@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <title>Ogrenci Rotalari</title>
 <style>
     * { box-sizing: border-box; }
@@ -551,6 +551,15 @@ if (kutu) {
         if (olay.keyCode === 27) { aramaTemizle(); }
         if (olay.keyCode === 13) { kutu.blur(); }
     };
+
+    var odakY = 0;
+    function suankiY() { return window.pageYOffset || document.documentElement.scrollTop || 0; }
+    kutu.onfocus = function () { odakY = suankiY(); };
+    window.onscroll = function () {
+        if (document.activeElement !== kutu) { return; }
+        if (Math.abs(suankiY() - odakY) > 30) { kutu.blur(); }
+    };
+
     filtrele();
 }
 </script>
