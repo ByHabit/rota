@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ogrenci Rotalari</title>
+<style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:0 0 40px 0; background:#12161C; color:#E8EDF3;
+           font-family:"Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+    .sarma { max-width:560px; margin:0 auto; padding:0 16px; }
+    header { padding:26px 0 16px 0; }
+    h1 { margin:0; font-size:19px; letter-spacing:2px; text-transform:uppercase; font-weight:700; }
+    h1 span { color:#FFC400; }
+    .tarih { color:#8A97A8; font-size:12px; margin-top:4px; letter-spacing:0.5px; }
+    .arama { width:100%; padding:15px; margin:16px 0 20px 0; font-size:16px;
+             background:#1B212A; border:1px solid #333D4B; border-radius:10px; color:#E8EDF3;
+             font-family:inherit; }
+    .arama:focus { outline:2px solid #FFC400; outline-offset:1px; border-color:transparent; }
+    ul { list-style:none; padding:0; margin:0; }
+    .kart { display:flex; align-items:center; justify-content:space-between; gap:12px;
+            background:#1B212A; border:1px solid #333D4B; border-radius:12px;
+            padding:14px 16px; margin-bottom:10px; }
+    .kisi { min-width:0; }
+    .kisi h2 { margin:0 0 4px 0; font-size:16px; font-weight:600; }
+    .kisi p { margin:0; font-size:13px; color:#8A97A8; }
+    .git { background:#FFC400; color:#14181F; text-decoration:none; font-weight:700;
+           font-size:14px; padding:13px 18px; border-radius:8px; white-space:nowrap; }
+    .git:active { background:#C99A00; }
+    .not { display:none; text-align:center; color:#8A97A8; font-size:14px; padding:24px 0; }
+    .js-kapali { border-left:3px solid #FFC400; background:rgba(255,196,0,0.07);
+                 padding:12px 14px; font-size:13px; color:#D9C99A; border-radius:0 8px 8px 0;
+                 margin-bottom:16px; }
+</style>
+</head>
+<body>
+<div class="sarma">
+    <header>
+        <h1>Ogrenci <span>Rotalari</span></h1>
+        <div class="tarih">Son guncelleme: 10.08.2026 &middot; 1 kayit</div>
+    </header>
+
+    <div class="js-kapali" id="jsUyari">Bu goruntuleyici aramayi calistirmiyor. Liste asagida tam halinde.</div>
+
+    <input type="text" id="arama" class="arama" placeholder="Isim veya mahalle ara...">
+
+    <ul id="liste">
+        <li class="kart">
+            <div class="kisi">
+                <h2>ÖZEL ÇINAR TUZLA KURUM MERKEZ</h2>
+                <p>YAYLA MAHALLESİ</p>
+            </div>
+            <a class="git" href="https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" target="_blank" rel="noopener">Yol Tarifi</a>
+        </li>
+    </ul>
+
+    <div class="not" id="bosNot">Aramanla eslesen kayit yok.</div>
+</div>
+
+<script>
+var u = document.getElementById("jsUyari");
+if (u) { u.style.display = "none"; }
+
+function sadelestir(m) {
+    var k = "\u00C7\u011E\u0130I\u00D6\u015E\u00DC\u00E7\u011F\u0131i\u00F6\u015F\u00FC";
+    var h = "cgiiosucgiiosu";
+    var s = "";
+    for (var i = 0; i < m.length; i++) {
+        var harf = m.charAt(i);
+        var y = k.indexOf(harf);
+        s += (y !== -1) ? h.charAt(y) : harf.toLowerCase();
+    }
+    return s;
+}
+
+function filtrele() {
+    var kutu = document.getElementById("arama");
+    if (!kutu) { return; }
+    var aranan = sadelestir(kutu.value).replace(/^\s+|\s+$/g, "");
+    var kartlar = document.getElementById("liste").getElementsByClassName("kart");
+    var bulunan = 0;
+    for (var i = 0; i < kartlar.length; i++) {
+        var metin = sadelestir(kartlar[i].textContent || kartlar[i].innerText || "");
+        if (aranan === "" || metin.indexOf(aranan) !== -1) {
+            kartlar[i].style.display = "flex"; bulunan++;
+        } else {
+            kartlar[i].style.display = "none";
+        }
+    }
+    document.getElementById("bosNot").style.display = (bulunan === 0) ? "block" : "none";
+}
+
+var kutu = document.getElementById("arama");
+if (kutu) {
+    kutu.onkeyup = filtrele;
+    kutu.oninput = filtrele;
+    if (kutu.addEventListener) { kutu.addEventListener("input", filtrele, false); }
+}
+</script>
+</body>
+</html>
