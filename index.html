@@ -8,13 +8,15 @@
     * { box-sizing: border-box; }
     body { margin:0; padding:0 0 40px 0; background:#12161C; color:#E8EDF3;
            font-family:"Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
-    .sarma { max-width:560px; margin:0 auto; padding:0 16px; }
+    .sarma { max-width:560px; margin:0 auto; padding:0 16px; overflow:visible; }
     header { padding:26px 0 16px 0; }
     h1 { margin:0; font-size:19px; letter-spacing:2px; text-transform:uppercase; font-weight:700; }
     h1 span { color:#FFC400; }
     .tarih { color:#8A97A8; font-size:12px; margin-top:4px; letter-spacing:0.5px; }
-    .arama-sar { position:sticky; top:0; z-index:5; background:#12161C;
-                 padding:12px 0 14px 0; margin-bottom:6px; }
+    html, body { overflow-x:visible; }
+    .arama-sar { position:-webkit-sticky; position:sticky; top:0; z-index:5;
+                 background:#12161C; padding:12px 0 14px 0; margin-bottom:6px;
+                 box-shadow:0 6px 12px -8px rgba(0,0,0,0.9); }
     .arama-ic { position:relative; }
     .arama { width:100%; padding:15px 48px 15px 15px; font-size:16px;
              background:#1B212A; border:1px solid #333D4B; border-radius:10px; color:#E8EDF3;
