@@ -13,10 +13,19 @@
     h1 { margin:0; font-size:19px; letter-spacing:2px; text-transform:uppercase; font-weight:700; }
     h1 span { color:#FFC400; }
     .tarih { color:#8A97A8; font-size:12px; margin-top:4px; letter-spacing:0.5px; }
-    .arama { width:100%; padding:15px; margin:16px 0 20px 0; font-size:16px;
+    .arama-sar { position:sticky; top:0; z-index:5; background:#12161C;
+                 padding:12px 0 14px 0; margin-bottom:6px; }
+    .arama-ic { position:relative; }
+    .arama { width:100%; padding:15px 48px 15px 15px; font-size:16px;
              background:#1B212A; border:1px solid #333D4B; border-radius:10px; color:#E8EDF3;
-             font-family:inherit; }
+             font-family:inherit; -webkit-appearance:none; }
     .arama:focus { outline:2px solid #FFC400; outline-offset:1px; border-color:transparent; }
+    .arama::-webkit-search-cancel-button { display:none; }
+    .temizle { display:none; position:absolute; right:7px; top:50%; transform:translateY(-50%);
+               width:38px; height:38px; padding:0; border:0; background:transparent; color:#8A97A8;
+               font-size:24px; line-height:1; cursor:pointer; border-radius:8px; font-family:inherit; }
+    .temizle:active { background:#232B36; color:#E8EDF3; }
+    .sonuc { display:none; font-size:12px; color:#8A97A8; margin:9px 2px 0 2px; letter-spacing:0.4px; }
     ul { list-style:none; padding:0; margin:0; }
     .kart { background:#1B212A; border:1px solid #333D4B; border-radius:12px;
             padding:14px 16px; margin-bottom:10px; }
@@ -47,7 +56,14 @@
 
     <div class="js-kapali" id="jsUyari">Bu goruntuleyici aramayi calistirmiyor. Liste asagida tam halinde.</div>
 
-    <input type="text" id="arama" class="arama" placeholder="Isim, mahalle veya telefon ara...">
+    <div class="arama-sar">
+        <div class="arama-ic">
+            <input type="search" id="arama" class="arama" placeholder="Isim, mahalle veya telefon ara..."
+                   autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+            <button type="button" class="temizle" id="temizleBtn" onclick="aramaTemizle()" aria-label="Aramayi temizle">&times;</button>
+        </div>
+        <div class="sonuc" id="sonucSatiri"></div>
+    </div>
 
     <ul id="liste">
         <li class="kart">
@@ -493,6 +509,23 @@ function filtrele() {
         }
     }
     document.getElementById("bosNot").style.display = (bulunan === 0) ? "block" : "none";
+
+    var tb = document.getElementById("temizleBtn");
+    if (tb) { tb.style.display = (kutu.value.length > 0) ? "block" : "none"; }
+
+    var ss = document.getElementById("sonucSatiri");
+    if (ss) {
+        if (aranan === "") { ss.style.display = "none"; }
+        else { ss.style.display = "block"; ss.textContent = bulunan + " kayit bulundu"; }
+    }
+}
+
+function aramaTemizle() {
+    var k = document.getElementById("arama");
+    if (!k) { return; }
+    k.value = "";
+    filtrele();
+    k.focus();
 }
 
 function paylas(dugme) {
@@ -510,7 +543,13 @@ var kutu = document.getElementById("arama");
 if (kutu) {
     kutu.onkeyup = filtrele;
     kutu.oninput = filtrele;
+    kutu.onsearch = filtrele;
     if (kutu.addEventListener) { kutu.addEventListener("input", filtrele, false); }
+    kutu.onkeydown = function (olay) {
+        if (olay.keyCode === 27) { aramaTemizle(); }
+        if (olay.keyCode === 13) { kutu.blur(); }
+    };
+    filtrele();
 }
 </script>
 </body>
