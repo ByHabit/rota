@@ -18,15 +18,20 @@
              font-family:inherit; }
     .arama:focus { outline:2px solid #FFC400; outline-offset:1px; border-color:transparent; }
     ul { list-style:none; padding:0; margin:0; }
-    .kart { display:flex; align-items:center; justify-content:space-between; gap:12px;
-            background:#1B212A; border:1px solid #333D4B; border-radius:12px;
+    .kart { background:#1B212A; border:1px solid #333D4B; border-radius:12px;
             padding:14px 16px; margin-bottom:10px; }
-    .kisi { min-width:0; }
     .kisi h2 { margin:0 0 4px 0; font-size:16px; font-weight:600; }
     .kisi p { margin:0; font-size:13px; color:#8A97A8; }
-    .git { background:#FFC400; color:#14181F; text-decoration:none; font-weight:700;
-           font-size:14px; padding:13px 18px; border-radius:8px; white-space:nowrap; }
+    .tel { display:inline-block; margin-top:6px; font-size:14px; color:#3DD68C;
+           text-decoration:none; font-weight:600; }
+    .butonlar { display:flex; gap:8px; margin-top:12px; }
+    .git { flex:1; text-align:center; background:#FFC400; color:#14181F; text-decoration:none;
+           font-weight:700; font-size:14px; padding:13px 16px; border-radius:8px; }
     .git:active { background:#C99A00; }
+    .gonder { text-align:center; background:transparent; color:#E8EDF3; text-decoration:none;
+              font-weight:700; font-size:14px; padding:13px 18px; border-radius:8px;
+              border:1px solid #333D4B; }
+    .gonder:active { border-color:#8A97A8; }
     .not { display:none; text-align:center; color:#8A97A8; font-size:14px; padding:24px 0; }
     .js-kapali { border-left:3px solid #FFC400; background:rgba(255,196,0,0.07);
                  padding:12px 14px; font-size:13px; color:#D9C99A; border-radius:0 8px 8px 0;
@@ -42,7 +47,7 @@
 
     <div class="js-kapali" id="jsUyari">Bu goruntuleyici aramayi calistirmiyor. Liste asagida tam halinde.</div>
 
-    <input type="text" id="arama" class="arama" placeholder="Isim veya mahalle ara...">
+    <input type="text" id="arama" class="arama" placeholder="Isim, mahalle veya telefon ara...">
 
     <ul id="liste">
         <li class="kart">
@@ -50,70 +55,110 @@
                 <h2>ÖZEL ÇINAR TUZLA KURUM MERKEZ</h2>
                 <p>YAYLA MAHALLESİ</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%20TUZLA%20KURUM%20MERKEZ%20-%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FYMpew7ZyDvdS6rXLA" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR TUZLA KURUM MERKEZ" data-metin="ÖZEL ÇINAR TUZLA KURUM MERKEZ - YAYLA MAHALLESİ
+https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ</h2>
                 <p>SULTANBEYLİ</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/LKzozaKLh8HCV1u29" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/LKzozaKLh8HCV1u29" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%202%20SULTANBEYL%C4%B0%20BAKIM%20MERKEZ%C4%B0%20-%20SULTANBEYL%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FLKzozaKLh8HCV1u29" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ" data-metin="ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ - SULTANBEYLİ
+https://maps.app.goo.gl/LKzozaKLh8HCV1u29" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ</h2>
                 <p>KURTKÖY</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/jBesgV1hoMvDehRj9" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/jBesgV1hoMvDehRj9" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%20KURTK%C3%96Y%20BAKIM%20MERKEZ%C4%B0%20-%20KURTK%C3%96Y%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FjBesgV1hoMvDehRj9" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ" data-metin="ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ - KURTKÖY
+https://maps.app.goo.gl/jBesgV1hoMvDehRj9" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>KADİR AKİF DABAN</h2>
                 <p>YAYLA MAHALLESİ</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/LnuUqnEvbEHv9pm68" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/LnuUqnEvbEHv9pm68" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=KAD%C4%B0R%20AK%C4%B0F%20DABAN%20-%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FLnuUqnEvbEHv9pm68" target="_blank" rel="noopener" data-baslik="KADİR AKİF DABAN" data-metin="KADİR AKİF DABAN - YAYLA MAHALLESİ
+https://maps.app.goo.gl/LnuUqnEvbEHv9pm68" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>UMUT KAYA BOLAT</h2>
                 <p>YAYLA MAHALLESİ</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/78aFkwirZ7oTXPNm9" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/78aFkwirZ7oTXPNm9" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=UMUT%20KAYA%20BOLAT%20-%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F78aFkwirZ7oTXPNm9" target="_blank" rel="noopener" data-baslik="UMUT KAYA BOLAT" data-metin="UMUT KAYA BOLAT - YAYLA MAHALLESİ
+https://maps.app.goo.gl/78aFkwirZ7oTXPNm9" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>ESLEM KONUK</h2>
                 <p>ŞİFA MAHALLESİ</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=ESLEM%20KONUK%20-%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FiAdxPcQ8Y8Veh3j17" target="_blank" rel="noopener" data-baslik="ESLEM KONUK" data-metin="ESLEM KONUK - ŞİFA MAHALLESİ
+https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>ÜMMÜHAN EYŞAN</h2>
                 <p>TUZLA</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/UMCtRgARHmJHCp8GA" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/UMCtRgARHmJHCp8GA" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=%C3%9CMM%C3%9CHAN%20EY%C5%9EAN%20-%20TUZLA%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FUMCtRgARHmJHCp8GA" target="_blank" rel="noopener" data-baslik="ÜMMÜHAN EYŞAN" data-metin="ÜMMÜHAN EYŞAN - TUZLA
+https://maps.app.goo.gl/UMCtRgARHmJHCp8GA" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>KARDELEN TURGUT</h2>
                 <p>ŞİFA MAHALLESİ</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=KARDELEN%20TURGUT%20-%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FMFrDWKokzDK3Wr1d6" target="_blank" rel="noopener" data-baslik="KARDELEN TURGUT" data-metin="KARDELEN TURGUT - ŞİFA MAHALLESİ
+https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>ESMA GÖLCÜ</h2>
                 <p>TUZLA YAYLA</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=ESMA%20G%C3%96LC%C3%9C%20-%20TUZLA%20YAYLA%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FpBKtESPuLkKqYQ4FA" target="_blank" rel="noopener" data-baslik="ESMA GÖLCÜ" data-metin="ESMA GÖLCÜ - TUZLA YAYLA
+https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
         <li class="kart">
             <div class="kisi">
                 <h2>ELİF YAZGÜLÜ DEMİRBOZAN</h2>
                 <p>ŞİFA MAHALLESİ</p>
             </div>
-            <a class="git" href="https://maps.app.goo.gl/p6kyGm76WQe32eq1A" target="_blank" rel="noopener">Yol Tarifi</a>
+            <div class="butonlar">
+                <a class="git" href="https://maps.app.goo.gl/p6kyGm76WQe32eq1A" target="_blank" rel="noopener">Yol Tarifi</a>
+                <a class="gonder" href="https://wa.me/?text=EL%C4%B0F%20YAZG%C3%9CL%C3%9C%20DEM%C4%B0RBOZAN%20-%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fp6kyGm76WQe32eq1A" target="_blank" rel="noopener" data-baslik="ELİF YAZGÜLÜ DEMİRBOZAN" data-metin="ELİF YAZGÜLÜ DEMİRBOZAN - ŞİFA MAHALLESİ
+https://maps.app.goo.gl/p6kyGm76WQe32eq1A" onclick="return paylas(this)">Gonder</a>
+            </div>
         </li>
     </ul>
 
@@ -145,12 +190,23 @@ function filtrele() {
     for (var i = 0; i < kartlar.length; i++) {
         var metin = sadelestir(kartlar[i].textContent || kartlar[i].innerText || "");
         if (aranan === "" || metin.indexOf(aranan) !== -1) {
-            kartlar[i].style.display = "flex"; bulunan++;
+            kartlar[i].style.display = "block"; bulunan++;
         } else {
             kartlar[i].style.display = "none";
         }
     }
     document.getElementById("bosNot").style.display = (bulunan === 0) ? "block" : "none";
+}
+
+function paylas(dugme) {
+    if (navigator.share) {
+        navigator.share({
+            title: dugme.getAttribute("data-baslik"),
+            text: dugme.getAttribute("data-metin")
+        }).catch(function () { });
+        return false;
+    }
+    return true;
 }
 
 var kutu = document.getElementById("arama");
