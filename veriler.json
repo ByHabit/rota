@@ -17,17 +17,20 @@
     },
     {
         "ad": "KADİR AKİF DABAN",
-        "mahalle": "YAYLA MAHALLESİ",
+        "mahalle": "TUZLA YAYLA MAHALLESİ",
+        "telefon": "",
         "link": "https://maps.app.goo.gl/LnuUqnEvbEHv9pm68"
     },
     {
         "ad": "UMUT KAYA BOLAT",
-        "mahalle": "YAYLA MAHALLESİ",
+        "mahalle": "TUZLA YAYLA MAHALLESİ",
+        "telefon": "",
         "link": "https://maps.app.goo.gl/78aFkwirZ7oTXPNm9"
     },
     {
         "ad": "ESLEM KONUK",
-        "mahalle": "ŞİFA MAHALLESİ",
+        "mahalle": "TUZLA ŞİFA MAHALLESİ",
+        "telefon": "",
         "link": "https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17"
     },
     {
@@ -38,22 +41,25 @@
     },
     {
         "ad": "KARDELEN TURGUT",
-        "mahalle": "ŞİFA MAHALLESİ",
+        "mahalle": "TUZLA ŞİFA MAHALLESİ",
+        "telefon": "",
         "link": "https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6"
     },
     {
         "ad": "ESMA GÖLCÜ",
-        "mahalle": "TUZLA YAYLA",
+        "mahalle": "TUZLA YAYLA MAHALLESİ",
+        "telefon": "",
         "link": "https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA"
     },
     {
         "ad": "ELİF YAZGÜLÜ DEMİRBOZAN",
-        "mahalle": "ŞİFA MAHALLESİ",
+        "mahalle": "TUZLA ŞİFA MAHALLESİ",
+        "telefon": "",
         "link": "https://maps.app.goo.gl/p6kyGm76WQe32eq1A"
     },
     {
         "ad": "HAZAL GÜLLÜ",
-        "mahalle": "ŞİFA MAHALLESİ",
+        "mahalle": "TUZLA ŞİFA MAHALLESİ",
         "telefon": "",
         "link": "https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6"
     },
@@ -77,19 +83,19 @@
     },
     {
         "ad": "ADEM VEZİR",
-        "mahalle": "AYDINLI MAHALLESİ",
+        "mahalle": "TUZLA AYDINLI MAHALLESİ",
         "telefon": "",
         "link": "https://maps.app.goo.gl/tekZtsueRzdq2Ku66"
     },
     {
         "ad": "HAMİT COŞKUN",
-        "mahalle": "OHANLI ORTA MAHALLE",
+        "mahalle": "TUZLA OHANLI ORTA MAHALLE",
         "telefon": "",
         "link": "https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8"
     },
     {
         "ad": "FURKAN FATİH",
-        "mahalle": "AKFIRAT",
+        "mahalle": "TUZLA AKFIRAT",
         "telefon": "",
         "link": "https://maps.app.goo.gl/PSgZVBaRMTyoexRM6"
     },
@@ -107,7 +113,7 @@
     },
     {
         "ad": "İBRAHİM ERGİN",
-        "mahalle": "ŞİFA MAHALLESİ",
+        "mahalle": "TUZLA ŞİFA MAHALLESİ",
         "telefon": "",
         "link": "https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9"
     },
