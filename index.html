@@ -17,16 +17,17 @@
 
     .ust { position:-webkit-sticky; position:sticky; top:0; z-index:5; background:#12161C;
            padding:12px 0 12px 0; box-shadow:0 6px 12px -8px rgba(0,0,0,0.9); }
-    .sekmeler { display:none; gap:8px; overflow-x:auto; padding-bottom:10px;
-                -webkit-overflow-scrolling:touch; }
+    .sekmeler { display:none; gap:8px; overflow-x:auto; padding-bottom:10px; -webkit-overflow-scrolling:touch; }
     .sekme { flex:0 0 auto; padding:9px 16px; font-size:13px; font-weight:700; border-radius:999px;
              background:#1B212A; border:1px solid #333D4B; color:#E8EDF3; font-family:inherit;
              cursor:pointer; white-space:nowrap; }
     .sekme.aktif { background:#FFC400; border-color:#FFC400; color:#14181F; }
+    .sekme.yerel { border-color:#3B3560; color:#B9AFFF; }
+    .sekme.yerel.aktif { background:#9B8CFF; border-color:#9B8CFF; color:#14181F; }
+    .sekme.yeni { border-style:dashed; color:#8A97A8; }
     .arama-ic { position:relative; }
     .arama { width:100%; padding:15px 48px 15px 15px; font-size:16px; background:#1B212A;
-             border:1px solid #333D4B; border-radius:10px; color:#E8EDF3; font-family:inherit;
-             -webkit-appearance:none; }
+             border:1px solid #333D4B; border-radius:10px; color:#E8EDF3; font-family:inherit; -webkit-appearance:none; }
     .arama:focus { outline:2px solid #FFC400; outline-offset:1px; border-color:transparent; }
     .arama::-webkit-search-cancel-button { display:none; }
     .temizle { display:none; position:absolute; right:7px; top:50%; transform:translateY(-50%);
@@ -38,28 +39,46 @@
     .bolum-basligi { font-size:11px; letter-spacing:1.6px; text-transform:uppercase; color:#8A97A8;
                      font-weight:700; margin:18px 2px 10px 2px; }
     .liste { list-style:none; padding:0; margin:0; }
-    .kart { background:#1B212A; border:1px solid #333D4B; border-radius:12px;
-            padding:14px 16px; margin-bottom:10px; }
+    .kart { background:#1B212A; border:1px solid #333D4B; border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+    .kart.sirali { display:flex; gap:12px; align-items:flex-start; }
+    .oklar { display:flex; flex-direction:column; gap:4px; flex:0 0 auto; }
+    .ok { width:38px; height:32px; padding:0; border:1px solid #333D4B; background:#232B36; color:#8A97A8;
+          border-radius:7px; font-size:13px; line-height:1; cursor:pointer; font-family:inherit; }
+    .ok:disabled { opacity:0.3; }
+    .kart-govde { flex:1; min-width:0; }
     .kisi h2 { margin:0 0 4px 0; font-size:16px; font-weight:600; }
     .sira-no { display:inline-block; min-width:24px; height:24px; line-height:24px; text-align:center;
                background:#FFC400; color:#14181F; border-radius:6px; font-size:13px; font-weight:700;
                margin-right:8px; padding:0 4px; }
     .kisi p { margin:0; font-size:13px; color:#8A97A8; }
-    .rozet-mesafe { display:inline-block; margin-top:8px; padding:3px 10px; font-size:12px;
-                    font-weight:700; color:#9B8CFF; border:1px solid #3B3560; background:#221F38;
-                    border-radius:999px; }
+    .rozet-mesafe { display:inline-block; margin-top:8px; padding:3px 10px; font-size:12px; font-weight:700;
+                    color:#9B8CFF; border:1px solid #3B3560; background:#221F38; border-radius:999px; }
     .tel { display:inline-block; margin-top:8px; margin-left:6px; font-size:14px; color:#3DD68C;
            text-decoration:none; font-weight:600; }
     .butonlar { display:flex; gap:8px; margin-top:12px; }
     .git { flex:1; text-align:center; background:#FFC400; color:#14181F; text-decoration:none;
            font-weight:700; font-size:14px; padding:13px 16px; border-radius:8px; }
     .git:active { background:#C99A00; }
-    .gonder { text-align:center; background:transparent; color:#E8EDF3; text-decoration:none;
-              font-weight:700; font-size:14px; padding:13px 18px; border-radius:8px; border:1px solid #333D4B; }
-    .gonder:active { border-color:#8A97A8; }
+    .gonder { text-align:center; background:transparent; color:#E8EDF3; text-decoration:none; font-weight:700;
+              font-size:14px; padding:13px 18px; border-radius:8px; border:1px solid #333D4B; }
+    .cikar { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-weight:700;
+             font-size:14px; padding:13px 16px; border-radius:8px; cursor:pointer; font-family:inherit; }
     .not { display:none; text-align:center; color:#8A97A8; font-size:14px; padding:24px 0; }
     .js-kapali { border-left:3px solid #FFC400; background:rgba(255,196,0,0.07); padding:12px 14px;
                  font-size:13px; color:#D9C99A; border-radius:0 8px 8px 0; margin:12px 0; }
+    .yerel-arac { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 6px 0; }
+    .arac-btn { padding:11px 15px; font-size:13px; font-weight:700; border-radius:8px; background:#1B212A;
+                border:1px solid #333D4B; color:#E8EDF3; cursor:pointer; font-family:inherit; }
+    .arac-btn.vurgu { background:#9B8CFF; border-color:#9B8CFF; color:#14181F; }
+    .arac-btn.tehlike { color:#FF6B5E; }
+    .ekle-satir { display:flex; align-items:center; gap:12px; background:#171C24; border:1px solid #262F3B;
+                  border-radius:10px; padding:11px 13px; margin-bottom:8px; }
+    .ekle-bilgi { flex:1; min-width:0; }
+    .ekle-ad { font-size:14px; font-weight:600; }
+    .ekle-alt { font-size:12px; color:#8A97A8; }
+    .ekle-btn { flex:0 0 auto; padding:9px 14px; font-size:13px; font-weight:700; border-radius:7px;
+                background:transparent; border:1px solid #3B3560; color:#B9AFFF; cursor:pointer; font-family:inherit; }
+    .bos-not { color:#8A97A8; font-size:14px; padding:14px 2px; }
 </style>
 </head>
 <body>
@@ -69,11 +88,11 @@
         <div class="tarih">Son guncelleme: 11.08.2026</div>
     </header>
 
-    <div class="js-kapali" id="jsUyari">Bu goruntuleyici arama ve sekmeleri calistirmiyor. Butun listeler asagida alt alta duruyor.</div>
+    <div class="js-kapali" id="jsUyari">Bu goruntuleyici arama, sekme ve gunluk liste ozelliklerini calistirmiyor. Butun listeler asagida alt alta duruyor.</div>
 
     <div class="ust">
         <div class="sekmeler" id="sekmeler">
-        <button class="sekme aktif" data-hedef="bolum-hepsi" onclick="sekmeSec('bolum-hepsi')">Tumu</button>
+        <button class="sekme aktif" data-anahtar="bolum-hepsi" onclick="sekmeSec('bolum-hepsi')">Tumu</button>
         </div>
         <div class="arama-ic">
             <input type="search" id="arama" class="arama" placeholder="Isim, mahalle veya mesafe ara..."
@@ -928,17 +947,29 @@ https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA" onclick="return paylas(this)">Gonder<
         </li>
         </ul>
     </section>
+    <section class="bolum" id="bolum-yerel" style="display:none;"></section>
 
     <div class="not" id="bosNot">Aramanla eslesen kayit yok.</div>
 </div>
 
 <script>
+var OGRENCILER = [{"ad":"ÖZEL ÇINAR TUZLA KURUM MERKEZ","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA","id":"omsoxipqf6t","mesafe":"KM HESAPLARI BU KURUMUN ADRESİNE GÖRE HESAPLANDI"},{"ad":"ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ","mahalle":"SULTANBEYLİ","telefon":"","link":"https://maps.app.goo.gl/LKzozaKLh8HCV1u29","id":"omsoxipqf3t","mesafe":"28 KM"},{"ad":"ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ","mahalle":"KURTKÖY","telefon":"","link":"https://maps.app.goo.gl/jBesgV1hoMvDehRj9","id":"omsoxipqfen","mesafe":"19 KM"},{"ad":"KADİR AKİF DABAN","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/LnuUqnEvbEHv9pm68","id":"omsoxipqfq8","mesafe":"2.2 KM"},{"ad":"UMUT KAYA BOLAT","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/78aFkwirZ7oTXPNm9","id":"omsoxipqfez","mesafe":"2.3 KM"},{"ad":"ESLEM KONUK","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17","id":"omsoxipqf8q","mesafe":"6.7 KM"},{"ad":"ÜMMÜHAN EYŞAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/UMCtRgARHmJHCp8GA","id":"omsoxipqfly","mesafe":"1.6 KM"},{"ad":"KARDELEN TURGUT","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6","id":"omsoxipqf9k","mesafe":"7.2 KM"},{"ad":"ESMA GÖLCÜ","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA","id":"omsoxipqffp","mesafe":"450 METRE"},{"ad":"ELİF YAZGÜLÜ DEMİRBOZAN","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/p6kyGm76WQe32eq1A","id":"omsoxipqf68","mesafe":"6.5 KM"},{"ad":"HAZAL GÜLLÜ","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6","id":"omsoxipqf9d","mesafe":"7.8 KM"},{"ad":"EMİR YILMAZ","mahalle":"BAYRAMOĞLU","telefon":"","link":"https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9","id":"omsoxipqfk6","mesafe":"9.2 KM"},{"ad":"MİRAÇ KIRMIZIGÖZ","mahalle":"BAYRAMOĞLU","telefon":"","link":"https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9","id":"omsoxipqfq1","mesafe":"9.2 KM"},{"ad":"EMRE YILMAZ","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/pWt5AEzNnkmS7icX7","id":"omsoxipqfg7","mesafe":"1.3 KM"},{"ad":"ADEM VEZİR","mahalle":"TUZLA AYDINLI MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/tekZtsueRzdq2Ku66","id":"omsoxipqfab","mesafe":"8.7 KM"},{"ad":"HAMİT COŞKUN","mahalle":"TUZLA OHANLI ORTA MAHALLE","telefon":"","link":"https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8","id":"omsoxipqf88","mesafe":"12.9 KM"},{"ad":"FURKAN FATİH","mahalle":"TUZLA AKFIRAT","telefon":"","link":"https://maps.app.goo.gl/PSgZVBaRMTyoexRM6","id":"omsoxipqf99","mesafe":"18.1 KM"},{"ad":"EYÜP CEVDET","mahalle":"ESENYALI EV","telefon":"","link":"https://maps.app.goo.gl/bA8JH6RTLcHr132fA","id":"omsoxipqfgj","mesafe":"6.8 KM"},{"ad":"EDANUR ÖN","mahalle":"TUZLA İSTASYON MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/VmyKBdYFconiDQLG7","id":"omsoxipqf8","mesafe":"2 KM"},{"ad":"İBRAHİM ERGİN","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9","id":"omsoxipqfbs","mesafe":"7.4 KM"},{"ad":"ÖMER ALPER GÜNDOĞDU","mahalle":"ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/QRHrK8A8V2QV2a548","id":"omsoxipqfgk","mesafe":"6.4 KM"},{"ad":"ÖMER YILMAZ UKUS","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/g97ogr2Uvy7sST8T8","id":"omsoxipqfoc","mesafe":"350 METRE"},{"ad":"ESLEM HALİME DEMİRCİ","mahalle":"TUZLA İSTASYON MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/PRXgPan4QNFX4MWv7","id":"omsoxipqfgi","mesafe":"2.8 KM"},{"ad":"MEHMET EFE ASLANDAĞ","mahalle":"TUZLA ORHANLI","telefon":"","link":"https://maps.app.goo.gl/9jPZoWmERwF3YoeDA","id":"omsoxipqfqz","mesafe":"12.6 KM"},{"ad":"AHMET MELİH","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/yM5yppFH8mJS93St8","id":"omsoxipqf1o","mesafe":"450 METRE"},{"ad":"ELANUR GÖKCÜL","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/rbHgSym4arEJkGFfA","id":"omsoxipqf15","mesafe":"400 METRE"},{"ad":"ZEYNEP ESMA KAPAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/fNo7EcHvf3poTrDW8","id":"omsoxipqfku","mesafe":"1.4 KM"},{"ad":"AHMET ADAR DOĞAN","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6","id":"omsoxipqfo8","mesafe":"1.1 KM"},{"ad":"YUSUF AYAZ BİLİR","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/oExhexLoBKAMYcHg7","id":"omsoxipqfu","mesafe":"6.4 KM"},{"ad":"BAYRAM BİLİR","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/oExhexLoBKAMYcHg7","id":"omsoxipqf8v","mesafe":"6.4 KM"},{"ad":"İBRAHİM TOROS","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/PVhfScb2sNuh1sv26","id":"omsoxipqfce","mesafe":"6.5 KM"},{"ad":"KEREM YAĞIZ","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/TegUf8B4BMyFEgu6A","id":"omsoxipqfof","mesafe":"550 METRE"},{"ad":"FURKAN GÜLCAN","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/NXSrXCcjmNR41QxX8","id":"omsoxipqf7s","mesafe":"6.4 KM"},{"ad":"EMİRHAN ÖZDEMİR","mahalle":"ÇAYIROVA","telefon":"","link":"https://maps.app.goo.gl/54iRUkJvux12sZM59","id":"omsoxipqfly","mesafe":"11.2 KM"},{"ad":"YUSUF AYAZ BİLİR","mahalle":"ESENYALI","telefon":"","link":"https://maps.app.goo.gl/DBPywNPqcYmb4Aro7","id":"omsoxipqfhp","mesafe":"7.3 KM"},{"ad":"ELANUR İNAN","mahalle":"ÇAYIROVA","telefon":"","link":"https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6","id":"omsoxipqfcp","mesafe":"6.9 KM"},{"ad":"ADEM ÖZGÜL","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8","id":"omsoxipqf2b","mesafe":"6 KM"},{"ad":"ARİF EMRE ŞANAL","mahalle":"TUZLA AYDINLI","telefon":"","link":"https://maps.app.goo.gl/3JmoKjy2jvHhznKx7","id":"omsoxipqfah","mesafe":"10.6 KM"},{"ad":"İCLAL SARE","mahalle":"TUZLA AYDINLI TOKİ","telefon":"","link":"https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18","id":"omsoxipqfla","mesafe":"8.5 KM"},{"ad":"DERYA BAYAT","mahalle":"TUZLA CAMİ MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8","id":"omsoxipqf99","mesafe":"2.4 KM"},{"ad":"SEMRA UÇAR","mahalle":"TUZLA AYDINLI","telefon":"","link":"https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA","id":"omsoxipqf6j","mesafe":"8.3 KM"},{"ad":"AZİZ AKDENİZ","mahalle":"KURTKÖY","telefon":"","link":"https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9","id":"omsoxipqfa","mesafe":"18.8 KM"},{"ad":"GAMZE ESİLA BOLAT","mahalle":"TUZLA İSTASYON MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/iKwPGNiA63Lr1ka46","id":"omsoxipqfnl","mesafe":"850 METRE"},{"ad":"NURFİDAN ŞAHİN","mahalle":"TUZLA ORTA MAHALLE","telefon":"","link":"https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9","id":"omsoxipqfcw","mesafe":"14.8 KM"},{"ad":"KEREM EDİS","mahalle":"TUZLA TEPEÖREN","telefon":"","link":"https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7","id":"omsoxipqf3h","mesafe":"15.9 KM"},{"ad":"SELAHATTİN YASİN YILMAZ","mahalle":"TUZLA AYDINLI","telefon":"","link":"https://maps.app.goo.gl/miR73asUTD5xYgzN8","id":"omsoxipqfqp","mesafe":"8.8 KM"},{"ad":"ERAY BULUT","mahalle":"TUZLA AYDINLI","telefon":"","link":"https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9","id":"omsoxipqfpw","mesafe":"8.5 KM"},{"ad":"AYŞENUR ÇAĞLAYAN","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9","id":"omsoxipqfbw","mesafe":"1.7 KM"},{"ad":"MUHAMMED ALİ RIZA CANBAKAL","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA","id":"omsoxipqf9u","mesafe":"1.1 KM"},{"ad":"HAMZA EFE TOSUN","mahalle":"BAYRAMOĞLU","telefon":"","link":"https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9","id":"omsoxipqf3n","mesafe":"11.2 KM"},{"ad":"EMRE SELÇUK","mahalle":"DARICA","telefon":"","link":"https://maps.app.goo.gl/osVBHfQAogCpoqvB7","id":"omsoxipqf3r","mesafe":"10.2 KM"},{"ad":"ESİLA İŞLER","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/bekAQADBrvEMUFo36","id":"omsoxipqfop","mesafe":"500 METRE"},{"ad":"İLAYDA ŞENOL","mahalle":"TUZLA EVLİYA ÇELEBİ MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/69JXcYPhaUXGKRCN7","id":"omsoxipqf86","mesafe":"2.1 KM"},{"ad":"YUSUF ÇAL","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/uzpifBe3C3s4hsSe8","id":"omsoxipqfjn","mesafe":"350 METRE"},{"ad":"MİKAİL KALINTAŞ","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/h47BL3UwjycAD8zS9","id":"omsoxipqf62","mesafe":"7.6 KM"},{"ad":"METİN KARSLI","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7","id":"omsoxipqfe7","mesafe":"6.1 KM"},{"ad":"ABDULLAH ÇELİK","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8","id":"omsoxipqfmm","mesafe":"5.7 KM"},{"ad":"YAĞMUR ÇAĞIL","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7","id":"omsoxipqfq0","mesafe":"5.9 KM"},{"ad":"ZEYNEP KARAMAN","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7","id":"omsoxipqfbq","mesafe":"7.4 KM"},{"ad":"YÜCEHAN TAŞOVA","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/xAcAqRSETknnJrZq5","id":"omsoxipqfhs","mesafe":"850 METRE"},{"ad":"FEYZA SENA","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/PY4uTYUkcbFs28CX6","id":"omsoxipqf53","mesafe":"600 METRE"},{"ad":"MİNA BOYSAN","mahalle":"TUZLA AYDINLI","telefon":"","link":"https://maps.app.goo.gl/x28RzWPEyueyZ7gBA","id":"omsoxipqfr3","mesafe":"8.4 KM"},{"ad":"BEYTULLAH YAVUZ","mahalle":"TUZLA ORTA MAHALLE","telefon":"","link":"https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7","id":"omsoxipqfgr","mesafe":"14.3 KM"},{"ad":"FATMANUR ÖZTÜRK","mahalle":"TUZLA ORTA MAHALLE","telefon":"","link":"https://maps.app.goo.gl/5wsiiuuEvF5kczM2A","id":"omsoxipqflt","mesafe":"14.2 KM"},{"ad":"YİĞİT EFE GÖKYAR","mahalle":"KONAŞLI","telefon":"","link":"https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6","id":"omsoxipqfm3","mesafe":"9.3 KM"},{"ad":"AHMET ÇAĞIN","mahalle":"TUZLA ŞİFA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/1juBzDQBKDgjVec16","id":"omsoxipqfdl","mesafe":"7.2 KM"},{"ad":"RABİA SAĞLIK","mahalle":"TUZLA ORTA MAHALLE","telefon":"","link":"https://maps.app.goo.gl/zNZZftpFAzo1s5bSA","id":"omsoxipqfp8","mesafe":"13.8 KM"},{"ad":"BURCU ATEŞ","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/BSo2j3AeihYZKmL68","id":"omsoxipqfcq","mesafe":"1.5 KM"},{"ad":"YUSUF BOZDOĞAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/U63FCY1pdVcskTyZ7","id":"omsoxipqfif","mesafe":"800 METRE"},{"ad":"TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ","mahalle":"TUZLA YAYLA MAHALLESİ","telefon":"","link":"https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA","id":"omsoxipqf6x","mesafe":"1.8 KM"}];
+var ANAHTAR = "rota_gunluk_v1";
+var yerelListeler = [];
+var aktifAnahtar = "bolum-hepsi";
+var aktifYerel = -1;
+var hafizaCalisiyor = true;
+
 var u = document.getElementById("jsUyari");
 if (u) { u.style.display = "none"; }
 var sk = document.getElementById("sekmeler");
 if (sk) { sk.style.display = "flex"; }
 
-var aktifBolum = "bolum-hepsi";
+function kacis(m) {
+    return String(m === undefined || m === null ? "" : m)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
 
 function sadelestir(m) {
     var k = "\u00C7\u011E\u0130I\u00D6\u015E\u00DC\u00E7\u011F\u0131i\u00F6\u015F\u00FC";
@@ -952,16 +983,238 @@ function sadelestir(m) {
     return s;
 }
 
-function sekmeSec(hedef) {
-    aktifBolum = hedef;
-    var dugmeler = document.getElementsByClassName("sekme");
-    for (var i = 0; i < dugmeler.length; i++) {
-        dugmeler[i].className = (dugmeler[i].getAttribute("data-hedef") === hedef) ? "sekme aktif" : "sekme";
+function ogrBul(kimlik) {
+    for (var i = 0; i < OGRENCILER.length; i++) {
+        if (OGRENCILER[i].id === kimlik) { return OGRENCILER[i]; }
     }
+    return null;
+}
+
+function telSade(n) { return String(n || "").replace(/[^0-9+]/g, ""); }
+
+/* ---------- Telefon hafizasi ---------- */
+function yerelYukle() {
+    try {
+        var ham = localStorage.getItem(ANAHTAR);
+        if (ham) { yerelListeler = JSON.parse(ham) || []; }
+    } catch (e) { hafizaCalisiyor = false; }
+}
+function yerelKaydet() {
+    try { localStorage.setItem(ANAHTAR, JSON.stringify(yerelListeler)); }
+    catch (e) { hafizaCalisiyor = false; alert("Liste telefona kaydedilemedi. Tarayici gizli modda olabilir."); }
+}
+
+/* ---------- Sekmeler ---------- */
+function sekmeleriCiz() {
+    var kutu = document.getElementById("sekmeler");
+    var eskiler = kutu.getElementsByClassName("uretilen");
+    while (eskiler.length > 0) { kutu.removeChild(eskiler[0]); }
+
+    for (var i = 0; i < yerelListeler.length; i++) {
+        var d = document.createElement("button");
+        d.className = "sekme yerel uretilen" + (aktifAnahtar === "yerel-" + i ? " aktif" : "");
+        d.setAttribute("data-anahtar", "yerel-" + i);
+        d.innerHTML = kacis(yerelListeler[i].ad) + " (" + yerelListeler[i].uyeler.length + ")";
+        (function (sira) { d.onclick = function () { yerelSec(sira); }; })(i);
+        kutu.appendChild(d);
+    }
+
+    var y = document.createElement("button");
+    y.className = "sekme yeni uretilen";
+    y.innerHTML = "+ Gunluk Liste";
+    y.onclick = yerelOlustur;
+    kutu.appendChild(y);
+
+    var sabitler = kutu.getElementsByClassName("sekme");
+    for (var s = 0; s < sabitler.length; s++) {
+        var ah = sabitler[s].getAttribute("data-anahtar");
+        if (!ah) { continue; }
+        var temel = (ah.indexOf("yerel-") === 0) ? "sekme yerel uretilen" : "sekme";
+        sabitler[s].className = temel + (ah === aktifAnahtar ? " aktif" : "");
+    }
+}
+
+function sekmeSec(hedef) {
+    aktifAnahtar = hedef;
+    aktifYerel = -1;
+    sekmeleriCiz();
     filtrele();
     window.scrollTo(0, 0);
 }
 
+/* ---------- Gunluk listeler ---------- */
+function bugunEtiket() {
+    var t = new Date();
+    return ("0" + t.getDate()).slice(-2) + "." + ("0" + (t.getMonth() + 1)).slice(-2);
+}
+
+function yerelOlustur() {
+    var ad = prompt("Liste adi:", bugunEtiket() + " Sabah");
+    if (ad === null) { return; }
+    ad = ad.replace(/^\s+|\s+$/g, "");
+    if (!ad) { return; }
+    yerelListeler.push({ ad: ad, uyeler: [] });
+    yerelKaydet();
+    yerelSec(yerelListeler.length - 1);
+}
+
+function yerelSec(sira) {
+    aktifYerel = sira;
+    aktifAnahtar = "yerel-" + sira;
+    sekmeleriCiz();
+    yerelCiz();
+    filtrele();
+    window.scrollTo(0, 0);
+}
+
+function yerelAdDegistir() {
+    if (aktifYerel < 0) { return; }
+    var ad = prompt("Yeni ad:", yerelListeler[aktifYerel].ad);
+    if (ad === null) { return; }
+    ad = ad.replace(/^\s+|\s+$/g, "");
+    if (!ad) { return; }
+    yerelListeler[aktifYerel].ad = ad;
+    yerelKaydet();
+    sekmeleriCiz();
+    yerelCiz();
+}
+
+function yerelSil() {
+    if (aktifYerel < 0) { return; }
+    if (!confirm(yerelListeler[aktifYerel].ad + " listesi silinsin mi?")) { return; }
+    yerelListeler.splice(aktifYerel, 1);
+    yerelKaydet();
+    sekmeSec("bolum-hepsi");
+}
+
+function yerelEkle(kimlik) {
+    if (aktifYerel < 0) { return; }
+    yerelListeler[aktifYerel].uyeler.push(kimlik);
+    yerelKaydet();
+    sekmeleriCiz();
+    yerelCiz();
+    filtrele();
+}
+
+function yerelCikar(sira) {
+    if (aktifYerel < 0) { return; }
+    yerelListeler[aktifYerel].uyeler.splice(sira, 1);
+    yerelKaydet();
+    sekmeleriCiz();
+    yerelCiz();
+    filtrele();
+}
+
+function yerelTasi(sira, yon) {
+    if (aktifYerel < 0) { return; }
+    var d = yerelListeler[aktifYerel].uyeler;
+    var hedef = sira + yon;
+    if (hedef < 0 || hedef >= d.length) { return; }
+    var g = d[sira]; d[sira] = d[hedef]; d[hedef] = g;
+    yerelKaydet();
+    yerelCiz();
+    filtrele();
+}
+
+function yerelBosalt() {
+    if (aktifYerel < 0) { return; }
+    if (!confirm("Listedeki tum duraklar kaldirilsin mi?")) { return; }
+    yerelListeler[aktifYerel].uyeler = [];
+    yerelKaydet();
+    sekmeleriCiz();
+    yerelCiz();
+    filtrele();
+}
+
+function yerelPaylas() {
+    if (aktifYerel < 0) { return; }
+    var L = yerelListeler[aktifYerel];
+    var metin = L.ad + "\n\n";
+    var n = 0;
+    for (var i = 0; i < L.uyeler.length; i++) {
+        var o = ogrBul(L.uyeler[i]);
+        if (!o) { continue; }
+        n++;
+        metin += n + ". " + o.ad + " - " + o.mahalle + "\n" + o.link + "\n\n";
+    }
+    if (n === 0) { alert("Liste bos."); return; }
+    if (navigator.share) {
+        navigator.share({ title: L.ad, text: metin }).catch(function () { });
+    } else {
+        window.open("https://wa.me/?text=" + encodeURIComponent(metin), "_blank");
+    }
+}
+
+function yerelCiz() {
+    var bolum = document.getElementById("bolum-yerel");
+    if (aktifYerel < 0 || !yerelListeler[aktifYerel]) { bolum.innerHTML = ""; return; }
+    var L = yerelListeler[aktifYerel];
+
+    var h = '<div class="bolum-basligi">' + kacis(L.ad) + " &middot; " + L.uyeler.length + " durak</div>";
+
+    h += '<div class="yerel-arac">' +
+         '<button class="arac-btn vurgu" onclick="yerelPaylas()">Listeyi Gonder</button>' +
+         '<button class="arac-btn" onclick="yerelAdDegistir()">Adini Degistir</button>' +
+         '<button class="arac-btn tehlike" onclick="yerelBosalt()">Bosalt</button>' +
+         '<button class="arac-btn tehlike" onclick="yerelSil()">Listeyi Sil</button>' +
+         "</div>";
+
+    if (L.uyeler.length === 0) {
+        h += '<div class="bos-not">Liste bos. Asagidan ogrenci ekle, sonra oklarla sirala.</div>';
+    } else {
+        h += '<ul class="liste">';
+        var n = 0;
+        for (var i = 0; i < L.uyeler.length; i++) {
+            var o = ogrBul(L.uyeler[i]);
+            if (!o) { continue; }
+            n++;
+            var metin = o.ad + " - " + o.mahalle + "\n" + o.link;
+            h += '<li class="kart sirali">' +
+                 '<div class="oklar">' +
+                     '<button class="ok" onclick="yerelTasi(' + i + ',-1)"' + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +
+                     '<button class="ok" onclick="yerelTasi(' + i + ',1)"' + (i === L.uyeler.length - 1 ? " disabled" : "") + ">&#9660;</button>" +
+                 "</div>" +
+                 '<div class="kart-govde">' +
+                     '<div class="kisi">' +
+                         '<h2><span class="sira-no">' + n + "</span>" + kacis(o.ad) + "</h2>" +
+                         "<p>" + kacis(o.mahalle) + "</p>" +
+                         (o.mesafe ? '<span class="rozet-mesafe">' + kacis(o.mesafe) + "</span>" : "") +
+                         (o.telefon ? '<a class="tel" href="tel:' + kacis(telSade(o.telefon)) + '">' + kacis(o.telefon) + "</a>" : "") +
+                     "</div>" +
+                     '<div class="butonlar">' +
+                         '<a class="git" href="' + kacis(o.link) + '" target="_blank" rel="noopener">Yol Tarifi</a>' +
+                         '<a class="gonder" href="https://wa.me/?text=' + encodeURIComponent(metin) + '" target="_blank" rel="noopener" data-baslik="' + kacis(o.ad) + '" data-metin="' + kacis(metin) + '" onclick="return paylas(this)">Gonder</a>' +
+                         '<button class="cikar" onclick="yerelCikar(' + i + ')">Cikar</button>' +
+                     "</div>" +
+                 "</div>" +
+                 "</li>";
+        }
+        h += "</ul>";
+    }
+
+    h += '<div class="bolum-basligi" style="margin-top:24px;">Listeye Ogrenci Ekle</div>';
+    var eklenecek = 0;
+    var e = "";
+    for (var k = 0; k < OGRENCILER.length; k++) {
+        var ogr = OGRENCILER[k];
+        var varMi = false;
+        for (var z = 0; z < L.uyeler.length; z++) { if (L.uyeler[z] === ogr.id) { varMi = true; break; } }
+        if (varMi) { continue; }
+        eklenecek++;
+        e += '<div class="ekle-satir">' +
+                 '<div class="ekle-bilgi">' +
+                     '<div class="ekle-ad">' + kacis(ogr.ad) + "</div>" +
+                     '<div class="ekle-alt">' + kacis(ogr.mahalle) + (ogr.mesafe ? " &middot; " + kacis(ogr.mesafe) : "") + "</div>" +
+                 "</div>" +
+                 '<button class="ekle-btn" onclick="yerelEkle(\'' + ogr.id + '\')">Ekle</button>' +
+             "</div>";
+    }
+    h += (eklenecek === 0) ? '<div class="bos-not">Butun ogrenciler listede.</div>' : e;
+
+    bolum.innerHTML = h;
+}
+
+/* ---------- Arama ve gorunurluk ---------- */
 function filtrele() {
     var kutu = document.getElementById("arama");
     if (!kutu) { return; }
@@ -971,22 +1224,33 @@ function filtrele() {
     var toplam = 0;
 
     for (var b = 0; b < bolumler.length; b++) {
+        var yerelMi = (bolumler[b].id === "bolum-yerel");
         var kartlar = bolumler[b].getElementsByClassName("kart");
         var gorunen = 0;
         for (var i = 0; i < kartlar.length; i++) {
             var metin = sadelestir(kartlar[i].textContent || kartlar[i].innerText || "");
             if (!aramaVar || metin.indexOf(aranan) !== -1) {
-                kartlar[i].style.display = "block"; gorunen++;
+                kartlar[i].style.display = (kartlar[i].className.indexOf("sirali") !== -1) ? "flex" : "block";
+                gorunen++;
             } else {
                 kartlar[i].style.display = "none";
             }
         }
-        var gorunsun = aramaVar ? (gorunen > 0) : (bolumler[b].id === aktifBolum);
+        var satirlar = bolumler[b].getElementsByClassName("ekle-satir");
+        for (var s = 0; s < satirlar.length; s++) {
+            var m2 = sadelestir(satirlar[s].textContent || satirlar[s].innerText || "");
+            satirlar[s].style.display = (!aramaVar || m2.indexOf(aranan) !== -1) ? "flex" : "none";
+        }
+
+        var gorunsun;
+        if (yerelMi) { gorunsun = (aktifYerel >= 0); }
+        else if (aramaVar) { gorunsun = (gorunen > 0); }
+        else { gorunsun = (bolumler[b].id === aktifAnahtar); }
         bolumler[b].style.display = gorunsun ? "block" : "none";
         if (gorunsun) { toplam += gorunen; }
     }
 
-    document.getElementById("bosNot").style.display = (toplam === 0) ? "block" : "none";
+    document.getElementById("bosNot").style.display = (toplam === 0 && aramaVar) ? "block" : "none";
 
     var tb = document.getElementById("temizleBtn");
     if (tb) { tb.style.display = (kutu.value.length > 0) ? "block" : "none"; }
@@ -1008,10 +1272,7 @@ function aramaTemizle() {
 
 function paylas(dugme) {
     if (navigator.share) {
-        navigator.share({
-            title: dugme.getAttribute("data-baslik"),
-            text: dugme.getAttribute("data-metin")
-        }).catch(function () { });
+        navigator.share({ title: dugme.getAttribute("data-baslik"), text: dugme.getAttribute("data-metin") }).catch(function () { });
         return false;
     }
     return true;
@@ -1035,6 +1296,9 @@ if (kutu) {
         if (Math.abs(suankiY() - odakY) > 30) { kutu.blur(); }
     };
 }
+
+yerelYukle();
+sekmeleriCiz();
 filtrele();
 </script>
 </body>
