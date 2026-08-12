@@ -7,7 +7,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA",
             "id": "omsoxipqf6t",
-            "mesafe": "KM HESAPLARI BU KURUMUN ADRESİNE GÖRE HESAPLANDI"
+            "mesafe": "KM HESAPLARI BU KURUMUN ADRESİNE GÖRE HESAPLANDI",
+            "enlem": 40.82752360562284,
+            "boylam": 29.31144049586419
         },
         {
             "ad": "ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ",
@@ -75,7 +77,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6",
             "id": "omsoxipqf9k",
-            "mesafe": "7.2 KM"
+            "mesafe": "7.2 KM",
+            "enlem": 40.84390494604853,
+            "boylam": 29.361053808485227
         },
         {
             "ad": "ESMA GÖLCÜ",
@@ -83,7 +87,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA",
             "id": "omsoxipqffp",
-            "mesafe": "450 METRE"
+            "mesafe": "450 METRE",
+            "enlem": 40.82967798397194,
+            "boylam": 29.309705128835645
         },
         {
             "ad": "ELİF YAZGÜLÜ DEMİRBOZAN",
@@ -91,7 +97,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/p6kyGm76WQe32eq1A",
             "id": "omsoxipqf68",
-            "mesafe": "6.5 KM"
+            "mesafe": "6.5 KM",
+            "enlem": 40.8393531027831,
+            "boylam": 29.356849151111447
         },
         {
             "ad": "HAZAL GÜLLÜ",
