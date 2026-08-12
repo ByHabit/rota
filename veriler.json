@@ -367,7 +367,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8",
             "id": "omsoxipqf2b",
-            "mesafe": "6 KM"
+            "mesafe": "6 KM",
+            "enlem": 40.8275491019536,
+            "boylam": 29.359944987945113
         },
         {
             "ad": "ARİF EMRE ŞANAL",
@@ -375,7 +377,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/3JmoKjy2jvHhznKx7",
             "id": "omsoxipqfah",
-            "mesafe": "10.6 KM"
+            "mesafe": "10.6 KM",
+            "enlem": 40.88274147528472,
+            "boylam": 29.338901484657445
         },
         {
             "ad": "İCLAL SARE",
