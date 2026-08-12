@@ -137,7 +137,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/pWt5AEzNnkmS7icX7",
             "id": "omsoxipqfg7",
-            "mesafe": "1.3 KM"
+            "mesafe": "1.3 KM",
+            "enlem": 40.833591227860715,
+            "boylam": 29.3056667
         },
         {
             "ad": "ADEM VEZİR",
@@ -145,7 +147,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/tekZtsueRzdq2Ku66",
             "id": "omsoxipqfab",
-            "mesafe": "8.7 KM"
+            "mesafe": "8.7 KM",
+            "enlem": 40.88275162040222,
+            "boylam": 29.339031715760825
         },
         {
             "ad": "HAMİT COŞKUN",
@@ -153,7 +157,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8",
             "id": "omsoxipqf88",
-            "mesafe": "12.9 KM"
+            "mesafe": "12.9 KM",
+            "enlem": 40.90084393706418,
+            "boylam": 29.37922229455615
         },
         {
             "ad": "FURKAN FATİH",
