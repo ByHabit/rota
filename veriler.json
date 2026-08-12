@@ -247,7 +247,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/yM5yppFH8mJS93St8",
             "id": "omsoxipqf1o",
-            "mesafe": "450 METRE"
+            "mesafe": "450 METRE",
+            "enlem": 40.829589911889336,
+            "boylam": 29.309873784657448
         },
         {
             "ad": "ELANUR GÖKCÜL",
@@ -255,7 +257,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/rbHgSym4arEJkGFfA",
             "id": "omsoxipqf15",
-            "mesafe": "400 METRE"
+            "mesafe": "400 METRE",
+            "enlem": 40.82510271295649,
+            "boylam": 29.311551113493085
         },
         {
             "ad": "ZEYNEP ESMA KAPAN",
@@ -263,7 +267,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/fNo7EcHvf3poTrDW8",
             "id": "omsoxipqfku",
-            "mesafe": "1.4 KM"
+            "mesafe": "1.4 KM",
+            "enlem": 40.8171237496169,
+            "boylam": 29.305145242328717
         },
         {
             "ad": "AHMET ADAR DOĞAN",
@@ -271,7 +277,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6",
             "id": "omsoxipqfo8",
-            "mesafe": "1.1 KM"
+            "mesafe": "1.1 KM",
+            "enlem": 40.82978096569006,
+            "boylam": 29.320583299999996
         },
         {
             "ad": "YUSUF AYAZ BİLİR",
@@ -279,7 +287,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/oExhexLoBKAMYcHg7",
             "id": "omsoxipqfu",
-            "mesafe": "6.4 KM"
+            "mesafe": "6.4 KM",
+            "enlem": 40.83296724120572,
+            "boylam": 29.361027800000002
         },
         {
             "ad": "BAYRAM BİLİR",
@@ -287,7 +297,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/oExhexLoBKAMYcHg7",
             "id": "omsoxipqf8v",
-            "mesafe": "6.4 KM"
+            "mesafe": "6.4 KM",
+            "enlem": 40.832991594123136,
+            "boylam": 29.361006342328725
         },
         {
             "ad": "İBRAHİM TOROS",
@@ -295,7 +307,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/PVhfScb2sNuh1sv26",
             "id": "omsoxipqfce",
-            "mesafe": "6.5 KM"
+            "mesafe": "6.5 KM",
+            "enlem": 40.83965706034635,
+            "boylam": 29.35686744232872
         },
         {
             "ad": "KEREM YAĞIZ",
