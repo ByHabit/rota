@@ -348,8 +348,8 @@
             "link": "https://maps.app.goo.gl/DBPywNPqcYmb4Aro7",
             "id": "omsoxipqfhp",
             "mesafe": "7.3 KM",
-            "enlem": 40.86912587825624,
-            "boylam": 29.301361068325782
+            "enlem": 40.869269307477694,
+            "boylam": 29.301361100000005
         },
         {
             "ad": "ELANUR İNAN",
@@ -357,7 +357,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6",
             "id": "omsoxipqfcp",
-            "mesafe": "6.9 KM"
+            "mesafe": "6.9 KM",
+            "enlem": 40.83210614294528,
+            "boylam": 29.366239271164357
         },
         {
             "ad": "ADEM ÖZGÜL",
