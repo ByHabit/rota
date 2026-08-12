@@ -107,7 +107,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6",
             "id": "omsoxipqf9d",
-            "mesafe": "7.8 KM"
+            "mesafe": "7.8 KM",
+            "enlem": 40.848736893617236,
+            "boylam": 29.36273927116436
         },
         {
             "ad": "EMİR YILMAZ",
@@ -115,7 +117,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9",
             "id": "omsoxipqfk6",
-            "mesafe": "9.2 KM"
+            "mesafe": "9.2 KM",
+            "enlem": 40.79378104279207,
+            "boylam": 29.369318184657438
         },
         {
             "ad": "MİRAÇ KIRMIZIGÖZ",
@@ -123,7 +127,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9",
             "id": "omsoxipqfq1",
-            "mesafe": "9.2 KM"
+            "mesafe": "9.2 KM",
+            "enlem": 40.79377292035501,
+            "boylam": 29.369328913493074
         },
         {
             "ad": "EMRE YILMAZ",
