@@ -15,7 +15,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/LKzozaKLh8HCV1u29",
             "id": "omsoxipqf3t",
-            "mesafe": "28 KM"
+            "mesafe": "28 KM",
+            "enlem": 40.96464228508893,
+            "boylam": 29.265421658083284
         },
         {
             "ad": "ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ",
@@ -23,7 +25,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/jBesgV1hoMvDehRj9",
             "id": "omsoxipqfen",
-            "mesafe": "19 KM"
+            "mesafe": "19 KM",
+            "enlem": 40.916703021607276,
+            "boylam": 29.302384487519156
         },
         {
             "ad": "KADİR AKİF DABAN",
@@ -31,7 +35,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/LnuUqnEvbEHv9pm68",
             "id": "omsoxipqfq8",
-            "mesafe": "2.2 KM"
+            "mesafe": "2.2 KM",
+            "enlem": 40.840449121428435,
+            "boylam": 29.30590713992544
         },
         {
             "ad": "UMUT KAYA BOLAT",
