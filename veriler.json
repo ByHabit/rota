@@ -407,7 +407,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA",
             "id": "omsoxipqf6j",
-            "mesafe": "8.3 KM"
+            "mesafe": "8.3 KM",
+            "enlem": 40.867470326706396,
+            "boylam": 29.322927147892358
         },
         {
             "ad": "AZİZ AKDENİZ",
@@ -415,7 +417,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9",
             "id": "omsoxipqfa",
-            "mesafe": "18.8 KM"
+            "mesafe": "18.8 KM",
+            "enlem": 40.91753792530437,
+            "boylam": 29.306190123010396
         },
         {
             "ad": "GAMZE ESİLA BOLAT",
@@ -423,7 +427,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/iKwPGNiA63Lr1ka46",
             "id": "omsoxipqfnl",
-            "mesafe": "850 METRE"
+            "mesafe": "850 METRE",
+            "enlem": 40.824152595878154,
+            "boylam": 29.315241657777005
         },
         {
             "ad": "NURFİDAN ŞAHİN",
@@ -431,7 +437,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9",
             "id": "omsoxipqfcw",
-            "mesafe": "14.8 KM"
+            "mesafe": "14.8 KM",
+            "enlem": 40.9013000829281,
+            "boylam": 29.378178365960444
         },
         {
             "ad": "KEREM EDİS",
@@ -439,7 +447,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7",
             "id": "omsoxipqf3h",
-            "mesafe": "15.9 KM"
+            "mesafe": "15.9 KM",
+            "enlem": 40.91024541158632,
+            "boylam": 29.391192804699898
         },
         {
             "ad": "SELAHATTİN YASİN YILMAZ",
@@ -447,7 +457,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/miR73asUTD5xYgzN8",
             "id": "omsoxipqfqp",
-            "mesafe": "8.8 KM"
+            "mesafe": "8.8 KM",
+            "enlem": 40.87138751278701,
+            "boylam": 29.325847264285983
         },
         {
             "ad": "ERAY BULUT",
