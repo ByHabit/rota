@@ -387,7 +387,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18",
             "id": "omsoxipqfla",
-            "mesafe": "8.5 KM"
+            "mesafe": "8.5 KM",
+            "enlem": 40.86212605040979,
+            "boylam": 29.33550063845405
         },
         {
             "ad": "DERYA BAYAT",
@@ -395,7 +397,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8",
             "id": "omsoxipqf99",
-            "mesafe": "2.4 KM"
+            "mesafe": "2.4 KM",
+            "enlem": 40.81775754456905,
+            "boylam": 29.314308214808992
         },
         {
             "ad": "SEMRA UÇAR",
