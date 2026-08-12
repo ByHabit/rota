@@ -177,7 +177,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/bA8JH6RTLcHr132fA",
             "id": "omsoxipqfgj",
-            "mesafe": "6.8 KM"
+            "mesafe": "6.8 KM",
+            "enlem": 40.868525003497304,
+            "boylam": 29.298868343113487
         },
         {
             "ad": "EDANUR ÖN",
@@ -185,7 +187,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/VmyKBdYFconiDQLG7",
             "id": "omsoxipqf8",
-            "mesafe": "2 KM"
+            "mesafe": "2 KM",
+            "enlem": 40.8313087624167,
+            "boylam": 29.32290597116436
         },
         {
             "ad": "İBRAHİM ERGİN",
