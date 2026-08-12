@@ -497,7 +497,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9",
             "id": "omsoxipqf3n",
-            "mesafe": "11.2 KM"
+            "mesafe": "11.2 KM",
+            "enlem": 40.78680271704639,
+            "boylam": 29.36256520212205
         },
         {
             "ad": "EMRE SELÇUK",
@@ -505,7 +507,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/osVBHfQAogCpoqvB7",
             "id": "omsoxipqf3r",
-            "mesafe": "10.2 KM"
+            "mesafe": "10.2 KM",
+            "enlem": 40.78966652047707,
+            "boylam": 29.370472199999995
         },
         {
             "ad": "ESİLA İŞLER",
@@ -513,7 +517,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/bekAQADBrvEMUFo36",
             "id": "omsoxipqfop",
-            "mesafe": "500 METRE"
+            "mesafe": "500 METRE",
+            "enlem": 40.82632593142359,
+            "boylam": 29.307640337954496
         },
         {
             "ad": "İLAYDA ŞENOL",
@@ -521,7 +527,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/69JXcYPhaUXGKRCN7",
             "id": "omsoxipqf86",
-            "mesafe": "2.1 KM"
+            "mesafe": "2.1 KM",
+            "enlem": 40.83997199425894,
+            "boylam": 29.303121828835636
         },
         {
             "ad": "YUSUF ÇAL",
