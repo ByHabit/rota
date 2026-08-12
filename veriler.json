@@ -467,7 +467,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9",
             "id": "omsoxipqfpw",
-            "mesafe": "8.5 KM"
+            "mesafe": "8.5 KM",
+            "enlem": 40.868444122764565,
+            "boylam": 29.328606713493077
         },
         {
             "ad": "AYŞENUR ÇAĞLAYAN",
@@ -475,7 +477,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9",
             "id": "omsoxipqfbw",
-            "mesafe": "1.7 KM"
+            "mesafe": "1.7 KM",
+            "enlem": 40.83787236541071,
+            "boylam": 29.30639962883564
         },
         {
             "ad": "MUHAMMED ALİ RIZA CANBAKAL",
@@ -483,7 +487,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA",
             "id": "omsoxipqf9u",
-            "mesafe": "1.1 KM"
+            "mesafe": "1.1 KM",
+            "enlem": 40.828617356826314,
+            "boylam": 29.301800810550052
         },
         {
             "ad": "HAMZA EFE TOSUN",
