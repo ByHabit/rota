@@ -667,7 +667,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/zNZZftpFAzo1s5bSA",
             "id": "omsoxipqfp8",
-            "mesafe": "13.8 KM"
+            "mesafe": "13.8 KM",
+            "enlem": 40.9016834228326,
+            "boylam": 29.378306506508356
         },
         {
             "ad": "BURCU ATEŞ",
@@ -675,7 +677,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/BSo2j3AeihYZKmL68",
             "id": "omsoxipqfcq",
-            "mesafe": "1.5 KM"
+            "mesafe": "1.5 KM",
+            "enlem": 40.83642015220152,
+            "boylam": 29.307605427425298
         },
         {
             "ad": "YUSUF BOZDOĞAN",
@@ -683,7 +687,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/U63FCY1pdVcskTyZ7",
             "id": "omsoxipqfif",
-            "mesafe": "800 METRE"
+            "mesafe": "800 METRE",
+            "enlem": 40.822608685796176,
+            "boylam": 29.30730266506917
         },
         {
             "ad": "TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ",
@@ -691,7 +697,9 @@
             "telefon": "",
             "link": "https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA",
             "id": "omsoxipqf6x",
-            "mesafe": "1.8 KM"
+            "mesafe": "1.8 KM",
+            "enlem": 40.83616173475196,
+            "boylam": 29.301234884657436
         }
     ],
     "guzergahlar": []
