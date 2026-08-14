@@ -700,6 +700,26 @@
             "mesafe": "1.8 KM",
             "enlem": 40.83616173475196,
             "boylam": 29.301234884657436
+        },
+        {
+            "id": "omssxnf3jz",
+            "ad": "BERKAY ÇAYIR",
+            "mahalle": "TUZLA ŞİFA MAHALLESİ",
+            "mesafe": "5.6 KM",
+            "telefon": "",
+            "link": "https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8",
+            "enlem": 40.83023315760372,
+            "boylam": 29.355640632324654
+        },
+        {
+            "id": "omssxpnus64",
+            "ad": "TALHA KICANÇ CAN",
+            "mahalle": "TUZLA İSTASYON MAHALLESİ",
+            "mesafe": "850 METRE",
+            "telefon": "",
+            "link": "https://maps.app.goo.gl/GnDxQpBBT7D2CVg27",
+            "enlem": 40.82824831272407,
+            "boylam": 29.318162896584802
         }
     ],
     "guzergahlar": []
