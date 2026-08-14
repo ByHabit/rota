@@ -66,7 +66,7 @@
         <div class="blok-bas">Yeni Ogrenci</div>
 
         <label for="ad">Adi Soyadi</label>
-        <input type="text" id="ad" placeholder="Ornek: Kadir Akif Daban">
+        <input type="text" id="ad" placeholder="Ornek: I TECH IN">
 
         <label for="mahalle">Mahalle / Semt</label>
         <input type="text" id="mahalle" placeholder="Ornek: Tuzla Yayla Mahallesi">
@@ -75,7 +75,7 @@
         <input type="text" id="mesafe" placeholder="Ornek: 3,4 km">
 
         <label for="telefon">Telefon <span class="ops">(zorunlu degil)</span></label>
-        <input type="tel" id="telefon" placeholder="Ornek: 0532 123 45 67">
+        <input type="tel" id="telefon" placeholder="Ornek: 0 530 788 71 94">
 
         <label for="link">Google Maps Konum Linki</label>
         <input type="text" id="link" autocapitalize="off" spellcheck="false" placeholder="https://maps.app.goo.gl/...">
@@ -84,7 +84,7 @@
         <label for="koordinat">Koordinat <span class="ops">(canli mesafe icin)</span></label>
         <input type="text" id="koordinat" autocapitalize="off" spellcheck="false" placeholder="40.815432, 29.301887">
         <button class="yesil" id="konumBtn" onclick="konumuKullan()">Su Anki Konumumu Kullan</button>
-        <div class="ipucu">Ogrencinin kapisinin onundeysen bu dugme koordinati kendisi doldurur.</div>
+        <div class="ipucu">Ogrencinin kapisinin onundeysen bu dugme koordinati doldurur ve link alani bossa yol tarifi linkini de olusturur.</div>
 
         <button class="ana" onclick="kaydet()" id="kaydetBtn">Kaydet ve Yayinla</button>
         <div class="sayi" id="sayi"></div>
@@ -856,9 +856,16 @@ function konumuKullan() {
     if (!navigator.geolocation) { bildir("Bu tarayici konum ozelligini desteklemiyor.", "hata"); return; }
     el("konumBtn").innerHTML = "Konum aliniyor...";
     navigator.geolocation.getCurrentPosition(function (p) {
-        el("koordinat").value = p.coords.latitude.toFixed(6) + ", " + p.coords.longitude.toFixed(6);
+        var e = p.coords.latitude.toFixed(6);
+        var b = p.coords.longitude.toFixed(6);
+        el("koordinat").value = e + ", " + b;
         el("konumBtn").innerHTML = "Konumu Yeniden Al";
-        bildir("Konum alindi, dogruluk yaklasik " + Math.round(p.coords.accuracy) + " m.", "ok");
+        var ek = "";
+        if (!el("link").value.replace(/^\s+|\s+$/g, "")) {
+            el("link").value = "https://www.google.com/maps/dir/?api=1&destination=" + e + "," + b;
+            ek = " Yol tarifi linki de olusturuldu.";
+        }
+        bildir("Konum alindi, dogruluk yaklasik " + Math.round(p.coords.accuracy) + " m." + ek, "ok");
     }, function (h) {
         el("konumBtn").innerHTML = "Su Anki Konumumu Kullan";
         bildir(h.code === 1 ? "Konum izni verilmedi." : "Konum alinamadi.", "hata");
