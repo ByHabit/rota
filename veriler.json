@@ -730,6 +730,16 @@
             "link": "https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8",
             "enlem": 40.83039469980715,
             "boylam": 29.310945710077966
+        },
+        {
+            "id": "omstbjbgqln",
+            "ad": "Aytekin GÜNEL",
+            "mahalle": "Tuzla Yayla Mahallesi",
+            "mesafe": "",
+            "telefon": "05307887194",
+            "link": "https://www.google.com/maps/dir/?api=1&destination=40.832743,29.312556",
+            "enlem": 40.832743,
+            "boylam": 29.312556
         }
     ],
     "guzergahlar": []
