@@ -730,6 +730,16 @@
             "link": "https://www.google.com/maps/dir/?api=1&destination=40.832743,29.312556",
             "enlem": 40.832743,
             "boylam": 29.312556
+        },
+        {
+            "id": "omstfkfwr97",
+            "ad": "EMİRHAN ÖZDEMİR",
+            "mahalle": "ÇAYIROVA",
+            "mesafe": "11.2 KM",
+            "telefon": "",
+            "link": "https://maps.app.goo.gl/z61duRuNLfqKeJeV8",
+            "enlem": 40.83616689170353,
+            "boylam": 29.372001811494332
         }
     ],
     "guzergahlar": []
