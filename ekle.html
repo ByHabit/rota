@@ -275,6 +275,16 @@ function listeSayfasiUret() {
 '                border:1px solid #333D4B; color:#E8EDF3; cursor:pointer; font-family:inherit; }\n' +
 '    .arac-btn.vurgu { background:#9B8CFF; border-color:#9B8CFF; color:#14181F; }\n' +
 '    .arac-btn.tehlike { color:#FF6B5E; }\n' +
+'    .sirala-kutu { display:none; background:#171C24; border:1px solid #262F3B; border-radius:10px;\n' +
+'                   padding:10px; margin:0 0 12px 0; }\n' +
+'    .sirala-bas { font-size:11px; letter-spacing:1.4px; text-transform:uppercase; color:#8A97A8;\n' +
+'                  font-weight:700; margin:4px 4px 10px 4px; }\n' +
+'    .sirala-sec { display:block; width:100%; text-align:left; padding:13px 14px; margin-bottom:7px;\n' +
+'                  font-size:14px; font-weight:600; border-radius:8px; background:#1B212A;\n' +
+'                  border:1px solid #333D4B; color:#E8EDF3; cursor:pointer; font-family:inherit; }\n' +
+'    .sirala-sec:active { border-color:#9B8CFF; }\n' +
+'    .sirala-sec.pasif { opacity:0.4; }\n' +
+'    .sirala-ipucu { font-size:12px; color:#8A97A8; margin:2px 4px 4px 4px; line-height:1.5; }\n' +
 '    .ekle-satir { display:flex; align-items:center; gap:12px; background:#171C24; border:1px solid #262F3B;\n' +
 '                  border-radius:10px; padding:11px 13px; margin-bottom:8px; }\n' +
 '    .ekle-bilgi { flex:1; min-width:0; }\n' +
@@ -405,6 +415,72 @@ bolumler +
 '        rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " uzakta";\n' +
 '        rozetler[i].style.display = "inline-block";\n' +
 '    }\n' +
+'}\n' +
+'\n' +
+'/* "3,4 km" -> 3400 ; "850 m" -> 850 ; okunamazsa null */\n' +
+'function mesafeMetre(metin) {\n' +
+'    var m = String(metin || "").replace(",", ".");\n' +
+'    var e = m.match(/(-?\\d+(?:\\.\\d+)?)/);\n' +
+'    if (!e) { return null; }\n' +
+'    var s = parseFloat(e[1]);\n' +
+'    if (isNaN(s)) { return null; }\n' +
+'    return /km/i.test(m) ? s * 1000 : s;\n' +
+'}\n' +
+'\n' +
+'function siralaAcKapa() {\n' +
+'    var k = document.getElementById("siralaKutu");\n' +
+'    if (!k) { return; }\n' +
+'    k.style.display = (k.style.display === "block") ? "none" : "block";\n' +
+'}\n' +
+'\n' +
+'function yerelSirala(tur) {\n' +
+'    if (aktifYerel < 0) { return; }\n' +
+'    var L = yerelListeler[aktifYerel];\n' +
+'    if (L.uyeler.length < 2) { return; }\n' +
+'\n' +
+'    if (tur === "ters") {\n' +
+'        L.uyeler.reverse();\n' +
+'        yerelKaydet(); yerelCiz(); filtrele();\n' +
+'        return;\n' +
+'    }\n' +
+'\n' +
+'    var dizi = [];\n' +
+'    for (var i = 0; i < L.uyeler.length; i++) {\n' +
+'        var o = ogrBul(L.uyeler[i]);\n' +
+'        var deger = null;\n' +
+'        if (o) {\n' +
+'            if (tur === "yakin" || tur === "uzak") {\n' +
+'                if (benimKonum && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {\n' +
+'                    deger = kusUcusu(benimKonum.e, benimKonum.b, o.enlem, o.boylam);\n' +
+'                }\n' +
+'            } else if (tur === "kurum") {\n' +
+'                deger = mesafeMetre(o.mesafe);\n' +
+'            } else if (tur === "isim") {\n' +
+'                deger = sadelestir(o.ad || "");\n' +
+'            }\n' +
+'        }\n' +
+'        dizi.push({ id: L.uyeler[i], deger: deger, sira: i });\n' +
+'    }\n' +
+'\n' +
+'    dizi.sort(function (a, b) {\n' +
+'        var bosA = (a.deger === null || a.deger === undefined);\n' +
+'        var bosB = (b.deger === null || b.deger === undefined);\n' +
+'        if (bosA && bosB) { return a.sira - b.sira; }\n' +
+'        if (bosA) { return 1; }\n' +
+'        if (bosB) { return -1; }\n' +
+'        var f = 0;\n' +
+'        if (tur === "isim") { f = (a.deger < b.deger) ? -1 : (a.deger > b.deger) ? 1 : 0; }\n' +
+'        else { f = a.deger - b.deger; }\n' +
+'        if (tur === "uzak") { f = -f; }\n' +
+'        return f || (a.sira - b.sira);\n' +
+'    });\n' +
+'\n' +
+'    var yeni = [];\n' +
+'    for (var j = 0; j < dizi.length; j++) { yeni.push(dizi[j].id); }\n' +
+'    L.uyeler = yeni;\n' +
+'    yerelKaydet();\n' +
+'    yerelCiz();\n' +
+'    filtrele();\n' +
 '}\n' +
 '\n' +
 'function yerelKonumaGoreSirala() {\n' +
@@ -593,11 +669,25 @@ bolumler +
 '\n' +
 '    h += \x27<div class="yerel-arac">\x27 +\n' +
 '         \x27<button class="arac-btn vurgu" onclick="yerelPaylas()">Listeyi Gonder</button>\x27 +\n' +
-'         (benimKonum ? \x27<button class="arac-btn" onclick="yerelKonumaGoreSirala()">Bana Gore Sirala</button>\x27 : "") +\n' +
+'         (L.uyeler.length > 1 ? \x27<button class="arac-btn" onclick="siralaAcKapa()">Sirala</button>\x27 : "") +\n' +
 '         \x27<button class="arac-btn" onclick="yerelAdDegistir()">Adini Degistir</button>\x27 +\n' +
 '         \x27<button class="arac-btn tehlike" onclick="yerelBosalt()">Bosalt</button>\x27 +\n' +
 '         \x27<button class="arac-btn tehlike" onclick="yerelSil()">Listeyi Sil</button>\x27 +\n' +
 '         "</div>";\n' +
+'\n' +
+'    if (L.uyeler.length > 1) {\n' +
+'        var kilit = benimKonum ? "" : " pasif";\n' +
+'        h += \x27<div class="sirala-kutu" id="siralaKutu">\x27 +\n' +
+'                 \x27<div class="sirala-bas">Siralama</div>\x27 +\n' +
+'                 \x27<button class="sirala-sec\x27 + kilit + \x27" onclick="yerelSirala(\x27 + "\x27yakin\x27" + \x27)">Bana yakindan uzaga</button>\x27 +\n' +
+'                 \x27<button class="sirala-sec\x27 + kilit + \x27" onclick="yerelSirala(\x27 + "\x27uzak\x27" + \x27)">Bana uzaktan yakina</button>\x27 +\n' +
+'                 (benimKonum ? "" : \x27<div class="sirala-ipucu">Bu iki secenek icin once yukaridaki Bana Uzakligi Hesapla dugmesine bas.</div>\x27) +\n' +
+'                 \x27<button class="sirala-sec" onclick="yerelSirala(\x27 + "\x27kurum\x27" + \x27)">Kuruma yakindan uzaga</button>\x27 +\n' +
+'                 \x27<button class="sirala-sec" onclick="yerelSirala(\x27 + "\x27isim\x27" + \x27)">Isme gore (A-Z)</button>\x27 +\n' +
+'                 \x27<button class="sirala-sec" onclick="yerelSirala(\x27 + "\x27ters\x27" + \x27)">Sirayi ters cevir</button>\x27 +\n' +
+'                 \x27<div class="sirala-ipucu">Siralama mevcut dizilisin yerine gecer. Sonrasinda oklarla yine elle oynayabilirsin.</div>\x27 +\n' +
+'             "</div>";\n' +
+'    }\n' +
 '\n' +
 '    if (L.uyeler.length === 0) {\n' +
 '        h += \x27<div class="bos-not">Liste bos. Asagidan ogrenci ekle, sonra oklarla sirala.</div>\x27;\n' +
