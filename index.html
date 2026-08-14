@@ -77,6 +77,16 @@
                 border:1px solid #333D4B; color:#E8EDF3; cursor:pointer; font-family:inherit; }
     .arac-btn.vurgu { background:#9B8CFF; border-color:#9B8CFF; color:#14181F; }
     .arac-btn.tehlike { color:#FF6B5E; }
+    .sirala-kutu { display:none; background:#171C24; border:1px solid #262F3B; border-radius:10px;
+                   padding:10px; margin:0 0 12px 0; }
+    .sirala-bas { font-size:11px; letter-spacing:1.4px; text-transform:uppercase; color:#8A97A8;
+                  font-weight:700; margin:4px 4px 10px 4px; }
+    .sirala-sec { display:block; width:100%; text-align:left; padding:13px 14px; margin-bottom:7px;
+                  font-size:14px; font-weight:600; border-radius:8px; background:#1B212A;
+                  border:1px solid #333D4B; color:#E8EDF3; cursor:pointer; font-family:inherit; }
+    .sirala-sec:active { border-color:#9B8CFF; }
+    .sirala-sec.pasif { opacity:0.4; }
+    .sirala-ipucu { font-size:12px; color:#8A97A8; margin:2px 4px 4px 4px; line-height:1.5; }
     .ekle-satir { display:flex; align-items:center; gap:12px; background:#171C24; border:1px solid #262F3B;
                   border-radius:10px; padding:11px 13px; margin-bottom:8px; }
     .ekle-bilgi { flex:1; min-width:0; }
@@ -1175,6 +1185,72 @@ function uzakliklariYaz() {
     }
 }
 
+/* "3,4 km" -> 3400 ; "850 m" -> 850 ; okunamazsa null */
+function mesafeMetre(metin) {
+    var m = String(metin || "").replace(",", ".");
+    var e = m.match(/(-?\d+(?:\.\d+)?)/);
+    if (!e) { return null; }
+    var s = parseFloat(e[1]);
+    if (isNaN(s)) { return null; }
+    return /km/i.test(m) ? s * 1000 : s;
+}
+
+function siralaAcKapa() {
+    var k = document.getElementById("siralaKutu");
+    if (!k) { return; }
+    k.style.display = (k.style.display === "block") ? "none" : "block";
+}
+
+function yerelSirala(tur) {
+    if (aktifYerel < 0) { return; }
+    var L = yerelListeler[aktifYerel];
+    if (L.uyeler.length < 2) { return; }
+
+    if (tur === "ters") {
+        L.uyeler.reverse();
+        yerelKaydet(); yerelCiz(); filtrele();
+        return;
+    }
+
+    var dizi = [];
+    for (var i = 0; i < L.uyeler.length; i++) {
+        var o = ogrBul(L.uyeler[i]);
+        var deger = null;
+        if (o) {
+            if (tur === "yakin" || tur === "uzak") {
+                if (benimKonum && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {
+                    deger = kusUcusu(benimKonum.e, benimKonum.b, o.enlem, o.boylam);
+                }
+            } else if (tur === "kurum") {
+                deger = mesafeMetre(o.mesafe);
+            } else if (tur === "isim") {
+                deger = sadelestir(o.ad || "");
+            }
+        }
+        dizi.push({ id: L.uyeler[i], deger: deger, sira: i });
+    }
+
+    dizi.sort(function (a, b) {
+        var bosA = (a.deger === null || a.deger === undefined);
+        var bosB = (b.deger === null || b.deger === undefined);
+        if (bosA && bosB) { return a.sira - b.sira; }
+        if (bosA) { return 1; }
+        if (bosB) { return -1; }
+        var f = 0;
+        if (tur === "isim") { f = (a.deger < b.deger) ? -1 : (a.deger > b.deger) ? 1 : 0; }
+        else { f = a.deger - b.deger; }
+        if (tur === "uzak") { f = -f; }
+        return f || (a.sira - b.sira);
+    });
+
+    var yeni = [];
+    for (var j = 0; j < dizi.length; j++) { yeni.push(dizi[j].id); }
+    L.uyeler = yeni;
+    yerelKaydet();
+    yerelCiz();
+    filtrele();
+}
+
 function yerelKonumaGoreSirala() {
     if (aktifYerel < 0 || !benimKonum) { return; }
     if (!confirm("Liste bulundugun yere en yakindan uzaga dogru yeniden dizilecek. Kendi siralamanin yerine gecer.")) { return; }
@@ -1361,11 +1437,25 @@ function yerelCiz() {
 
     h += '<div class="yerel-arac">' +
          '<button class="arac-btn vurgu" onclick="yerelPaylas()">Listeyi Gonder</button>' +
-         (benimKonum ? '<button class="arac-btn" onclick="yerelKonumaGoreSirala()">Bana Gore Sirala</button>' : "") +
+         (L.uyeler.length > 1 ? '<button class="arac-btn" onclick="siralaAcKapa()">Sirala</button>' : "") +
          '<button class="arac-btn" onclick="yerelAdDegistir()">Adini Degistir</button>' +
          '<button class="arac-btn tehlike" onclick="yerelBosalt()">Bosalt</button>' +
          '<button class="arac-btn tehlike" onclick="yerelSil()">Listeyi Sil</button>' +
          "</div>";
+
+    if (L.uyeler.length > 1) {
+        var kilit = benimKonum ? "" : " pasif";
+        h += '<div class="sirala-kutu" id="siralaKutu">' +
+                 '<div class="sirala-bas">Siralama</div>' +
+                 '<button class="sirala-sec' + kilit + '" onclick="yerelSirala(' + "'yakin'" + ')">Bana yakindan uzaga</button>' +
+                 '<button class="sirala-sec' + kilit + '" onclick="yerelSirala(' + "'uzak'" + ')">Bana uzaktan yakina</button>' +
+                 (benimKonum ? "" : '<div class="sirala-ipucu">Bu iki secenek icin once yukaridaki Bana Uzakligi Hesapla dugmesine bas.</div>') +
+                 '<button class="sirala-sec" onclick="yerelSirala(' + "'kurum'" + ')">Kuruma yakindan uzaga</button>' +
+                 '<button class="sirala-sec" onclick="yerelSirala(' + "'isim'" + ')">Isme gore (A-Z)</button>' +
+                 '<button class="sirala-sec" onclick="yerelSirala(' + "'ters'" + ')">Sirayi ters cevir</button>' +
+                 '<div class="sirala-ipucu">Siralama mevcut dizilisin yerine gecer. Sonrasinda oklarla yine elle oynayabilirsin.</div>' +
+             "</div>";
+    }
 
     if (L.uyeler.length === 0) {
         h += '<div class="bos-not">Liste bos. Asagidan ogrenci ekle, sonra oklarla sirala.</div>';
