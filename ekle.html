@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12161C">
@@ -133,7 +133,7 @@ function kartUret(o, numara) {
 
     return '        <li class="kart" id="kart-' + htmlKacis(o.id) + '" data-id="' + htmlKacis(o.id) + '">\n' +
 '            <div class="kart-ust">\n' +
-'                <button class="tik-btn" onclick="durumDegistir(\'' + htmlKacis(o.id) + '\')" title="Alındı">&#10003;</button>\n' +
+'                <button class="tik-btn" onclick="durumDegistir(\'' + jsKacis(o.id) + '\')" title="Alındı">&#10003;</button>\n' +
 '                <div class="kisi">\n' +
 '                    <h2>' + basNo + htmlKacis(o.ad) + '</h2>\n' +
 '                    <p>' + htmlKacis(o.mahalle) + '</p>\n' +
@@ -141,8 +141,8 @@ function kartUret(o, numara) {
 '                </div>\n' +
 '            </div>\n' +
 '            <div class="butonlar">\n' +
-'                <button class="nav-btn gmaps" onclick="navigasyonAc(\'' + latVal + '\', \'' + lngVal + '\', \'' + htmlKacis(o.link) + '\')">Yol Tarifi</button>\n' +
-'                <button class="gonder" onclick="waSecimAc(\'' + htmlKacis(o.ad) + '\', \'' + htmlKacis(o.mahalle) + '\', \'' + htmlKacis(o.link) + '\', \'' + telVal + '\')">WhatsApp</button>\n' +
+'                <button class="nav-btn gmaps" onclick="navigasyonAc(\'' + latVal + '\', \'' + lngVal + '\', \'' + jsKacis(o.link) + '\')">Yol Tarifi</button>\n' +
+'                <button class="gonder" onclick="waSecimAc(\'' + jsKacis(o.ad) + '\', \'' + jsKacis(o.mahalle) + '\', \'' + jsKacis(o.link) + '\', \'' + telVal + '\')">WhatsApp</button>\n' +
 '            </div>\n' +
 '        </li>\n';
 }
@@ -190,7 +190,7 @@ function listeSayfasiUret() {
 '<html lang="tr">\n' +
 '<head>\n' +
 '<meta charset="UTF-8">\n' +
-'<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+'<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">\n' +
 '<meta name="apple-mobile-web-app-capable" content="yes">\n' +
 '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n' +
 '<meta name="theme-color" content="#12161C">\n' +
@@ -239,7 +239,12 @@ function listeSayfasiUret() {
 '    .kart.alindi { opacity:0.4; border-color:#1F5240; background:#101714; }\n' +
 '    .kart.alindi .tik-btn { background:#3DD68C; color:#14181F; border-color:#3DD68C; }\n' +
 '    .kart.sirali { display:flex; gap:12px; align-items:flex-start; }\n' +
-'    .surukle-tut { width:32px; height:42px; display:flex; align-items:center; justify-content:center; color:#5E6C7E; font-size:18px; cursor:grab; touch-action:none; flex:0 0 auto; }\n' +
+'    .surukle-tut { width:32px; height:34px; display:flex; align-items:center; justify-content:center; color:#5E6C7E; font-size:18px; cursor:grab; touch-action:none; flex:0 0 auto; }\n' +
+'    .tut-sutun { display:flex; flex-direction:column; align-items:center; gap:3px; flex:0 0 auto; }\n' +
+'    .ok { width:32px; height:30px; padding:0; border:1px solid #333D4B; background:#232B36; color:#8A97A8;\n' +
+'          border-radius:7px; font-size:12px; line-height:1; cursor:pointer; font-family:inherit; }\n' +
+'    .ok:active { border-color:#9B8CFF; color:#E8EDF3; }\n' +
+'    .ok:disabled { opacity:0.25; }\n' +
 '    .kart-govde { flex:1; min-width:0; }\n' +
 '    .kart-ust { display:flex; gap:12px; align-items:flex-start; }\n' +
 '    .tik-btn { width:32px; height:32px; border-radius:8px; border:2px solid #333D4B; background:#232B36;\n' +
@@ -385,6 +390,13 @@ bolumler +
 'var u = document.getElementById("jsUyari"); if (u) { u.style.display = "none"; }\n' +
 'var sk = document.getElementById("sekmeler"); if (sk) { sk.style.display = "flex"; }\n' +
 'var ks = document.getElementById("konumSatiri"); if (ks && navigator.geolocation) { ks.style.display = "flex"; }\n' +
+'\n' +
+'function jsKacis(m) {\n' +
+'    return String(m === undefined || m === null ? "" : m)\n' +
+'        .replace(/\\\\/g, "\\\\\\\\").replace(/\x27/g, "\\\\\x27")\n' +
+'        .replace(/&/g, "&amp;").replace(/"/g, "&quot;")\n' +
+'        .replace(/</g, "&lt;").replace(/>/g, "&gt;");\n' +
+'}\n' +
 '\n' +
 'function kacis(m) {\n' +
 '    return String(m === undefined || m === null ? "" : m)\n' +
@@ -592,6 +604,16 @@ bolumler +
 '    yerelKaydet(); yerelCiz(); filtrele();\n' +
 '}\n' +
 '\n' +
+'/* Ok dugmeleriyle tasima: dokunmatikte surukleme calismazsa yedek yol */\n' +
+'function yerelTasi(sira, yon) {\n' +
+'    if (aktifYerel < 0) { return; }\n' +
+'    var d = yerelListeler[aktifYerel].uyeler;\n' +
+'    var hedef = sira + yon;\n' +
+'    if (hedef < 0 || hedef >= d.length) { return; }\n' +
+'    var g = d[sira]; d[sira] = d[hedef]; d[hedef] = g;\n' +
+'    yerelKaydet(); yerelCiz(); filtrele();\n' +
+'}\n' +
+'\n' +
 '/* ---------- Yerel Hafıza & Günlük Listeler ---------- */\n' +
 'function yerelYukle() { try { yerelListeler = JSON.parse(localStorage.getItem(ANAHTAR)) || []; } catch(e) {} }\n' +
 'function yerelKaydet() { try { localStorage.setItem(ANAHTAR, JSON.stringify(yerelListeler)); } catch(e) {} }\n' +
@@ -710,10 +732,14 @@ bolumler +
 '            var lngV = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";\n' +
 '            var telV = telSade(o.telefon || "");\n' +
 '            h += \x27<li class="kart sirali" id="kart-\x27 + kacis(o.id) + \x27" data-id="\x27 + kacis(o.id) + \x27" draggable="true" ondragstart="surukleBasla(event, \x27 + i + \x27)" ondragend="surukleBitir(event)" ondragover="surukleUzerinde(event)" ondrop="surukleBirak(event, \x27 + i + \x27)">\x27 +\n' +
-'                 \x27<div class="surukle-tut">&#9776;</div>\x27 +\n' +
+'                 \x27<div class="tut-sutun">\x27 +\n' +
+'                     \x27<button class="ok" onclick="yerelTasi(\x27 + i + \x27,-1)"\x27 + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +\n' +
+'                     \x27<div class="surukle-tut">&#9776;</div>\x27 +\n' +
+'                     \x27<button class="ok" onclick="yerelTasi(\x27 + i + \x27,1)"\x27 + (i === L.uyeler.length - 1 ? " disabled" : "") + ">&#9660;</button>" +\n' +
+'                 \x27</div>\x27 +\n' +
 '                 \x27<div class="kart-govde">\x27 +\n' +
 '                     \x27<div class="kart-ust">\x27 +\n' +
-'                         \x27<button class="tik-btn" onclick="durumDegistir(\\\x27\x27 + kacis(o.id) + \x27\\\x27)">&#10003;</button>\x27 +\n' +
+'                         \x27<button class="tik-btn" onclick="durumDegistir(\\\x27\x27 + jsKacis(o.id) + \x27\\\x27)">&#10003;</button>\x27 +\n' +
 '                         \x27<div class="kisi">\x27 +\n' +
 '                             \x27<h2><span class="sira-no">\x27 + (i + 1) + "</span>" + kacis(o.ad) + "</h2>" +\n' +
 '                             "<p>" + kacis(o.mahalle) + "</p>" +\n' +
@@ -723,8 +749,8 @@ bolumler +
 '                         "</div>" +\n' +
 '                     "</div>" +\n' +
 '                     \x27<div class="butonlar">\x27 +\n' +
-'                         \x27<button class="nav-btn gmaps" onclick="navigasyonAc(\\\x27\x27 + latV + \x27\\\x27, \\\x27\x27 + lngV + \x27\\\x27, \\\x27\x27 + kacis(o.link) + \x27\\\x27)">Yol Tarifi</button>\x27 +\n' +
-'                         \x27<button class="gonder" onclick="waSecimAc(\\\x27\x27 + kacis(o.ad) + \x27\\\x27, \\\x27\x27 + kacis(o.mahalle) + \x27\\\x27, \\\x27\x27 + kacis(o.link) + \x27\\\x27, \\\x27\x27 + telV + \x27\\\x27)">WhatsApp</button>\x27 +\n' +
+'                         \x27<button class="nav-btn gmaps" onclick="navigasyonAc(\\\x27\x27 + latV + \x27\\\x27, \\\x27\x27 + lngV + \x27\\\x27, \\\x27\x27 + jsKacis(o.link) + \x27\\\x27)">Yol Tarifi</button>\x27 +\n' +
+'                         \x27<button class="gonder" onclick="waSecimAc(\\\x27\x27 + jsKacis(o.ad) + \x27\\\x27, \\\x27\x27 + jsKacis(o.mahalle) + \x27\\\x27, \\\x27\x27 + jsKacis(o.link) + \x27\\\x27, \\\x27\x27 + telV + \x27\\\x27)">WhatsApp</button>\x27 +\n' +
 '                         \x27<button class="cikar" onclick="yerelCikar(\x27 + i + \x27)">Çıkar</button>\x27 +\n' +
 '                     "</div>" +\n' +
 '                 "</div></li>";\n' +
@@ -868,8 +894,14 @@ function kaydet() {
     var ad = el("ad").value.trim(); var mahalle = el("mahalle").value.trim();
     var mesafe = el("mesafe").value.trim(); var telefon = el("telefon").value.trim();
     var link = el("link").value.trim(); var koordMetin = el("koordinat").value.trim();
-    if (!ad || !mahalle || link.indexOf("http") !== 0) { bildir("Lütfen zorunlu alanları doldurun.", "hata"); return; }
-    var koord = koordMetin ? koordinatCoz(koordMetin) : null;
+    if (!ad) { bildir("Ad soyad boş bırakılamaz.", "hata"); el("ad").focus(); return; }
+    if (!mahalle) { bildir("Mahalle boş bırakılamaz.", "hata"); el("mahalle").focus(); return; }
+    if (link.indexOf("http") !== 0) { bildir("Konum linki http ile başlamalı.", "hata"); el("link").focus(); return; }
+    var koord = null;
+    if (koordMetin) {
+        koord = koordinatCoz(koordMetin);
+        if (!koord) { bildir("Koordinat okunamadı. Örnek: 40.815432, 29.301887", "hata"); el("koordinat").focus(); return; }
+    }
     var kayit = { id: yeniKimlik(), ad: ad, mahalle: mahalle, mesafe: mesafe, telefon: telefon, link: link };
     if (koord) { kayit.enlem = koord.enlem; kayit.boylam = koord.boylam; }
     ogrenciler.push(kayit);
@@ -888,7 +920,7 @@ function kaydet() {
         })
         .catch(function(h){
             ogrenciler.pop(); el("kaydetBtn").disabled = false; el("kaydetBtn").innerHTML = "Kaydet ve Yayınla";
-            bildir("Hata oluştu, tekrar deneyin.", "hata");
+            bildir((h && h.message ? h.message : "Bilinmeyen hata") + " Kayıt eklenmedi, tekrar dene.", "hata");
         });
 }
 el("link").oninput = function(){
