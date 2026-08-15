@@ -2,10 +2,13 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#12161C">
 <title>Öğrenci Ekle</title>
 <style>
-    * { box-sizing:border-box; }
+    * { box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     body { margin:0; padding:0 0 50px 0; background:#12161C; color:#E8EDF3;
            font-family:"Segoe UI", system-ui, -apple-system, Roboto, sans-serif; font-size:15px; }
     .sarma { max-width:520px; margin:0 auto; padding:0 16px; }
@@ -112,9 +115,6 @@ function yeniKimlik() {
 }
 
 function kartUret(o, numara) {
-    var paylasMetni = o.ad + " - " + o.mahalle + "\n" + o.link;
-    var waAdres = "https://wa.me/?text=" + encodeURIComponent(paylasMetni);
-
     var etiketler = "";
     if (o.mesafe) { etiketler += '                <span class="rozet-mesafe">' + htmlKacis(o.mesafe) + '</span>\n'; }
     if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {
@@ -129,10 +129,11 @@ function kartUret(o, numara) {
     var basNo = numara ? '<span class="sira-no">' + numara + '</span>' : "";
     var latVal = (o.enlem !== undefined && o.enlem !== null) ? o.enlem : "";
     var lngVal = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";
+    var telVal = telSadelestir(o.telefon || "");
 
     return '        <li class="kart" id="kart-' + htmlKacis(o.id) + '" data-id="' + htmlKacis(o.id) + '">\n' +
 '            <div class="kart-ust">\n' +
-'                <button class="tik-btn" onclick="durumDegistir(\'' + htmlKacis(o.id) + '\')" title="Alındı olarak işaretle">&#10003;</button>\n' +
+'                <button class="tik-btn" onclick="durumDegistir(\'' + htmlKacis(o.id) + '\')" title="Alındı">&#10003;</button>\n' +
 '                <div class="kisi">\n' +
 '                    <h2>' + basNo + htmlKacis(o.ad) + '</h2>\n' +
 '                    <p>' + htmlKacis(o.mahalle) + '</p>\n' +
@@ -141,9 +142,7 @@ function kartUret(o, numara) {
 '            </div>\n' +
 '            <div class="butonlar">\n' +
 '                <button class="nav-btn gmaps" onclick="navigasyonAc(\'' + latVal + '\', \'' + lngVal + '\', \'' + htmlKacis(o.link) + '\')">Yol Tarifi</button>\n' +
-'                <a class="gonder" href="' + htmlKacis(waAdres) + '" target="_blank" rel="noopener"' +
-                 ' data-baslik="' + htmlKacis(o.ad) + '" data-metin="' + htmlKacis(paylasMetni) + '"' +
-                 ' onclick="return paylas(this)">WhatsApp</a>\n' +
+'                <button class="gonder" onclick="waSecimAc(\'' + htmlKacis(o.ad) + '\', \'' + htmlKacis(o.mahalle) + '\', \'' + htmlKacis(o.link) + '\', \'' + telVal + '\')">WhatsApp</button>\n' +
 '            </div>\n' +
 '        </li>\n';
 }
@@ -160,7 +159,7 @@ function listeSayfasiUret() {
     var bolumler = '    <section class="bolum" id="bolum-hepsi">\n';
     bolumler += '        <div class="bolum-baslik-satir">\n' +
                 '            <div class="bolum-basligi">Tüm Öğrenciler &middot; ' + ogrenciler.length + ' kayıt</div>\n' +
-                '            <button class="rota-harita-btn" onclick="tumunuHaritadaAc(\'bolum-hepsi\')">&#128506; Rotayı Aç</button>\n' +
+                '            <button class="rota-harita-btn" onclick="rotaMenuAc(\'bolum-hepsi\')">&#128506; Rotayı Aç</button>\n' +
                 '        </div>\n';
     bolumler += '        <ul class="liste">\n';
     for (var i = 0; i < ogrenciler.length; i++) { bolumler += kartUret(ogrenciler[i], 0); }
@@ -171,7 +170,7 @@ function listeSayfasiUret() {
         bolumler += '    <section class="bolum" id="bolum-g' + g2 + '">\n';
         bolumler += '        <div class="bolum-baslik-satir">\n' +
                     '            <div class="bolum-basligi">' + htmlKacis(guz.ad) + ' &middot; ' + guz.uyeler.length + ' durak</div>\n' +
-                    '            <button class="rota-harita-btn" onclick="tumunuHaritadaAc(\'bolum-g' + g2 + '\')">&#128506; Rotayı Aç</button>\n' +
+                    '            <button class="rota-harita-btn" onclick="rotaMenuAc(\'bolum-g' + g2 + '\')">&#128506; Rotayı Aç</button>\n' +
                     '        </div>\n';
         bolumler += '        <ul class="liste">\n';
         var sayi = 0;
@@ -191,13 +190,16 @@ function listeSayfasiUret() {
 '<html lang="tr">\n' +
 '<head>\n' +
 '<meta charset="UTF-8">\n' +
-'<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">\n' +
+'<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+'<meta name="apple-mobile-web-app-capable" content="yes">\n' +
+'<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n' +
+'<meta name="theme-color" content="#12161C">\n' +
 '<title>Öğrenci Rotaları</title>\n' +
 '<style>\n' +
-'    * { box-sizing: border-box; }\n' +
+'    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }\n' +
 '    html, body { overflow-x:visible; overscroll-behavior-y:contain; }\n' +
 '    body { margin:0; padding:0 0 50px 0; background:#12161C; color:#E8EDF3;\n' +
-'           font-family:"Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }\n' +
+'           font-family:"Segoe UI", system-ui, -apple-system, Roboto, sans-serif; user-select:none; }\n' +
 '    .sarma { max-width:560px; margin:0 auto; padding:0 16px; overflow:visible; }\n' +
 '    header { padding:20px 0 6px 0; display:flex; justify-content:space-between; align-items:center; }\n' +
 '    h1 { margin:0; font-size:19px; letter-spacing:2px; text-transform:uppercase; font-weight:700; }\n' +
@@ -223,20 +225,21 @@ function listeSayfasiUret() {
 '    .temizle { display:none; position:absolute; right:7px; top:50%; transform:translateY(-50%);\n' +
 '               width:36px; height:36px; padding:0; border:0; background:transparent; color:#8A97A8;\n' +
 '               font-size:22px; line-height:1; cursor:pointer; border-radius:8px; }\n' +
+'    .mahalle-filtre { display:flex; gap:6px; overflow-x:auto; margin-top:8px; padding-bottom:4px; -webkit-overflow-scrolling:touch; }\n' +
+'    .mahalle-cip { flex:0 0 auto; font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:999px; background:#232B36; color:#8A97A8; border:1px solid #333D4B; cursor:pointer; }\n' +
+'    .mahalle-cip.aktif { background:#FFC400; color:#14181F; border-color:#FFC400; }\n' +
 '    .sonuc { display:none; font-size:12px; color:#8A97A8; margin:8px 2px 0 2px; }\n' +
 '\n' +
 '    .bolum-baslik-satir { display:flex; justify-content:space-between; align-items:center; margin:18px 2px 10px 2px; }\n' +
 '    .bolum-basligi { font-size:11px; letter-spacing:1.6px; text-transform:uppercase; color:#8A97A8; font-weight:700; }\n' +
 '    .rota-harita-btn { background:#152B24; border:1px solid #1F5240; color:#3DD68C; font-size:12px; font-weight:700; padding:6px 12px; border-radius:6px; cursor:pointer; }\n' +
 '    .liste { list-style:none; padding:0; margin:0; }\n' +
-'    .kart { background:#1B212A; border:1px solid #333D4B; border-radius:12px; padding:14px 16px; margin-bottom:10px; transition:0.2s opacity, 0.2s border-color; }\n' +
+'    .kart { background:#1B212A; border:1px solid #333D4B; border-radius:12px; padding:14px 16px; margin-bottom:10px; transition:0.2s transform, 0.2s opacity; }\n' +
+'    .kart.surukleniyor { opacity:0.3; transform:scale(0.97); border:1px dashed #FFC400; }\n' +
 '    .kart.alindi { opacity:0.4; border-color:#1F5240; background:#101714; }\n' +
 '    .kart.alindi .tik-btn { background:#3DD68C; color:#14181F; border-color:#3DD68C; }\n' +
 '    .kart.sirali { display:flex; gap:12px; align-items:flex-start; }\n' +
-'    .oklar { display:flex; flex-direction:column; gap:4px; flex:0 0 auto; }\n' +
-'    .ok { width:36px; height:30px; padding:0; border:1px solid #333D4B; background:#232B36; color:#8A97A8;\n' +
-'          border-radius:6px; font-size:12px; line-height:1; cursor:pointer; font-family:inherit; }\n' +
-'    .ok:disabled { opacity:0.3; }\n' +
+'    .surukle-tut { width:32px; height:42px; display:flex; align-items:center; justify-content:center; color:#5E6C7E; font-size:18px; cursor:grab; touch-action:none; flex:0 0 auto; }\n' +
 '    .kart-govde { flex:1; min-width:0; }\n' +
 '    .kart-ust { display:flex; gap:12px; align-items:flex-start; }\n' +
 '    .tik-btn { width:32px; height:32px; border-radius:8px; border:2px solid #333D4B; background:#232B36;\n' +
@@ -259,7 +262,7 @@ function listeSayfasiUret() {
 '               padding:11px 12px; border-radius:8px; border:none; cursor:pointer; font-family:inherit; }\n' +
 '    .nav-btn.gmaps { background:#FFC400; color:#14181F; }\n' +
 '    .gonder { flex:1; text-align:center; background:#232B36; color:#E8EDF3; text-decoration:none; font-weight:700;\n' +
-'              font-size:13.5px; padding:11px 12px; border-radius:8px; border:1px solid #333D4B; }\n' +
+'              font-size:13.5px; padding:11px 12px; border-radius:8px; border:1px solid #333D4B; cursor:pointer; font-family:inherit; }\n' +
 '    .cikar { flex:0 0 auto; background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-weight:700;\n' +
 '             font-size:13px; padding:11px 14px; border-radius:8px; cursor:pointer; font-family:inherit; }\n' +
 '    .not { display:none; text-align:center; color:#8A97A8; font-size:14px; padding:24px 0; }\n' +
@@ -275,7 +278,6 @@ function listeSayfasiUret() {
 '    .sirala-sec { display:block; width:100%; text-align:left; padding:11px 12px; margin-bottom:6px;\n' +
 '                  font-size:13.5px; font-weight:600; border-radius:7px; background:#1B212A;\n' +
 '                  border:1px solid #333D4B; color:#E8EDF3; cursor:pointer; font-family:inherit; }\n' +
-'    .sirala-sec.pasif { opacity:0.4; }\n' +
 '    .ekle-satir { display:flex; align-items:center; gap:12px; background:#171C24; border:1px solid #262F3B;\n' +
 '                  border-radius:9px; padding:10px 12px; margin-bottom:8px; }\n' +
 '    .ekle-bilgi { flex:1; min-width:0; }\n' +
@@ -288,14 +290,15 @@ function listeSayfasiUret() {
 '    .konum-btn { padding:8px 12px; font-size:12px; font-weight:700; border-radius:6px; background:#152B24; border:1px solid #1F5240; color:#3DD68C; cursor:pointer; }\n' +
 '    .konum-not { font-size:11.5px; color:#8A97A8; }\n' +
 '\n' +
-'    /* Navigasyon Modal */\n' +
-'    .modal-perde { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:100; align-items:center; justify-content:center; padding:16px; }\n' +
+'    /* Modal Pencereler */\n' +
+'    .modal-perde { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); z-index:100; align-items:center; justify-content:center; padding:16px; }\n' +
 '    .modal-kutu { background:#1B212A; border:1px solid #333D4B; border-radius:12px; max-width:360px; width:100%; padding:20px; text-align:center; }\n' +
 '    .modal-baslik { font-size:15px; font-weight:700; margin-bottom:14px; }\n' +
 '    .modal-btn { display:block; width:100%; padding:12px; margin-bottom:8px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; text-align:center; font-family:inherit; border:none; cursor:pointer; }\n' +
 '    .btn-gmaps { background:#FFC400; color:#14181F; }\n' +
 '    .btn-yandex { background:#E63946; color:#FFF; }\n' +
 '    .btn-apple { background:#333D4B; color:#E8EDF3; }\n' +
+'    .btn-yesil { background:#3DD68C; color:#14181F; }\n' +
 '    .btn-kapat { background:transparent; color:#8A97A8; margin-top:6px; margin-bottom:0; font-size:13px; }\n' +
 '</style>\n' +
 '</head>\n' +
@@ -320,6 +323,7 @@ sekmeler +
 '                   autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">\n' +
 '            <button type="button" class="temizle" id="temizleBtn" onclick="aramaTemizle()" aria-label="Temizle">&times;</button>\n' +
 '        </div>\n' +
+'        <div class="mahalle-filtre" id="mahalleFiltreleri"></div>\n' +
 '        <div class="sonuc" id="sonucSatiri"></div>\n' +
 '        <div class="konum-satir" id="konumSatiri">\n' +
 '            <button type="button" class="konum-btn" id="konumBtn" onclick="konumAl()">Uzaklık Hesapla</button>\n' +
@@ -334,13 +338,34 @@ bolumler +
 '</div>\n' +
 '\n' +
 '<!-- Navigasyon Seçim Penceresi -->\n' +
-'<div class="modal-perde" id="navModal" onclick="navModalKapat(event)">\n' +
+'<div class="modal-perde" id="navModal" onclick="modalKapat(event, \'navModal\')">\n' +
 '    <div class="modal-kutu">\n' +
 '        <div class="modal-baslik">Navigasyon Seçin</div>\n' +
 '        <a class="modal-btn btn-gmaps" id="navLinkGoogle" href="#" target="_blank">Google Haritalar</a>\n' +
 '        <a class="modal-btn btn-yandex" id="navLinkYandex" href="#" target="_blank">Yandex Navigasyon</a>\n' +
 '        <a class="modal-btn btn-apple" id="navLinkApple" href="#" target="_blank">Apple Haritalar</a>\n' +
 '        <button class="modal-btn btn-kapat" onclick="document.getElementById(\'navModal\').style.display=\'none\'">Vazgeç</button>\n' +
+'    </div>\n' +
+'</div>\n' +
+'\n' +
+'<!-- Rota Sıralama Menüsü -->\n' +
+'<div class="modal-perde" id="rotaModal" onclick="modalKapat(event, \'rotaModal\')">\n' +
+'    <div class="modal-kutu">\n' +
+'        <div class="modal-baslik">Harita Rotasını Nasıl Açalım?</div>\n' +
+'        <button class="modal-btn btn-gmaps" onclick="rotaCalistir(\'mevcut\')">Mevcut Sırayla Aç</button>\n' +
+'        <button class="modal-btn btn-yesil" onclick="rotaCalistir(\'yakin\')">📍 Bana En Yakından En Uzağa (Sabah)</button>\n' +
+'        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'uzak\')">🏁 Bana En Uzaktan En Yakına (Akşam)</button>\n' +
+'        <button class="modal-btn btn-kapat" onclick="document.getElementById(\'rotaModal\').style.display=\'none\'">Vazgeç</button>\n' +
+'    </div>\n' +
+'</div>\n' +
+'\n' +
+'<!-- WhatsApp Seçim Menüsü -->\n' +
+'<div class="modal-perde" id="waModal" onclick="modalKapat(event, \'waModal\')">\n' +
+'    <div class="modal-kutu">\n' +
+'        <div class="modal-baslik" id="waModalBaslik">WhatsApp Paylaşımı</div>\n' +
+'        <a class="modal-btn btn-yesil" id="waLinkGenel" href="#" target="_blank">Konum Bilgisini Paylaş</a>\n' +
+'        <a class="modal-btn btn-gmaps" id="waLinkKapi" href="#" target="_blank">Veliye "Kapıdayız" Mesajı At</a>\n' +
+'        <button class="modal-btn btn-kapat" onclick="document.getElementById(\'waModal\').style.display=\'none\'">Vazgeç</button>\n' +
 '    </div>\n' +
 '</div>\n' +
 '\n' +
@@ -354,6 +379,8 @@ bolumler +
 'var aktifAnahtar = "bolum-hepsi";\n' +
 'var aktifYerel = -1;\n' +
 'var benimKonum = null;\n' +
+'var seciliRotaBolumId = null;\n' +
+'var aktifMahalleFiltre = "";\n' +
 '\n' +
 'var u = document.getElementById("jsUyari"); if (u) { u.style.display = "none"; }\n' +
 'var sk = document.getElementById("sekmeler"); if (sk) { sk.style.display = "flex"; }\n' +
@@ -384,22 +411,29 @@ bolumler +
 '\n' +
 'function telSade(n) { return String(n || "").replace(/[^0-9+]/g, ""); }\n' +
 '\n' +
+'function modalKapat(e, id) {\n' +
+'    if (e.target.id === id) { document.getElementById(id).style.display = "none"; }\n' +
+'}\n' +
+'\n' +
 '/* ---------- Navigasyon Seçici ---------- */\n' +
 'function navigasyonAc(lat, lng, link) {\n' +
-'    if (!lat || !lng) {\n' +
-'        window.open(link, "_blank");\n' +
-'        return;\n' +
-'    }\n' +
-'    var gUrl = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;\n' +
-'    var yUrl = "https://yandex.com.tr/harita/?rtext=~" + lat + "," + lng;\n' +
-'    var aUrl = "http://maps.apple.com/?daddr=" + lat + "," + lng;\n' +
-'    document.getElementById("navLinkGoogle").href = gUrl;\n' +
-'    document.getElementById("navLinkYandex").href = yUrl;\n' +
-'    document.getElementById("navLinkApple").href = aUrl;\n' +
+'    if (!lat || !lng) { window.open(link, "_blank"); return; }\n' +
+'    document.getElementById("navLinkGoogle").href = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;\n' +
+'    document.getElementById("navLinkYandex").href = "https://yandex.com.tr/harita/?rtext=~" + lat + "," + lng;\n' +
+'    document.getElementById("navLinkApple").href = "http://maps.apple.com/?daddr=" + lat + "," + lng;\n' +
 '    document.getElementById("navModal").style.display = "flex";\n' +
 '}\n' +
-'function navModalKapat(e) {\n' +
-'    if (e.target.id === "navModal") { document.getElementById("navModal").style.display = "none"; }\n' +
+'\n' +
+'/* ---------- WhatsApp Seçici ---------- */\n' +
+'function waSecimAc(ad, mahalle, link, tel) {\n' +
+'    document.getElementById("waModalBaslik").textContent = ad;\n' +
+'    var paylasMetni = ad + " - " + mahalle + "\\n" + link;\n' +
+'    var gUrl = tel ? "https://wa.me/" + tel + "?text=" + encodeURIComponent(paylasMetni) : "https://wa.me/?text=" + encodeURIComponent(paylasMetni);\n' +
+'    var kapiMetni = "Sayın veli, öğrencimizi almak için servis aracımız adresinize yaklaşmaktadır.";\n' +
+'    var kUrl = tel ? "https://wa.me/" + tel + "?text=" + encodeURIComponent(kapiMetni) : "https://wa.me/?text=" + encodeURIComponent(kapiMetni);\n' +
+'    document.getElementById("waLinkGenel").href = gUrl;\n' +
+'    document.getElementById("waLinkKapi").href = kUrl;\n' +
+'    document.getElementById("waModal").style.display = "flex";\n' +
 '}\n' +
 '\n' +
 '/* ---------- Servis Modu (Alındı İşareti) ---------- */\n' +
@@ -428,27 +462,44 @@ bolumler +
 '    els.forEach(function(el){ el.classList.remove("alindi"); });\n' +
 '}\n' +
 '\n' +
-'/* ---------- Sadece Seçili/Aktif Listenin Rotasını Aç ---------- */\n' +
-'function tumunuHaritadaAc(bolumId) {\n' +
+'/* ---------- Akıllı Rotayı Aç Menüsü & Sıralama ---------- */\n' +
+'function rotaMenuAc(bolumId) {\n' +
+'    seciliRotaBolumId = bolumId;\n' +
+'    document.getElementById("rotaModal").style.display = "flex";\n' +
+'}\n' +
+'\n' +
+'function rotaCalistir(tur) {\n' +
+'    document.getElementById("rotaModal").style.display = "none";\n' +
 '    var hedefBolum = null;\n' +
-'    if (bolumId) {\n' +
-'        hedefBolum = document.getElementById(bolumId);\n' +
-'    } else if (aktifYerel >= 0) {\n' +
-'        hedefBolum = document.getElementById("bolum-yerel");\n' +
-'    } else {\n' +
-'        hedefBolum = document.getElementById(aktifAnahtar);\n' +
-'    }\n' +
+'    if (seciliRotaBolumId) hedefBolum = document.getElementById(seciliRotaBolumId);\n' +
+'    else if (aktifYerel >= 0) hedefBolum = document.getElementById("bolum-yerel");\n' +
+'    else hedefBolum = document.getElementById(aktifAnahtar);\n' +
 '    if (!hedefBolum) return;\n' +
+'\n' +
 '    var kartlar = hedefBolum.querySelectorAll(".kart");\n' +
-'    var koords = [];\n' +
+'    var liste = [];\n' +
 '    kartlar.forEach(function(k){\n' +
 '        var id = k.getAttribute("data-id");\n' +
 '        var o = ogrBul(id);\n' +
 '        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {\n' +
-'            koords.push(o.enlem + "," + o.boylam);\n' +
+'            var uz = (benimKonum) ? kusUcusu(benimKonum.e, benimKonum.b, o.enlem, o.boylam) : 0;\n' +
+'            liste.push({ o: o, uz: uz });\n' +
 '        }\n' +
 '    });\n' +
-'    if (koords.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return; }\n' +
+'\n' +
+'    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return;\n }\n' +
+'\n' +
+'    if (tur === "yakin" || tur === "uzak") {\n' +
+'        if (!benimKonum) {\n' +
+'            alert("Konumunuza göre sıralayabilmek için lütfen önce yukarıdaki Uzaklık Hesapla butonuna basın.");\n' +
+'            return;\n' +
+'        }\n' +
+'        liste.sort(function(a, b){\n' +
+'            return (tur === "yakin") ? (a.uz - b.uz) : (b.uz - a.uz);\n' +
+'        });\n' +
+'    }\n' +
+'\n' +
+'    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
 '    var url = "https://www.google.com/maps/dir/" + koords.join("/");\n' +
 '    window.open(url, "_blank");\n' +
 '}\n' +
@@ -485,6 +536,60 @@ bolumler +
 '        rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " uzakta";\n' +
 '        rozetler[i].style.display = "inline-block";\n' +
 '    }\n' +
+'}\n' +
+'\n' +
+'/* ---------- Mahalle Hızlı Filtreleri ---------- */\n' +
+'function mahalleFiltreleriniKur() {\n' +
+'    var kutu = document.getElementById("mahalleFiltreleri");\n' +
+'    if (!kutu) return;\n' +
+'    var mahalleler = {};\n' +
+'    OGRENCILER.forEach(function(o){\n' +
+'        if (o.mahalle) {\n' +
+'            var parcalar = o.mahalle.split(/[,/\\-]/);\n' +
+'            var ilk = parcalar[0].trim();\n' +
+'            if (ilk.length > 2) mahalleler[ilk] = true;\n' +
+'        }\n' +
+'    });\n' +
+'    var h = "";\n' +
+'    for (var m in mahalleler) {\n' +
+'        h += \'<button class="mahalle-cip" onclick="mahalleFiltrele(\\\'\' + kacis(m) + \'\\\', this)">\' + kacis(m) + \'</button>\';\n' +
+'    }\n' +
+'    kutu.innerHTML = h;\n' +
+'}\n' +
+'function mahalleFiltrele(mahalle, btn) {\n' +
+'    var arama = document.getElementById("arama");\n' +
+'    if (aktifMahalleFiltre === mahalle) {\n' +
+'        aktifMahalleFiltre = "";\n' +
+'        btn.classList.remove("aktif");\n' +
+'        arama.value = "";\n' +
+'    } else {\n' +
+'        document.querySelectorAll(".mahalle-cip").forEach(function(c){ c.classList.remove("aktif"); });\n' +
+'        aktifMahalleFiltre = mahalle;\n' +
+'        btn.classList.add("aktif");\n' +
+'        arama.value = mahalle;\n' +
+'    }\n' +
+'    filtrele();\n' +
+'}\n' +
+'\n' +
+'/* ---------- Sürükle - Bırak (Touch / Mouse Reorder) ---------- */\n' +
+'var suruklenenIndex = null;\n' +
+'function surukleBasla(e, index) {\n' +
+'    suruklenenIndex = index;\n' +
+'    e.target.closest(".kart").classList.add("surukleniyor");\n' +
+'    if (e.dataTransfer) e.dataTransfer.setData("text/plain", index);\n' +
+'}\n' +
+'function surukleBitir(e) {\n' +
+'    document.querySelectorAll(".kart").forEach(function(k){ k.classList.remove("surukleniyor"); });\n' +
+'}\n' +
+'function surukleUzerinde(e) { e.preventDefault(); }\n' +
+'function surukleBirak(e, hedefIndex) {\n' +
+'    e.preventDefault();\n' +
+'    if (suruklenenIndex === null || suruklenenIndex === hedefIndex || aktifYerel < 0) return;\n' +
+'    var d = yerelListeler[aktifYerel].uyeler;\n' +
+'    var eleman = d.splice(suruklenenIndex, 1)[0];\n' +
+'    d.splice(hedefIndex, 0, eleman);\n' +
+'    suruklenenIndex = null;\n' +
+'    yerelKaydet(); yerelCiz(); filtrele();\n' +
 '}\n' +
 '\n' +
 '/* ---------- Yerel Hafıza & Günlük Listeler ---------- */\n' +
@@ -541,13 +646,6 @@ bolumler +
 '}\n' +
 'function yerelEkle(kimlik) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.push(kimlik); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }\n' +
 'function yerelCikar(sira) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.splice(sira, 1); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }\n' +
-'function yerelTasi(sira, yon) {\n' +
-'    if (aktifYerel < 0) return;\n' +
-'    var d = yerelListeler[aktifYerel].uyeler; var h = sira + yon;\n' +
-'    if (h < 0 || h >= d.length) return;\n' +
-'    var g = d[sira]; d[sira] = d[h]; d[h] = g;\n' +
-'    yerelKaydet(); yerelCiz(); filtrele();\n' +
-'}\n' +
 'function yerelBosalt() { if (aktifYerel < 0 || !confirm("Tüm duraklar çıkarılsın mı?")) return; yerelListeler[aktifYerel].uyeler = []; yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }\n' +
 'function yerelPaylas() {\n' +
 '    if (aktifYerel < 0) return;\n' +
@@ -587,7 +685,7 @@ bolumler +
 '    if (aktifYerel < 0 || !yerelListeler[aktifYerel]) { bolum.innerHTML = ""; return; }\n' +
 '    var L = yerelListeler[aktifYerel];\n' +
 '    var h = \x27<div class="bolum-baslik-satir"><div class="bolum-basligi">\x27 + kacis(L.ad) + " &middot; " + L.uyeler.length + " durak</div>" +\n' +
-'            \x27<button class="rota-harita-btn" onclick="tumunuHaritadaAc(\\\'bolum-yerel\\\')">&#128506; Rotayı Aç</button></div>\x27;\n' +
+'            \x27<button class="rota-harita-btn" onclick="rotaMenuAc(\\\'bolum-yerel\\\')">&#128506; Rotayı Aç</button></div>\x27;\n' +
 '    h += \x27<div class="yerel-arac">\x27 +\n' +
 '         \x27<button class="arac-btn vurgu" onclick="yerelPaylas()">Paylaş</button>\x27 +\n' +
 '         (L.uyeler.length > 1 ? \x27<button class="arac-btn" onclick="siralaAcKapa()">Sırala</button>\x27 : "") +\n' +
@@ -608,14 +706,11 @@ bolumler +
 '        h += \x27<ul class="liste">\x27;\n' +
 '        for (var i = 0; i < L.uyeler.length; i++) {\n' +
 '            var o = ogrBul(L.uyeler[i]); if (!o) continue;\n' +
-'            var metin = o.ad + " - " + o.mahalle + "\\n" + o.link;\n' +
 '            var latV = (o.enlem !== undefined && o.enlem !== null) ? o.enlem : "";\n' +
 '            var lngV = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";\n' +
-'            h += \x27<li class="kart sirali" id="kart-\x27 + kacis(o.id) + \x27" data-id="\x27 + kacis(o.id) + \x27">\x27 +\n' +
-'                 \x27<div class="oklar">\x27 +\n' +
-'                     \x27<button class="ok" onclick="yerelTasi(\x27 + i + \x27,-1)"\x27 + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +\n' +
-'                     \x27<button class="ok" onclick="yerelTasi(\x27 + i + \x27,1)"\x27 + (i === L.uyeler.length - 1 ? " disabled" : "") + ">&#9660;</button>" +\n' +
-'                 "</div>" +\n' +
+'            var telV = telSade(o.telefon || "");\n' +
+'            h += \x27<li class="kart sirali" id="kart-\x27 + kacis(o.id) + \x27" data-id="\x27 + kacis(o.id) + \x27" draggable="true" ondragstart="surukleBasla(event, \x27 + i + \x27)" ondragend="surukleBitir(event)" ondragover="surukleUzerinde(event)" ondrop="surukleBirak(event, \x27 + i + \x27)">\x27 +\n' +
+'                 \x27<div class="surukle-tut">&#9776;</div>\x27 +\n' +
 '                 \x27<div class="kart-govde">\x27 +\n' +
 '                     \x27<div class="kart-ust">\x27 +\n' +
 '                         \x27<button class="tik-btn" onclick="durumDegistir(\\\x27\x27 + kacis(o.id) + \x27\\\x27)">&#10003;</button>\x27 +\n' +
@@ -629,7 +724,7 @@ bolumler +
 '                     "</div>" +\n' +
 '                     \x27<div class="butonlar">\x27 +\n' +
 '                         \x27<button class="nav-btn gmaps" onclick="navigasyonAc(\\\x27\x27 + latV + \x27\\\x27, \\\x27\x27 + lngV + \x27\\\x27, \\\x27\x27 + kacis(o.link) + \x27\\\x27)">Yol Tarifi</button>\x27 +\n' +
-'                         \x27<a class="gonder" href="https://wa.me/?text=\x27 + encodeURIComponent(metin) + \x27" target="_blank" rel="noopener" data-baslik="\x27 + kacis(o.ad) + \x27" data-metin="\x27 + kacis(metin) + \x27" onclick="return paylas(this)">WhatsApp</a>\x27 +\n' +
+'                         \x27<button class="gonder" onclick="waSecimAc(\\\x27\x27 + kacis(o.ad) + \x27\\\x27, \\\x27\x27 + kacis(o.mahalle) + \x27\\\x27, \\\x27\x27 + kacis(o.link) + \x27\\\x27, \\\x27\x27 + telV + \x27\\\x27)">WhatsApp</button>\x27 +\n' +
 '                         \x27<button class="cikar" onclick="yerelCikar(\x27 + i + \x27)">Çıkar</button>\x27 +\n' +
 '                     "</div>" +\n' +
 '                 "</div></li>";\n' +
@@ -678,17 +773,18 @@ bolumler +
 '    var tb = document.getElementById("temizleBtn"); if (tb) tb.style.display = (kutu.value.length > 0) ? "block" : "none";\n' +
 '    var ss = document.getElementById("sonucSatiri"); if (ss) { ss.style.display = aramaVar ? "block" : "none"; ss.textContent = toplam + " kayıt bulundu"; }\n' +
 '}\n' +
-'function aramaTemizle() { var k = document.getElementById("arama"); if (!k) return; k.value = ""; filtrele(); k.focus(); }\n' +
-'function paylas(d) {\n' +
-'    if (navigator.share) { navigator.share({ title: d.getAttribute("data-baslik"), text: d.getAttribute("data-metin") }).catch(function(){}); return false; }\n' +
-'    return true;\n' +
+'function aramaTemizle() {\n' +
+'    var k = document.getElementById("arama"); if (!k) return; k.value = "";\n' +
+'    aktifMahalleFiltre = "";\n' +
+'    document.querySelectorAll(".mahalle-cip").forEach(function(c){ c.classList.remove("aktif"); });\n' +
+'    filtrele(); k.focus();\n' +
 '}\n' +
 'var aramaKutu = document.getElementById("arama");\n' +
 'if (aramaKutu) {\n' +
 '    aramaKutu.oninput = filtrele;\n' +
 '    aramaKutu.onkeydown = function(e){ if(e.keyCode===27) aramaTemizle(); if(e.keyCode===13) aramaKutu.blur(); };\n' +
 '}\n' +
-'yerelYukle(); sekmeleriCiz(); filtrele(); tikleriYukle();\n' +
+'yerelYukle(); sekmeleriCiz(); mahalleFiltreleriniKur(); filtrele(); tikleriYukle();\n' +
 '<\/script>\n' +
 '</body>\n' +
 '</html>';
