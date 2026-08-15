@@ -2,13 +2,16 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#12161C">
 <title>Öğrenci Rotaları</title>
 <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body { overflow-x:visible; overscroll-behavior-y:contain; }
     body { margin:0; padding:0 0 50px 0; background:#12161C; color:#E8EDF3;
-           font-family:"Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+           font-family:"Segoe UI", system-ui, -apple-system, Roboto, sans-serif; user-select:none; }
     .sarma { max-width:560px; margin:0 auto; padding:0 16px; overflow:visible; }
     header { padding:20px 0 6px 0; display:flex; justify-content:space-between; align-items:center; }
     h1 { margin:0; font-size:19px; letter-spacing:2px; text-transform:uppercase; font-weight:700; }
@@ -34,20 +37,21 @@
     .temizle { display:none; position:absolute; right:7px; top:50%; transform:translateY(-50%);
                width:36px; height:36px; padding:0; border:0; background:transparent; color:#8A97A8;
                font-size:22px; line-height:1; cursor:pointer; border-radius:8px; }
+    .mahalle-filtre { display:flex; gap:6px; overflow-x:auto; margin-top:8px; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
+    .mahalle-cip { flex:0 0 auto; font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:999px; background:#232B36; color:#8A97A8; border:1px solid #333D4B; cursor:pointer; }
+    .mahalle-cip.aktif { background:#FFC400; color:#14181F; border-color:#FFC400; }
     .sonuc { display:none; font-size:12px; color:#8A97A8; margin:8px 2px 0 2px; }
 
     .bolum-baslik-satir { display:flex; justify-content:space-between; align-items:center; margin:18px 2px 10px 2px; }
     .bolum-basligi { font-size:11px; letter-spacing:1.6px; text-transform:uppercase; color:#8A97A8; font-weight:700; }
     .rota-harita-btn { background:#152B24; border:1px solid #1F5240; color:#3DD68C; font-size:12px; font-weight:700; padding:6px 12px; border-radius:6px; cursor:pointer; }
     .liste { list-style:none; padding:0; margin:0; }
-    .kart { background:#1B212A; border:1px solid #333D4B; border-radius:12px; padding:14px 16px; margin-bottom:10px; transition:0.2s opacity, 0.2s border-color; }
+    .kart { background:#1B212A; border:1px solid #333D4B; border-radius:12px; padding:14px 16px; margin-bottom:10px; transition:0.2s transform, 0.2s opacity; }
+    .kart.surukleniyor { opacity:0.3; transform:scale(0.97); border:1px dashed #FFC400; }
     .kart.alindi { opacity:0.4; border-color:#1F5240; background:#101714; }
     .kart.alindi .tik-btn { background:#3DD68C; color:#14181F; border-color:#3DD68C; }
     .kart.sirali { display:flex; gap:12px; align-items:flex-start; }
-    .oklar { display:flex; flex-direction:column; gap:4px; flex:0 0 auto; }
-    .ok { width:36px; height:30px; padding:0; border:1px solid #333D4B; background:#232B36; color:#8A97A8;
-          border-radius:6px; font-size:12px; line-height:1; cursor:pointer; font-family:inherit; }
-    .ok:disabled { opacity:0.3; }
+    .surukle-tut { width:32px; height:42px; display:flex; align-items:center; justify-content:center; color:#5E6C7E; font-size:18px; cursor:grab; touch-action:none; flex:0 0 auto; }
     .kart-govde { flex:1; min-width:0; }
     .kart-ust { display:flex; gap:12px; align-items:flex-start; }
     .tik-btn { width:32px; height:32px; border-radius:8px; border:2px solid #333D4B; background:#232B36;
@@ -70,7 +74,7 @@
                padding:11px 12px; border-radius:8px; border:none; cursor:pointer; font-family:inherit; }
     .nav-btn.gmaps { background:#FFC400; color:#14181F; }
     .gonder { flex:1; text-align:center; background:#232B36; color:#E8EDF3; text-decoration:none; font-weight:700;
-              font-size:13.5px; padding:11px 12px; border-radius:8px; border:1px solid #333D4B; }
+              font-size:13.5px; padding:11px 12px; border-radius:8px; border:1px solid #333D4B; cursor:pointer; font-family:inherit; }
     .cikar { flex:0 0 auto; background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-weight:700;
              font-size:13px; padding:11px 14px; border-radius:8px; cursor:pointer; font-family:inherit; }
     .not { display:none; text-align:center; color:#8A97A8; font-size:14px; padding:24px 0; }
@@ -86,7 +90,6 @@
     .sirala-sec { display:block; width:100%; text-align:left; padding:11px 12px; margin-bottom:6px;
                   font-size:13.5px; font-weight:600; border-radius:7px; background:#1B212A;
                   border:1px solid #333D4B; color:#E8EDF3; cursor:pointer; font-family:inherit; }
-    .sirala-sec.pasif { opacity:0.4; }
     .ekle-satir { display:flex; align-items:center; gap:12px; background:#171C24; border:1px solid #262F3B;
                   border-radius:9px; padding:10px 12px; margin-bottom:8px; }
     .ekle-bilgi { flex:1; min-width:0; }
@@ -99,14 +102,15 @@
     .konum-btn { padding:8px 12px; font-size:12px; font-weight:700; border-radius:6px; background:#152B24; border:1px solid #1F5240; color:#3DD68C; cursor:pointer; }
     .konum-not { font-size:11.5px; color:#8A97A8; }
 
-    /* Navigasyon Modal */
-    .modal-perde { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:100; align-items:center; justify-content:center; padding:16px; }
+    /* Modal Pencereler */
+    .modal-perde { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); z-index:100; align-items:center; justify-content:center; padding:16px; }
     .modal-kutu { background:#1B212A; border:1px solid #333D4B; border-radius:12px; max-width:360px; width:100%; padding:20px; text-align:center; }
     .modal-baslik { font-size:15px; font-weight:700; margin-bottom:14px; }
     .modal-btn { display:block; width:100%; padding:12px; margin-bottom:8px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; text-align:center; font-family:inherit; border:none; cursor:pointer; }
     .btn-gmaps { background:#FFC400; color:#14181F; }
     .btn-yandex { background:#E63946; color:#FFF; }
     .btn-apple { background:#333D4B; color:#E8EDF3; }
+    .btn-yesil { background:#3DD68C; color:#14181F; }
     .btn-kapat { background:transparent; color:#8A97A8; margin-top:6px; margin-bottom:0; font-size:13px; }
 </style>
 </head>
@@ -131,6 +135,7 @@
                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
             <button type="button" class="temizle" id="temizleBtn" onclick="aramaTemizle()" aria-label="Temizle">&times;</button>
         </div>
+        <div class="mahalle-filtre" id="mahalleFiltreleri"></div>
         <div class="sonuc" id="sonucSatiri"></div>
         <div class="konum-satir" id="konumSatiri">
             <button type="button" class="konum-btn" id="konumBtn" onclick="konumAl()">Uzaklık Hesapla</button>
@@ -141,12 +146,12 @@
     <section class="bolum" id="bolum-hepsi">
         <div class="bolum-baslik-satir">
             <div class="bolum-basligi">Tüm Öğrenciler &middot; 74 kayıt</div>
-            <button class="rota-harita-btn" onclick="tumunuHaritadaAc('bolum-hepsi')">&#128506; Rotayı Aç</button>
+            <button class="rota-harita-btn" onclick="rotaMenuAc('bolum-hepsi')">&#128506; Rotayı Aç</button>
         </div>
         <ul class="liste">
         <li class="kart" id="kart-omsoxipqf6t" data-id="omsoxipqf6t">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf6t')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf6t')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ÖZEL ÇINAR TUZLA KURUM MERKEZ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -157,13 +162,12 @@
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82752360562284', '29.31144049586419', 'https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%20TUZLA%20KURUM%20MERKEZ%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FYMpew7ZyDvdS6rXLA" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR TUZLA KURUM MERKEZ" data-metin="ÖZEL ÇINAR TUZLA KURUM MERKEZ - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ÖZEL ÇINAR TUZLA KURUM MERKEZ', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf3t" data-id="omsoxipqf3t">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf3t')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf3t')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ</h2>
                     <p>SULTANBEYLİ</p>
@@ -174,13 +178,12 @@ https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.96464228508893', '29.265421658083284', 'https://maps.app.goo.gl/LKzozaKLh8HCV1u29')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%202%20SULTANBEYL%C4%B0%20BAKIM%20MERKEZ%C4%B0%20-%20SULTANBEYL%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FLKzozaKLh8HCV1u29" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ" data-metin="ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ - SULTANBEYLİ
-https://maps.app.goo.gl/LKzozaKLh8HCV1u29" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ', 'SULTANBEYLİ', 'https://maps.app.goo.gl/LKzozaKLh8HCV1u29', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfen" data-id="omsoxipqfen">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfen')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfen')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ</h2>
                     <p>KURTKÖY</p>
@@ -191,13 +194,12 @@ https://maps.app.goo.gl/LKzozaKLh8HCV1u29" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.916703021607276', '29.302384487519156', 'https://maps.app.goo.gl/jBesgV1hoMvDehRj9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%20KURTK%C3%96Y%20BAKIM%20MERKEZ%C4%B0%20-%20KURTK%C3%96Y%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FjBesgV1hoMvDehRj9" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ" data-metin="ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ - KURTKÖY
-https://maps.app.goo.gl/jBesgV1hoMvDehRj9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ', 'KURTKÖY', 'https://maps.app.goo.gl/jBesgV1hoMvDehRj9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfq8" data-id="omsoxipqfq8">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfq8')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfq8')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>KADİR AKİF DABAN</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -208,13 +210,12 @@ https://maps.app.goo.gl/jBesgV1hoMvDehRj9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.840449121428435', '29.30590713992544', 'https://maps.app.goo.gl/LnuUqnEvbEHv9pm68')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=KAD%C4%B0R%20AK%C4%B0F%20DABAN%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FLnuUqnEvbEHv9pm68" target="_blank" rel="noopener" data-baslik="KADİR AKİF DABAN" data-metin="KADİR AKİF DABAN - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/LnuUqnEvbEHv9pm68" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('KADİR AKİF DABAN', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/LnuUqnEvbEHv9pm68', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfez" data-id="omsoxipqfez">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfez')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfez')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>UMUT KAYA BOLAT</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -225,13 +226,12 @@ https://maps.app.goo.gl/LnuUqnEvbEHv9pm68" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.839885034971836', '29.303992516238534', 'https://maps.app.goo.gl/78aFkwirZ7oTXPNm9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=UMUT%20KAYA%20BOLAT%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F78aFkwirZ7oTXPNm9" target="_blank" rel="noopener" data-baslik="UMUT KAYA BOLAT" data-metin="UMUT KAYA BOLAT - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/78aFkwirZ7oTXPNm9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('UMUT KAYA BOLAT', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/78aFkwirZ7oTXPNm9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf8q" data-id="omsoxipqf8q">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf8q')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf8q')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ESLEM KONUK</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -242,13 +242,12 @@ https://maps.app.goo.gl/78aFkwirZ7oTXPNm9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.839735386398594', '29.358181722475276', 'https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ESLEM%20KONUK%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FiAdxPcQ8Y8Veh3j17" target="_blank" rel="noopener" data-baslik="ESLEM KONUK" data-metin="ESLEM KONUK - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ESLEM KONUK', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfly" data-id="omsoxipqfly">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfly')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfly')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ÜMMÜHAN EYŞAN</h2>
                     <p>TUZLA POSTAHANE MAHALLESİ</p>
@@ -259,13 +258,12 @@ https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.81585490427553', '29.30882590303212', 'https://maps.app.goo.gl/UMCtRgARHmJHCp8GA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C3%9CMM%C3%9CHAN%20EY%C5%9EAN%20-%20TUZLA%20POSTAHANE%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FUMCtRgARHmJHCp8GA" target="_blank" rel="noopener" data-baslik="ÜMMÜHAN EYŞAN" data-metin="ÜMMÜHAN EYŞAN - TUZLA POSTAHANE MAHALLESİ
-https://maps.app.goo.gl/UMCtRgARHmJHCp8GA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ÜMMÜHAN EYŞAN', 'TUZLA POSTAHANE MAHALLESİ', 'https://maps.app.goo.gl/UMCtRgARHmJHCp8GA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf9k" data-id="omsoxipqf9k">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf9k')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf9k')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>KARDELEN TURGUT</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -276,13 +274,12 @@ https://maps.app.goo.gl/UMCtRgARHmJHCp8GA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.84390494604853', '29.361053808485227', 'https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=KARDELEN%20TURGUT%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FMFrDWKokzDK3Wr1d6" target="_blank" rel="noopener" data-baslik="KARDELEN TURGUT" data-metin="KARDELEN TURGUT - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('KARDELEN TURGUT', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqffp" data-id="omsoxipqffp">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqffp')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqffp')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ESMA GÖLCÜ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -293,13 +290,12 @@ https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82967798397194', '29.309705128835645', 'https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ESMA%20G%C3%96LC%C3%9C%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FpBKtESPuLkKqYQ4FA" target="_blank" rel="noopener" data-baslik="ESMA GÖLCÜ" data-metin="ESMA GÖLCÜ - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ESMA GÖLCÜ', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf68" data-id="omsoxipqf68">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf68')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf68')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ELİF YAZGÜLÜ DEMİRBOZAN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -310,13 +306,12 @@ https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.8393531027831', '29.356849151111447', 'https://maps.app.goo.gl/p6kyGm76WQe32eq1A')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=EL%C4%B0F%20YAZG%C3%9CL%C3%9C%20DEM%C4%B0RBOZAN%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fp6kyGm76WQe32eq1A" target="_blank" rel="noopener" data-baslik="ELİF YAZGÜLÜ DEMİRBOZAN" data-metin="ELİF YAZGÜLÜ DEMİRBOZAN - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/p6kyGm76WQe32eq1A" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ELİF YAZGÜLÜ DEMİRBOZAN', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/p6kyGm76WQe32eq1A', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf9d" data-id="omsoxipqf9d">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf9d')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf9d')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>HAZAL GÜLLÜ</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -327,13 +322,12 @@ https://maps.app.goo.gl/p6kyGm76WQe32eq1A" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.848736893617236', '29.36273927116436', 'https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=HAZAL%20G%C3%9CLL%C3%9C%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F5Xr65Aaf5gz8qyhx6" target="_blank" rel="noopener" data-baslik="HAZAL GÜLLÜ" data-metin="HAZAL GÜLLÜ - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('HAZAL GÜLLÜ', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfk6" data-id="omsoxipqfk6">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfk6')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfk6')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>EMİR YILMAZ</h2>
                     <p>BAYRAMOĞLU</p>
@@ -344,13 +338,12 @@ https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.79378104279207', '29.369318184657438', 'https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=EM%C4%B0R%20YILMAZ%20-%20BAYRAMO%C4%9ELU%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fncs5Wq2sGZKDARwg9" target="_blank" rel="noopener" data-baslik="EMİR YILMAZ" data-metin="EMİR YILMAZ - BAYRAMOĞLU
-https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('EMİR YILMAZ', 'BAYRAMOĞLU', 'https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfq1" data-id="omsoxipqfq1">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfq1')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfq1')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>MİRAÇ KIRMIZIGÖZ</h2>
                     <p>BAYRAMOĞLU</p>
@@ -361,13 +354,12 @@ https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.79377292035501', '29.369328913493074', 'https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=M%C4%B0RA%C3%87%20KIRMIZIG%C3%96Z%20-%20BAYRAMO%C4%9ELU%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fncs5Wq2sGZKDARwg9" target="_blank" rel="noopener" data-baslik="MİRAÇ KIRMIZIGÖZ" data-metin="MİRAÇ KIRMIZIGÖZ - BAYRAMOĞLU
-https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('MİRAÇ KIRMIZIGÖZ', 'BAYRAMOĞLU', 'https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfg7" data-id="omsoxipqfg7">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfg7')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfg7')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>EMRE YILMAZ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -378,13 +370,12 @@ https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.833591227860715', '29.3056667', 'https://maps.app.goo.gl/pWt5AEzNnkmS7icX7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=EMRE%20YILMAZ%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FpWt5AEzNnkmS7icX7" target="_blank" rel="noopener" data-baslik="EMRE YILMAZ" data-metin="EMRE YILMAZ - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/pWt5AEzNnkmS7icX7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('EMRE YILMAZ', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/pWt5AEzNnkmS7icX7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfab" data-id="omsoxipqfab">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfab')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfab')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ADEM VEZİR</h2>
                     <p>TUZLA AYDINLI MAHALLESİ</p>
@@ -395,13 +386,12 @@ https://maps.app.goo.gl/pWt5AEzNnkmS7icX7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.88275162040222', '29.339031715760825', 'https://maps.app.goo.gl/tekZtsueRzdq2Ku66')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ADEM%20VEZ%C4%B0R%20-%20TUZLA%20AYDINLI%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FtekZtsueRzdq2Ku66" target="_blank" rel="noopener" data-baslik="ADEM VEZİR" data-metin="ADEM VEZİR - TUZLA AYDINLI MAHALLESİ
-https://maps.app.goo.gl/tekZtsueRzdq2Ku66" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ADEM VEZİR', 'TUZLA AYDINLI MAHALLESİ', 'https://maps.app.goo.gl/tekZtsueRzdq2Ku66', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf88" data-id="omsoxipqf88">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf88')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf88')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>HAMİT COŞKUN</h2>
                     <p>TUZLA OHANLI ORTA MAHALLE</p>
@@ -412,13 +402,12 @@ https://maps.app.goo.gl/tekZtsueRzdq2Ku66" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.90084393706418', '29.37922229455615', 'https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=HAM%C4%B0T%20CO%C5%9EKUN%20-%20TUZLA%20OHANLI%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FAex4k3vnPtYV3Zfa8" target="_blank" rel="noopener" data-baslik="HAMİT COŞKUN" data-metin="HAMİT COŞKUN - TUZLA OHANLI ORTA MAHALLE
-https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('HAMİT COŞKUN', 'TUZLA OHANLI ORTA MAHALLE', 'https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf99" data-id="omsoxipqf99">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf99')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf99')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>FURKAN FATİH</h2>
                     <p>TUZLA AKFIRAT</p>
@@ -429,13 +418,12 @@ https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.924605955905264', '29.423318184657447', 'https://maps.app.goo.gl/PSgZVBaRMTyoexRM6')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=FURKAN%20FAT%C4%B0H%20-%20TUZLA%20AKFIRAT%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FPSgZVBaRMTyoexRM6" target="_blank" rel="noopener" data-baslik="FURKAN FATİH" data-metin="FURKAN FATİH - TUZLA AKFIRAT
-https://maps.app.goo.gl/PSgZVBaRMTyoexRM6" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('FURKAN FATİH', 'TUZLA AKFIRAT', 'https://maps.app.goo.gl/PSgZVBaRMTyoexRM6', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfgj" data-id="omsoxipqfgj">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfgj')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfgj')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>EYÜP CEVDET</h2>
                     <p>ESENYALI EV</p>
@@ -446,13 +434,12 @@ https://maps.app.goo.gl/PSgZVBaRMTyoexRM6" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.868525003497304', '29.298868343113487', 'https://maps.app.goo.gl/bA8JH6RTLcHr132fA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=EY%C3%9CP%20CEVDET%20-%20ESENYALI%20EV%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FbA8JH6RTLcHr132fA" target="_blank" rel="noopener" data-baslik="EYÜP CEVDET" data-metin="EYÜP CEVDET - ESENYALI EV
-https://maps.app.goo.gl/bA8JH6RTLcHr132fA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('EYÜP CEVDET', 'ESENYALI EV', 'https://maps.app.goo.gl/bA8JH6RTLcHr132fA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf8" data-id="omsoxipqf8">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf8')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf8')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>EDANUR ÖN</h2>
                     <p>TUZLA İSTASYON MAHALLESİ</p>
@@ -463,13 +450,12 @@ https://maps.app.goo.gl/bA8JH6RTLcHr132fA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.8313087624167', '29.32290597116436', 'https://maps.app.goo.gl/VmyKBdYFconiDQLG7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=EDANUR%20%C3%96N%20-%20TUZLA%20%C4%B0STASYON%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FVmyKBdYFconiDQLG7" target="_blank" rel="noopener" data-baslik="EDANUR ÖN" data-metin="EDANUR ÖN - TUZLA İSTASYON MAHALLESİ
-https://maps.app.goo.gl/VmyKBdYFconiDQLG7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('EDANUR ÖN', 'TUZLA İSTASYON MAHALLESİ', 'https://maps.app.goo.gl/VmyKBdYFconiDQLG7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfbs" data-id="omsoxipqfbs">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfbs')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfbs')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>İBRAHİM ERGİN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -480,13 +466,12 @@ https://maps.app.goo.gl/VmyKBdYFconiDQLG7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.84630396619189', '29.36195708465744', 'https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C4%B0BRAH%C4%B0M%20ERG%C4%B0N%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fa9FHfkGG4iQjEdoe9" target="_blank" rel="noopener" data-baslik="İBRAHİM ERGİN" data-metin="İBRAHİM ERGİN - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('İBRAHİM ERGİN', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfgk" data-id="omsoxipqfgk">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfgk')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfgk')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ÖMER ALPER GÜNDOĞDU</h2>
                     <p>ŞİFA MAHALLESİ</p>
@@ -497,13 +482,12 @@ https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83110614496546', '29.36257452698617', 'https://maps.app.goo.gl/QRHrK8A8V2QV2a548')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C3%96MER%20ALPER%20G%C3%9CNDO%C4%9EDU%20-%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FQRHrK8A8V2QV2a548" target="_blank" rel="noopener" data-baslik="ÖMER ALPER GÜNDOĞDU" data-metin="ÖMER ALPER GÜNDOĞDU - ŞİFA MAHALLESİ
-https://maps.app.goo.gl/QRHrK8A8V2QV2a548" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ÖMER ALPER GÜNDOĞDU', 'ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/QRHrK8A8V2QV2a548', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfoc" data-id="omsoxipqfoc">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfoc')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfoc')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ÖMER YILMAZ UKUS</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -514,13 +498,12 @@ https://maps.app.goo.gl/QRHrK8A8V2QV2a548" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83053096408319', '29.31208964232873', 'https://maps.app.goo.gl/g97ogr2Uvy7sST8T8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C3%96MER%20YILMAZ%20UKUS%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fg97ogr2Uvy7sST8T8" target="_blank" rel="noopener" data-baslik="ÖMER YILMAZ UKUS" data-metin="ÖMER YILMAZ UKUS - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/g97ogr2Uvy7sST8T8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ÖMER YILMAZ UKUS', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/g97ogr2Uvy7sST8T8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfgi" data-id="omsoxipqfgi">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfgi')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfgi')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ESLEM HALİME DEMİRCİ</h2>
                     <p>TUZLA İSTASYON MAHALLESİ</p>
@@ -531,13 +514,12 @@ https://maps.app.goo.gl/g97ogr2Uvy7sST8T8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82659803563569', '29.32717928465744', 'https://maps.app.goo.gl/PRXgPan4QNFX4MWv7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ESLEM%20HAL%C4%B0ME%20DEM%C4%B0RC%C4%B0%20-%20TUZLA%20%C4%B0STASYON%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FPRXgPan4QNFX4MWv7" target="_blank" rel="noopener" data-baslik="ESLEM HALİME DEMİRCİ" data-metin="ESLEM HALİME DEMİRCİ - TUZLA İSTASYON MAHALLESİ
-https://maps.app.goo.gl/PRXgPan4QNFX4MWv7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ESLEM HALİME DEMİRCİ', 'TUZLA İSTASYON MAHALLESİ', 'https://maps.app.goo.gl/PRXgPan4QNFX4MWv7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfqz" data-id="omsoxipqfqz">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfqz')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfqz')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>MEHMET EFE ASLANDAĞ</h2>
                     <p>TUZLA ORHANLI</p>
@@ -548,13 +530,12 @@ https://maps.app.goo.gl/PRXgPan4QNFX4MWv7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.888034308076854', '29.34545708465744', 'https://maps.app.goo.gl/9jPZoWmERwF3YoeDA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=MEHMET%20EFE%20ASLANDA%C4%9E%20-%20TUZLA%20ORHANLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F9jPZoWmERwF3YoeDA" target="_blank" rel="noopener" data-baslik="MEHMET EFE ASLANDAĞ" data-metin="MEHMET EFE ASLANDAĞ - TUZLA ORHANLI
-https://maps.app.goo.gl/9jPZoWmERwF3YoeDA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('MEHMET EFE ASLANDAĞ', 'TUZLA ORHANLI', 'https://maps.app.goo.gl/9jPZoWmERwF3YoeDA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf1o" data-id="omsoxipqf1o">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf1o')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf1o')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>AHMET MELİH</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -565,13 +546,12 @@ https://maps.app.goo.gl/9jPZoWmERwF3YoeDA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.829589911889336', '29.309873784657448', 'https://maps.app.goo.gl/yM5yppFH8mJS93St8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=AHMET%20MEL%C4%B0H%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FyM5yppFH8mJS93St8" target="_blank" rel="noopener" data-baslik="AHMET MELİH" data-metin="AHMET MELİH - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/yM5yppFH8mJS93St8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('AHMET MELİH', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/yM5yppFH8mJS93St8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf15" data-id="omsoxipqf15">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf15')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf15')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ELANUR GÖKCÜL</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -582,13 +562,12 @@ https://maps.app.goo.gl/yM5yppFH8mJS93St8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82510271295649', '29.311551113493085', 'https://maps.app.goo.gl/rbHgSym4arEJkGFfA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ELANUR%20G%C3%96KC%C3%9CL%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FrbHgSym4arEJkGFfA" target="_blank" rel="noopener" data-baslik="ELANUR GÖKCÜL" data-metin="ELANUR GÖKCÜL - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/rbHgSym4arEJkGFfA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ELANUR GÖKCÜL', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/rbHgSym4arEJkGFfA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfku" data-id="omsoxipqfku">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfku')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfku')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ZEYNEP ESMA KAPAN</h2>
                     <p>TUZLA POSTAHANE MAHALLESİ</p>
@@ -599,13 +578,12 @@ https://maps.app.goo.gl/rbHgSym4arEJkGFfA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.8171237496169', '29.305145242328717', 'https://maps.app.goo.gl/fNo7EcHvf3poTrDW8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ZEYNEP%20ESMA%20KAPAN%20-%20TUZLA%20POSTAHANE%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FfNo7EcHvf3poTrDW8" target="_blank" rel="noopener" data-baslik="ZEYNEP ESMA KAPAN" data-metin="ZEYNEP ESMA KAPAN - TUZLA POSTAHANE MAHALLESİ
-https://maps.app.goo.gl/fNo7EcHvf3poTrDW8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ZEYNEP ESMA KAPAN', 'TUZLA POSTAHANE MAHALLESİ', 'https://maps.app.goo.gl/fNo7EcHvf3poTrDW8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfo8" data-id="omsoxipqfo8">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfo8')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfo8')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>AHMET ADAR DOĞAN</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -616,13 +594,12 @@ https://maps.app.goo.gl/fNo7EcHvf3poTrDW8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82978096569006', '29.320583299999996', 'https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=AHMET%20ADAR%20DO%C4%9EAN%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F3Dqr8A9YjqWWUp3f6" target="_blank" rel="noopener" data-baslik="AHMET ADAR DOĞAN" data-metin="AHMET ADAR DOĞAN - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('AHMET ADAR DOĞAN', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfu" data-id="omsoxipqfu">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfu')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfu')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>YUSUF AYAZ BİLİR</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -633,13 +610,12 @@ https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83296724120572', '29.361027800000002', 'https://maps.app.goo.gl/oExhexLoBKAMYcHg7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=YUSUF%20AYAZ%20B%C4%B0L%C4%B0R%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FoExhexLoBKAMYcHg7" target="_blank" rel="noopener" data-baslik="YUSUF AYAZ BİLİR" data-metin="YUSUF AYAZ BİLİR - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/oExhexLoBKAMYcHg7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('YUSUF AYAZ BİLİR', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/oExhexLoBKAMYcHg7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf8v" data-id="omsoxipqf8v">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf8v')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf8v')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>BAYRAM BİLİR</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -650,13 +626,12 @@ https://maps.app.goo.gl/oExhexLoBKAMYcHg7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.832991594123136', '29.361006342328725', 'https://maps.app.goo.gl/oExhexLoBKAMYcHg7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=BAYRAM%20B%C4%B0L%C4%B0R%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FoExhexLoBKAMYcHg7" target="_blank" rel="noopener" data-baslik="BAYRAM BİLİR" data-metin="BAYRAM BİLİR - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/oExhexLoBKAMYcHg7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('BAYRAM BİLİR', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/oExhexLoBKAMYcHg7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfce" data-id="omsoxipqfce">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfce')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfce')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>İBRAHİM TOROS</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -667,13 +642,12 @@ https://maps.app.goo.gl/oExhexLoBKAMYcHg7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83965706034635', '29.35686744232872', 'https://maps.app.goo.gl/PVhfScb2sNuh1sv26')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C4%B0BRAH%C4%B0M%20TOROS%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FPVhfScb2sNuh1sv26" target="_blank" rel="noopener" data-baslik="İBRAHİM TOROS" data-metin="İBRAHİM TOROS - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/PVhfScb2sNuh1sv26" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('İBRAHİM TOROS', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/PVhfScb2sNuh1sv26', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfof" data-id="omsoxipqfof">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfof')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfof')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>KEREM YAĞIZ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -684,13 +658,12 @@ https://maps.app.goo.gl/PVhfScb2sNuh1sv26" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.831035634587934', '29.31462378465745', 'https://maps.app.goo.gl/TegUf8B4BMyFEgu6A')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=KEREM%20YA%C4%9EIZ%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FTegUf8B4BMyFEgu6A" target="_blank" rel="noopener" data-baslik="KEREM YAĞIZ" data-metin="KEREM YAĞIZ - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/TegUf8B4BMyFEgu6A" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('KEREM YAĞIZ', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/TegUf8B4BMyFEgu6A', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf7s" data-id="omsoxipqf7s">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf7s')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf7s')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>FURKAN GÜLCAN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -701,13 +674,12 @@ https://maps.app.goo.gl/TegUf8B4BMyFEgu6A" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83128096247628', '29.362484884657444', 'https://maps.app.goo.gl/NXSrXCcjmNR41QxX8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=FURKAN%20G%C3%9CLCAN%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FNXSrXCcjmNR41QxX8" target="_blank" rel="noopener" data-baslik="FURKAN GÜLCAN" data-metin="FURKAN GÜLCAN - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/NXSrXCcjmNR41QxX8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('FURKAN GÜLCAN', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/NXSrXCcjmNR41QxX8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfhp" data-id="omsoxipqfhp">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfhp')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfhp')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>YUSUF AYAZ BİLİR</h2>
                     <p>ESENYALI</p>
@@ -718,13 +690,12 @@ https://maps.app.goo.gl/NXSrXCcjmNR41QxX8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.869269307477694', '29.301361100000005', 'https://maps.app.goo.gl/DBPywNPqcYmb4Aro7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=YUSUF%20AYAZ%20B%C4%B0L%C4%B0R%20-%20ESENYALI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FDBPywNPqcYmb4Aro7" target="_blank" rel="noopener" data-baslik="YUSUF AYAZ BİLİR" data-metin="YUSUF AYAZ BİLİR - ESENYALI
-https://maps.app.goo.gl/DBPywNPqcYmb4Aro7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('YUSUF AYAZ BİLİR', 'ESENYALI', 'https://maps.app.goo.gl/DBPywNPqcYmb4Aro7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfcp" data-id="omsoxipqfcp">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfcp')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfcp')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ELANUR İNAN</h2>
                     <p>ÇAYIROVA</p>
@@ -735,13 +706,12 @@ https://maps.app.goo.gl/DBPywNPqcYmb4Aro7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83210614294528', '29.366239271164357', 'https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ELANUR%20%C4%B0NAN%20-%20%C3%87AYIROVA%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FGByuDp9LZHiJ8VUX6" target="_blank" rel="noopener" data-baslik="ELANUR İNAN" data-metin="ELANUR İNAN - ÇAYIROVA
-https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ELANUR İNAN', 'ÇAYIROVA', 'https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf2b" data-id="omsoxipqf2b">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf2b')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf2b')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ADEM ÖZGÜL</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -752,13 +722,12 @@ https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.8275491019536', '29.359944987945113', 'https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ADEM%20%C3%96ZG%C3%9CL%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FMEtv6iwkDfQ6Mokv8" target="_blank" rel="noopener" data-baslik="ADEM ÖZGÜL" data-metin="ADEM ÖZGÜL - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ADEM ÖZGÜL', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfah" data-id="omsoxipqfah">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfah')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfah')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ARİF EMRE ŞANAL</h2>
                     <p>TUZLA AYDINLI</p>
@@ -769,13 +738,12 @@ https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.88274147528472', '29.338901484657445', 'https://maps.app.goo.gl/3JmoKjy2jvHhznKx7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=AR%C4%B0F%20EMRE%20%C5%9EANAL%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F3JmoKjy2jvHhznKx7" target="_blank" rel="noopener" data-baslik="ARİF EMRE ŞANAL" data-metin="ARİF EMRE ŞANAL - TUZLA AYDINLI
-https://maps.app.goo.gl/3JmoKjy2jvHhznKx7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ARİF EMRE ŞANAL', 'TUZLA AYDINLI', 'https://maps.app.goo.gl/3JmoKjy2jvHhznKx7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfla" data-id="omsoxipqfla">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfla')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfla')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>İCLAL SARE</h2>
                     <p>TUZLA AYDINLI TOKİ</p>
@@ -786,13 +754,12 @@ https://maps.app.goo.gl/3JmoKjy2jvHhznKx7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.86212605040979', '29.33550063845405', 'https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C4%B0CLAL%20SARE%20-%20TUZLA%20AYDINLI%20TOK%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FeLnUxxCrJ3c4cyf18" target="_blank" rel="noopener" data-baslik="İCLAL SARE" data-metin="İCLAL SARE - TUZLA AYDINLI TOKİ
-https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('İCLAL SARE', 'TUZLA AYDINLI TOKİ', 'https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf99" data-id="omsoxipqf99">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf99')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf99')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>DERYA BAYAT</h2>
                     <p>TUZLA CAMİ MAHALLESİ</p>
@@ -803,13 +770,12 @@ https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.81775754456905', '29.314308214808992', 'https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=DERYA%20BAYAT%20-%20TUZLA%20CAM%C4%B0%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FqfUfzQHNqSAsoQVA8" target="_blank" rel="noopener" data-baslik="DERYA BAYAT" data-metin="DERYA BAYAT - TUZLA CAMİ MAHALLESİ
-https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('DERYA BAYAT', 'TUZLA CAMİ MAHALLESİ', 'https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf6j" data-id="omsoxipqf6j">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf6j')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf6j')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>SEMRA UÇAR</h2>
                     <p>TUZLA AYDINLI</p>
@@ -820,13 +786,12 @@ https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.867470326706396', '29.322927147892358', 'https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=SEMRA%20U%C3%87AR%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FGuQhJ8G6xpzGnCMVA" target="_blank" rel="noopener" data-baslik="SEMRA UÇAR" data-metin="SEMRA UÇAR - TUZLA AYDINLI
-https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('SEMRA UÇAR', 'TUZLA AYDINLI', 'https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfa" data-id="omsoxipqfa">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfa')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfa')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>AZİZ AKDENİZ</h2>
                     <p>KURTKÖY</p>
@@ -837,13 +802,12 @@ https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.91753792530437', '29.306190123010396', 'https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=AZ%C4%B0Z%20AKDEN%C4%B0Z%20-%20KURTK%C3%96Y%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FWN2ALV6s7ogVnBCr9" target="_blank" rel="noopener" data-baslik="AZİZ AKDENİZ" data-metin="AZİZ AKDENİZ - KURTKÖY
-https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('AZİZ AKDENİZ', 'KURTKÖY', 'https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfnl" data-id="omsoxipqfnl">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfnl')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfnl')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>GAMZE ESİLA BOLAT</h2>
                     <p>TUZLA İSTASYON MAHALLESİ</p>
@@ -854,13 +818,12 @@ https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.824152595878154', '29.315241657777005', 'https://maps.app.goo.gl/iKwPGNiA63Lr1ka46')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=GAMZE%20ES%C4%B0LA%20BOLAT%20-%20TUZLA%20%C4%B0STASYON%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FiKwPGNiA63Lr1ka46" target="_blank" rel="noopener" data-baslik="GAMZE ESİLA BOLAT" data-metin="GAMZE ESİLA BOLAT - TUZLA İSTASYON MAHALLESİ
-https://maps.app.goo.gl/iKwPGNiA63Lr1ka46" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('GAMZE ESİLA BOLAT', 'TUZLA İSTASYON MAHALLESİ', 'https://maps.app.goo.gl/iKwPGNiA63Lr1ka46', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfcw" data-id="omsoxipqfcw">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfcw')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfcw')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>NURFİDAN ŞAHİN</h2>
                     <p>TUZLA ORTA MAHALLE</p>
@@ -871,13 +834,12 @@ https://maps.app.goo.gl/iKwPGNiA63Lr1ka46" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.9013000829281', '29.378178365960444', 'https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=NURF%C4%B0DAN%20%C5%9EAH%C4%B0N%20-%20TUZLA%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FDnXtcp8LMjkVnR6n9" target="_blank" rel="noopener" data-baslik="NURFİDAN ŞAHİN" data-metin="NURFİDAN ŞAHİN - TUZLA ORTA MAHALLE
-https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('NURFİDAN ŞAHİN', 'TUZLA ORTA MAHALLE', 'https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf3h" data-id="omsoxipqf3h">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf3h')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf3h')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>KEREM EDİS</h2>
                     <p>TUZLA TEPEÖREN</p>
@@ -888,13 +850,12 @@ https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.91024541158632', '29.391192804699898', 'https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=KEREM%20ED%C4%B0S%20-%20TUZLA%20TEPE%C3%96REN%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FpTYjbAC4v8C7d3VF7" target="_blank" rel="noopener" data-baslik="KEREM EDİS" data-metin="KEREM EDİS - TUZLA TEPEÖREN
-https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('KEREM EDİS', 'TUZLA TEPEÖREN', 'https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfqp" data-id="omsoxipqfqp">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfqp')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfqp')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>SELAHATTİN YASİN YILMAZ</h2>
                     <p>TUZLA AYDINLI</p>
@@ -905,13 +866,12 @@ https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.87138751278701', '29.325847264285983', 'https://maps.app.goo.gl/miR73asUTD5xYgzN8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=SELAHATT%C4%B0N%20YAS%C4%B0N%20YILMAZ%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FmiR73asUTD5xYgzN8" target="_blank" rel="noopener" data-baslik="SELAHATTİN YASİN YILMAZ" data-metin="SELAHATTİN YASİN YILMAZ - TUZLA AYDINLI
-https://maps.app.goo.gl/miR73asUTD5xYgzN8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('SELAHATTİN YASİN YILMAZ', 'TUZLA AYDINLI', 'https://maps.app.goo.gl/miR73asUTD5xYgzN8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfpw" data-id="omsoxipqfpw">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfpw')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfpw')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ERAY BULUT</h2>
                     <p>TUZLA AYDINLI</p>
@@ -922,13 +882,12 @@ https://maps.app.goo.gl/miR73asUTD5xYgzN8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.868444122764565', '29.328606713493077', 'https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ERAY%20BULUT%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FRpNAAC9o6oBhvd7r9" target="_blank" rel="noopener" data-baslik="ERAY BULUT" data-metin="ERAY BULUT - TUZLA AYDINLI
-https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ERAY BULUT', 'TUZLA AYDINLI', 'https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfbw" data-id="omsoxipqfbw">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfbw')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfbw')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>AYŞENUR ÇAĞLAYAN</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -939,13 +898,12 @@ https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83787236541071', '29.30639962883564', 'https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=AY%C5%9EENUR%20%C3%87A%C4%9ELAYAN%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FjWPGLxxHcbDoDpmV9" target="_blank" rel="noopener" data-baslik="AYŞENUR ÇAĞLAYAN" data-metin="AYŞENUR ÇAĞLAYAN - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('AYŞENUR ÇAĞLAYAN', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf9u" data-id="omsoxipqf9u">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf9u')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf9u')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>MUHAMMED ALİ RIZA CANBAKAL</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -956,13 +914,12 @@ https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.828617356826314', '29.301800810550052', 'https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=MUHAMMED%20AL%C4%B0%20RIZA%20CANBAKAL%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fiwwb2zL5KyiwcyPUA" target="_blank" rel="noopener" data-baslik="MUHAMMED ALİ RIZA CANBAKAL" data-metin="MUHAMMED ALİ RIZA CANBAKAL - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('MUHAMMED ALİ RIZA CANBAKAL', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf3n" data-id="omsoxipqf3n">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf3n')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf3n')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>HAMZA EFE TOSUN</h2>
                     <p>BAYRAMOĞLU</p>
@@ -973,13 +930,12 @@ https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.78680271704639', '29.36256520212205', 'https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=HAMZA%20EFE%20TOSUN%20-%20BAYRAMO%C4%9ELU%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F4Nj3bWtMMD49eBcd9" target="_blank" rel="noopener" data-baslik="HAMZA EFE TOSUN" data-metin="HAMZA EFE TOSUN - BAYRAMOĞLU
-https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('HAMZA EFE TOSUN', 'BAYRAMOĞLU', 'https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf3r" data-id="omsoxipqf3r">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf3r')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf3r')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>EMRE SELÇUK</h2>
                     <p>DARICA</p>
@@ -990,13 +946,12 @@ https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.78966652047707', '29.370472199999995', 'https://maps.app.goo.gl/osVBHfQAogCpoqvB7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=EMRE%20SEL%C3%87UK%20-%20DARICA%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FosVBHfQAogCpoqvB7" target="_blank" rel="noopener" data-baslik="EMRE SELÇUK" data-metin="EMRE SELÇUK - DARICA
-https://maps.app.goo.gl/osVBHfQAogCpoqvB7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('EMRE SELÇUK', 'DARICA', 'https://maps.app.goo.gl/osVBHfQAogCpoqvB7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfop" data-id="omsoxipqfop">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfop')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfop')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ESİLA İŞLER</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -1007,13 +962,12 @@ https://maps.app.goo.gl/osVBHfQAogCpoqvB7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82632593142359', '29.307640337954496', 'https://maps.app.goo.gl/bekAQADBrvEMUFo36')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ES%C4%B0LA%20%C4%B0%C5%9ELER%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FbekAQADBrvEMUFo36" target="_blank" rel="noopener" data-baslik="ESİLA İŞLER" data-metin="ESİLA İŞLER - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/bekAQADBrvEMUFo36" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ESİLA İŞLER', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/bekAQADBrvEMUFo36', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf86" data-id="omsoxipqf86">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf86')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf86')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>İLAYDA ŞENOL</h2>
                     <p>TUZLA EVLİYA ÇELEBİ MAHALLESİ</p>
@@ -1024,13 +978,12 @@ https://maps.app.goo.gl/bekAQADBrvEMUFo36" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83997199425894', '29.303121828835636', 'https://maps.app.goo.gl/69JXcYPhaUXGKRCN7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=%C4%B0LAYDA%20%C5%9EENOL%20-%20TUZLA%20EVL%C4%B0YA%20%C3%87ELEB%C4%B0%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F69JXcYPhaUXGKRCN7" target="_blank" rel="noopener" data-baslik="İLAYDA ŞENOL" data-metin="İLAYDA ŞENOL - TUZLA EVLİYA ÇELEBİ MAHALLESİ
-https://maps.app.goo.gl/69JXcYPhaUXGKRCN7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('İLAYDA ŞENOL', 'TUZLA EVLİYA ÇELEBİ MAHALLESİ', 'https://maps.app.goo.gl/69JXcYPhaUXGKRCN7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfjn" data-id="omsoxipqfjn">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfjn')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfjn')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>YUSUF ÇAL</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -1041,13 +994,12 @@ https://maps.app.goo.gl/69JXcYPhaUXGKRCN7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83017798283948', '29.312527799999998', 'https://maps.app.goo.gl/uzpifBe3C3s4hsSe8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=YUSUF%20%C3%87AL%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FuzpifBe3C3s4hsSe8" target="_blank" rel="noopener" data-baslik="YUSUF ÇAL" data-metin="YUSUF ÇAL - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/uzpifBe3C3s4hsSe8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('YUSUF ÇAL', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/uzpifBe3C3s4hsSe8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf62" data-id="omsoxipqf62">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf62')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf62')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>MİKAİL KALINTAŞ</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -1058,13 +1010,12 @@ https://maps.app.goo.gl/uzpifBe3C3s4hsSe8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.841439524088464', '29.366967813493083', 'https://maps.app.goo.gl/h47BL3UwjycAD8zS9')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=M%C4%B0KA%C4%B0L%20KALINTA%C5%9E%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fh47BL3UwjycAD8zS9" target="_blank" rel="noopener" data-baslik="MİKAİL KALINTAŞ" data-metin="MİKAİL KALINTAŞ - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/h47BL3UwjycAD8zS9" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('MİKAİL KALINTAŞ', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/h47BL3UwjycAD8zS9', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfe7" data-id="omsoxipqfe7">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfe7')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfe7')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>METİN KARSLI</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -1075,13 +1026,12 @@ https://maps.app.goo.gl/h47BL3UwjycAD8zS9" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.833047193990396', '29.35792928465744', 'https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=MET%C4%B0N%20KARSLI%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FqKUnZPkSfa5fiNsa7" target="_blank" rel="noopener" data-baslik="METİN KARSLI" data-metin="METİN KARSLI - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('METİN KARSLI', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfmm" data-id="omsoxipqfmm">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfmm')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfmm')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ABDULLAH ÇELİK</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -1092,13 +1042,12 @@ https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83221946528022', '29.35424999999999', 'https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ABDULLAH%20%C3%87EL%C4%B0K%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FTx8mevk6ygtiAVBw8" target="_blank" rel="noopener" data-baslik="ABDULLAH ÇELİK" data-metin="ABDULLAH ÇELİK - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ABDULLAH ÇELİK', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfq0" data-id="omsoxipqfq0">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfq0')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfq0')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>YAĞMUR ÇAĞIL</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -1109,13 +1058,12 @@ https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82857023189332', '29.35962817116436', 'https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=YA%C4%9EMUR%20%C3%87A%C4%9EIL%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FmTTc2hZTQoK3ZJQF7" target="_blank" rel="noopener" data-baslik="YAĞMUR ÇAĞIL" data-metin="YAĞMUR ÇAĞIL - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('YAĞMUR ÇAĞIL', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfbq" data-id="omsoxipqfbq">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfbq')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfbq')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ZEYNEP KARAMAN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -1126,13 +1074,12 @@ https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.8436472617208', '29.364661971269904', 'https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ZEYNEP%20KARAMAN%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F1y6gdSaLSFS2X1ts7" target="_blank" rel="noopener" data-baslik="ZEYNEP KARAMAN" data-metin="ZEYNEP KARAMAN - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ZEYNEP KARAMAN', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfhs" data-id="omsoxipqfhs">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfhs')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfhs')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>YÜCEHAN TAŞOVA</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -1143,13 +1090,12 @@ https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83434232001036', '29.31270789302038', 'https://maps.app.goo.gl/xAcAqRSETknnJrZq5')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=Y%C3%9CCEHAN%20TA%C5%9EOVA%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FxAcAqRSETknnJrZq5" target="_blank" rel="noopener" data-baslik="YÜCEHAN TAŞOVA" data-metin="YÜCEHAN TAŞOVA - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/xAcAqRSETknnJrZq5" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('YÜCEHAN TAŞOVA', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/xAcAqRSETknnJrZq5', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf53" data-id="omsoxipqf53">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf53')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf53')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>FEYZA SENA</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -1160,13 +1106,12 @@ https://maps.app.goo.gl/xAcAqRSETknnJrZq5" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83234625754406', '29.313524349050862', 'https://maps.app.goo.gl/PY4uTYUkcbFs28CX6')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=FEYZA%20SENA%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FPY4uTYUkcbFs28CX6" target="_blank" rel="noopener" data-baslik="FEYZA SENA" data-metin="FEYZA SENA - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/PY4uTYUkcbFs28CX6" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('FEYZA SENA', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/PY4uTYUkcbFs28CX6', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfr3" data-id="omsoxipqfr3">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfr3')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfr3')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>MİNA BOYSAN</h2>
                     <p>TUZLA AYDINLI</p>
@@ -1177,13 +1122,12 @@ https://maps.app.goo.gl/PY4uTYUkcbFs28CX6" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.86621717401141', '29.34123927116437', 'https://maps.app.goo.gl/x28RzWPEyueyZ7gBA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=M%C4%B0NA%20BOYSAN%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fx28RzWPEyueyZ7gBA" target="_blank" rel="noopener" data-baslik="MİNA BOYSAN" data-metin="MİNA BOYSAN - TUZLA AYDINLI
-https://maps.app.goo.gl/x28RzWPEyueyZ7gBA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('MİNA BOYSAN', 'TUZLA AYDINLI', 'https://maps.app.goo.gl/x28RzWPEyueyZ7gBA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfgr" data-id="omsoxipqfgr">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfgr')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfgr')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>BEYTULLAH YAVUZ</h2>
                     <p>TUZLA ORTA MAHALLE</p>
@@ -1194,13 +1138,12 @@ https://maps.app.goo.gl/x28RzWPEyueyZ7gBA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.90185369960096', '29.38219579412973', 'https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=BEYTULLAH%20YAVUZ%20-%20TUZLA%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FR4Ejz3Jr58p1rLmH7" target="_blank" rel="noopener" data-baslik="BEYTULLAH YAVUZ" data-metin="BEYTULLAH YAVUZ - TUZLA ORTA MAHALLE
-https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('BEYTULLAH YAVUZ', 'TUZLA ORTA MAHALLE', 'https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqflt" data-id="omsoxipqflt">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqflt')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqflt')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>FATMANUR ÖZTÜRK</h2>
                     <p>TUZLA ORTA MAHALLE</p>
@@ -1211,13 +1154,12 @@ https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.901315358921615', '29.381052005173366', 'https://maps.app.goo.gl/5wsiiuuEvF5kczM2A')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=FATMANUR%20%C3%96ZT%C3%9CRK%20-%20TUZLA%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F5wsiiuuEvF5kczM2A" target="_blank" rel="noopener" data-baslik="FATMANUR ÖZTÜRK" data-metin="FATMANUR ÖZTÜRK - TUZLA ORTA MAHALLE
-https://maps.app.goo.gl/5wsiiuuEvF5kczM2A" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('FATMANUR ÖZTÜRK', 'TUZLA ORTA MAHALLE', 'https://maps.app.goo.gl/5wsiiuuEvF5kczM2A', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfm3" data-id="omsoxipqfm3">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfm3')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfm3')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>YİĞİT EFE GÖKYAR</h2>
                     <p>KONAŞLI</p>
@@ -1228,13 +1170,12 @@ https://maps.app.goo.gl/5wsiiuuEvF5kczM2A" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.87992704471022', '29.339082762308486', 'https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=Y%C4%B0%C4%9E%C4%B0T%20EFE%20G%C3%96KYAR%20-%20KONA%C5%9ELI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fnkch2rFY8sE4f9Qf6" target="_blank" rel="noopener" data-baslik="YİĞİT EFE GÖKYAR" data-metin="YİĞİT EFE GÖKYAR - KONAŞLI
-https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('YİĞİT EFE GÖKYAR', 'KONAŞLI', 'https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfdl" data-id="omsoxipqfdl">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfdl')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfdl')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>AHMET ÇAĞIN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -1245,13 +1186,12 @@ https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82903515274744', '29.360940555133293', 'https://maps.app.goo.gl/1juBzDQBKDgjVec16')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=AHMET%20%C3%87A%C4%9EIN%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F1juBzDQBKDgjVec16" target="_blank" rel="noopener" data-baslik="AHMET ÇAĞIN" data-metin="AHMET ÇAĞIN - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/1juBzDQBKDgjVec16" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('AHMET ÇAĞIN', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/1juBzDQBKDgjVec16', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfp8" data-id="omsoxipqfp8">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfp8')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfp8')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>RABİA SAĞLIK</h2>
                     <p>TUZLA ORTA MAHALLE</p>
@@ -1262,13 +1202,12 @@ https://maps.app.goo.gl/1juBzDQBKDgjVec16" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.9016834228326', '29.378306506508356', 'https://maps.app.goo.gl/zNZZftpFAzo1s5bSA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=RAB%C4%B0A%20SA%C4%9ELIK%20-%20TUZLA%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FzNZZftpFAzo1s5bSA" target="_blank" rel="noopener" data-baslik="RABİA SAĞLIK" data-metin="RABİA SAĞLIK - TUZLA ORTA MAHALLE
-https://maps.app.goo.gl/zNZZftpFAzo1s5bSA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('RABİA SAĞLIK', 'TUZLA ORTA MAHALLE', 'https://maps.app.goo.gl/zNZZftpFAzo1s5bSA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfcq" data-id="omsoxipqfcq">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfcq')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfcq')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>BURCU ATEŞ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -1279,13 +1218,12 @@ https://maps.app.goo.gl/zNZZftpFAzo1s5bSA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83642015220152', '29.307605427425298', 'https://maps.app.goo.gl/BSo2j3AeihYZKmL68')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=BURCU%20ATE%C5%9E%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FBSo2j3AeihYZKmL68" target="_blank" rel="noopener" data-baslik="BURCU ATEŞ" data-metin="BURCU ATEŞ - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/BSo2j3AeihYZKmL68" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('BURCU ATEŞ', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/BSo2j3AeihYZKmL68', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqfif" data-id="omsoxipqfif">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqfif')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqfif')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>YUSUF BOZDOĞAN</h2>
                     <p>TUZLA POSTAHANE MAHALLESİ</p>
@@ -1296,13 +1234,12 @@ https://maps.app.goo.gl/BSo2j3AeihYZKmL68" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.822608685796176', '29.30730266506917', 'https://maps.app.goo.gl/U63FCY1pdVcskTyZ7')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=YUSUF%20BOZDO%C4%9EAN%20-%20TUZLA%20POSTAHANE%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FU63FCY1pdVcskTyZ7" target="_blank" rel="noopener" data-baslik="YUSUF BOZDOĞAN" data-metin="YUSUF BOZDOĞAN - TUZLA POSTAHANE MAHALLESİ
-https://maps.app.goo.gl/U63FCY1pdVcskTyZ7" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('YUSUF BOZDOĞAN', 'TUZLA POSTAHANE MAHALLESİ', 'https://maps.app.goo.gl/U63FCY1pdVcskTyZ7', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omsoxipqf6x" data-id="omsoxipqf6x">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omsoxipqf6x')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omsoxipqf6x')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -1313,13 +1250,12 @@ https://maps.app.goo.gl/U63FCY1pdVcskTyZ7" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83616173475196', '29.301234884657436', 'https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=TUZLA%20BELED%C4%B0YES%C4%B0%20ENGELS%C4%B0Z%20YA%C5%9EAM%20MERKEZ%C4%B0%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FP5Ljd8BV4WDmwWuAA" target="_blank" rel="noopener" data-baslik="TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ" data-metin="TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omssxnf3jz" data-id="omssxnf3jz">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omssxnf3jz')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omssxnf3jz')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>BERKAY ÇAYIR</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
@@ -1330,13 +1266,12 @@ https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83023315760372', '29.355640632324654', 'https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=BERKAY%20%C3%87AYIR%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FZ43xuHVK6pxB9cLi8" target="_blank" rel="noopener" data-baslik="BERKAY ÇAYIR" data-metin="BERKAY ÇAYIR - TUZLA ŞİFA MAHALLESİ
-https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('BERKAY ÇAYIR', 'TUZLA ŞİFA MAHALLESİ', 'https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omssxpnus64" data-id="omssxpnus64">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omssxpnus64')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omssxpnus64')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>TALHA KICANÇ CAN</h2>
                     <p>TUZLA İSTASYON MAHALLESİ</p>
@@ -1347,13 +1282,12 @@ https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.82824831272407', '29.318162896584802', 'https://maps.app.goo.gl/GnDxQpBBT7D2CVg27')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=TALHA%20KICAN%C3%87%20CAN%20-%20TUZLA%20%C4%B0STASYON%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FGnDxQpBBT7D2CVg27" target="_blank" rel="noopener" data-baslik="TALHA KICANÇ CAN" data-metin="TALHA KICANÇ CAN - TUZLA İSTASYON MAHALLESİ
-https://maps.app.goo.gl/GnDxQpBBT7D2CVg27" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('TALHA KICANÇ CAN', 'TUZLA İSTASYON MAHALLESİ', 'https://maps.app.goo.gl/GnDxQpBBT7D2CVg27', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omssyjivsfn" data-id="omssyjivsfn">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omssyjivsfn')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omssyjivsfn')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>ENES ARAS</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
@@ -1364,13 +1298,12 @@ https://maps.app.goo.gl/GnDxQpBBT7D2CVg27" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83039469980715', '29.310945710077966', 'https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=ENES%20ARAS%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F8Hsi23xs6yYb4WAF8" target="_blank" rel="noopener" data-baslik="ENES ARAS" data-metin="ENES ARAS - TUZLA YAYLA MAHALLESİ
-https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('ENES ARAS', 'TUZLA YAYLA MAHALLESİ', 'https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8', '')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omstbjbgqln" data-id="omstbjbgqln">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omstbjbgqln')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omstbjbgqln')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>Aytekin GÜNEL</h2>
                     <p>Tuzla Yayla Mahallesi</p>
@@ -1381,13 +1314,12 @@ https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8" onclick="return paylas(this)">WhatsAp
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.832743', '29.312556', 'https://www.google.com/maps/dir/?api=1&amp;destination=40.832743,29.312556')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=Aytekin%20G%C3%9CNEL%20-%20Tuzla%20Yayla%20Mahallesi%0Ahttps%3A%2F%2Fwww.google.com%2Fmaps%2Fdir%2F%3Fapi%3D1%26destination%3D40.832743%2C29.312556" target="_blank" rel="noopener" data-baslik="Aytekin GÜNEL" data-metin="Aytekin GÜNEL - Tuzla Yayla Mahallesi
-https://www.google.com/maps/dir/?api=1&amp;destination=40.832743,29.312556" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('Aytekin GÜNEL', 'Tuzla Yayla Mahallesi', 'https://www.google.com/maps/dir/?api=1&amp;destination=40.832743,29.312556', '05307887194')">WhatsApp</button>
             </div>
         </li>
         <li class="kart" id="kart-omstfkfwr97" data-id="omstfkfwr97">
             <div class="kart-ust">
-                <button class="tik-btn" onclick="durumDegistir('omstfkfwr97')" title="Alındı olarak işaretle">&#10003;</button>
+                <button class="tik-btn" onclick="durumDegistir('omstfkfwr97')" title="Alındı">&#10003;</button>
                 <div class="kisi">
                     <h2>EMİRHAN ÖZDEMİR</h2>
                     <p>ÇAYIROVA</p>
@@ -1398,8 +1330,7 @@ https://www.google.com/maps/dir/?api=1&amp;destination=40.832743,29.312556" oncl
             </div>
             <div class="butonlar">
                 <button class="nav-btn gmaps" onclick="navigasyonAc('40.83616689170353', '29.372001811494332', 'https://maps.app.goo.gl/z61duRuNLfqKeJeV8')">Yol Tarifi</button>
-                <a class="gonder" href="https://wa.me/?text=EM%C4%B0RHAN%20%C3%96ZDEM%C4%B0R%20-%20%C3%87AYIROVA%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fz61duRuNLfqKeJeV8" target="_blank" rel="noopener" data-baslik="EMİRHAN ÖZDEMİR" data-metin="EMİRHAN ÖZDEMİR - ÇAYIROVA
-https://maps.app.goo.gl/z61duRuNLfqKeJeV8" onclick="return paylas(this)">WhatsApp</a>
+                <button class="gonder" onclick="waSecimAc('EMİRHAN ÖZDEMİR', 'ÇAYIROVA', 'https://maps.app.goo.gl/z61duRuNLfqKeJeV8', '')">WhatsApp</button>
             </div>
         </li>
         </ul>
@@ -1410,13 +1341,34 @@ https://maps.app.goo.gl/z61duRuNLfqKeJeV8" onclick="return paylas(this)">WhatsAp
 </div>
 
 <!-- Navigasyon Seçim Penceresi -->
-<div class="modal-perde" id="navModal" onclick="navModalKapat(event)">
+<div class="modal-perde" id="navModal" onclick="modalKapat(event, 'navModal')">
     <div class="modal-kutu">
         <div class="modal-baslik">Navigasyon Seçin</div>
         <a class="modal-btn btn-gmaps" id="navLinkGoogle" href="#" target="_blank">Google Haritalar</a>
         <a class="modal-btn btn-yandex" id="navLinkYandex" href="#" target="_blank">Yandex Navigasyon</a>
         <a class="modal-btn btn-apple" id="navLinkApple" href="#" target="_blank">Apple Haritalar</a>
         <button class="modal-btn btn-kapat" onclick="document.getElementById('navModal').style.display='none'">Vazgeç</button>
+    </div>
+</div>
+
+<!-- Rota Sıralama Menüsü -->
+<div class="modal-perde" id="rotaModal" onclick="modalKapat(event, 'rotaModal')">
+    <div class="modal-kutu">
+        <div class="modal-baslik">Harita Rotasını Nasıl Açalım?</div>
+        <button class="modal-btn btn-gmaps" onclick="rotaCalistir('mevcut')">Mevcut Sırayla Aç</button>
+        <button class="modal-btn btn-yesil" onclick="rotaCalistir('yakin')">📍 Bana En Yakından En Uzağa (Sabah)</button>
+        <button class="modal-btn btn-apple" onclick="rotaCalistir('uzak')">🏁 Bana En Uzaktan En Yakına (Akşam)</button>
+        <button class="modal-btn btn-kapat" onclick="document.getElementById('rotaModal').style.display='none'">Vazgeç</button>
+    </div>
+</div>
+
+<!-- WhatsApp Seçim Menüsü -->
+<div class="modal-perde" id="waModal" onclick="modalKapat(event, 'waModal')">
+    <div class="modal-kutu">
+        <div class="modal-baslik" id="waModalBaslik">WhatsApp Paylaşımı</div>
+        <a class="modal-btn btn-yesil" id="waLinkGenel" href="#" target="_blank">Konum Bilgisini Paylaş</a>
+        <a class="modal-btn btn-gmaps" id="waLinkKapi" href="#" target="_blank">Veliye "Kapıdayız" Mesajı At</a>
+        <button class="modal-btn btn-kapat" onclick="document.getElementById('waModal').style.display='none'">Vazgeç</button>
     </div>
 </div>
 
@@ -1430,6 +1382,8 @@ var alinanlar = {};
 var aktifAnahtar = "bolum-hepsi";
 var aktifYerel = -1;
 var benimKonum = null;
+var seciliRotaBolumId = null;
+var aktifMahalleFiltre = "";
 
 var u = document.getElementById("jsUyari"); if (u) { u.style.display = "none"; }
 var sk = document.getElementById("sekmeler"); if (sk) { sk.style.display = "flex"; }
@@ -1460,22 +1414,29 @@ function ogrBul(kimlik) {
 
 function telSade(n) { return String(n || "").replace(/[^0-9+]/g, ""); }
 
+function modalKapat(e, id) {
+    if (e.target.id === id) { document.getElementById(id).style.display = "none"; }
+}
+
 /* ---------- Navigasyon Seçici ---------- */
 function navigasyonAc(lat, lng, link) {
-    if (!lat || !lng) {
-        window.open(link, "_blank");
-        return;
-    }
-    var gUrl = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
-    var yUrl = "https://yandex.com.tr/harita/?rtext=~" + lat + "," + lng;
-    var aUrl = "http://maps.apple.com/?daddr=" + lat + "," + lng;
-    document.getElementById("navLinkGoogle").href = gUrl;
-    document.getElementById("navLinkYandex").href = yUrl;
-    document.getElementById("navLinkApple").href = aUrl;
+    if (!lat || !lng) { window.open(link, "_blank"); return; }
+    document.getElementById("navLinkGoogle").href = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
+    document.getElementById("navLinkYandex").href = "https://yandex.com.tr/harita/?rtext=~" + lat + "," + lng;
+    document.getElementById("navLinkApple").href = "http://maps.apple.com/?daddr=" + lat + "," + lng;
     document.getElementById("navModal").style.display = "flex";
 }
-function navModalKapat(e) {
-    if (e.target.id === "navModal") { document.getElementById("navModal").style.display = "none"; }
+
+/* ---------- WhatsApp Seçici ---------- */
+function waSecimAc(ad, mahalle, link, tel) {
+    document.getElementById("waModalBaslik").textContent = ad;
+    var paylasMetni = ad + " - " + mahalle + "\n" + link;
+    var gUrl = tel ? "https://wa.me/" + tel + "?text=" + encodeURIComponent(paylasMetni) : "https://wa.me/?text=" + encodeURIComponent(paylasMetni);
+    var kapiMetni = "Sayın veli, öğrencimizi almak için servis aracımız adresinize yaklaşmaktadır.";
+    var kUrl = tel ? "https://wa.me/" + tel + "?text=" + encodeURIComponent(kapiMetni) : "https://wa.me/?text=" + encodeURIComponent(kapiMetni);
+    document.getElementById("waLinkGenel").href = gUrl;
+    document.getElementById("waLinkKapi").href = kUrl;
+    document.getElementById("waModal").style.display = "flex";
 }
 
 /* ---------- Servis Modu (Alındı İşareti) ---------- */
@@ -1504,27 +1465,45 @@ function tikleriSifirla() {
     els.forEach(function(el){ el.classList.remove("alindi"); });
 }
 
-/* ---------- Sadece Seçili/Aktif Listenin Rotasını Aç ---------- */
-function tumunuHaritadaAc(bolumId) {
+/* ---------- Akıllı Rotayı Aç Menüsü & Sıralama ---------- */
+function rotaMenuAc(bolumId) {
+    seciliRotaBolumId = bolumId;
+    document.getElementById("rotaModal").style.display = "flex";
+}
+
+function rotaCalistir(tur) {
+    document.getElementById("rotaModal").style.display = "none";
     var hedefBolum = null;
-    if (bolumId) {
-        hedefBolum = document.getElementById(bolumId);
-    } else if (aktifYerel >= 0) {
-        hedefBolum = document.getElementById("bolum-yerel");
-    } else {
-        hedefBolum = document.getElementById(aktifAnahtar);
-    }
+    if (seciliRotaBolumId) hedefBolum = document.getElementById(seciliRotaBolumId);
+    else if (aktifYerel >= 0) hedefBolum = document.getElementById("bolum-yerel");
+    else hedefBolum = document.getElementById(aktifAnahtar);
     if (!hedefBolum) return;
+
     var kartlar = hedefBolum.querySelectorAll(".kart");
-    var koords = [];
+    var liste = [];
     kartlar.forEach(function(k){
         var id = k.getAttribute("data-id");
         var o = ogrBul(id);
         if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {
-            koords.push(o.enlem + "," + o.boylam);
+            var uz = (benimKonum) ? kusUcusu(benimKonum.e, benimKonum.b, o.enlem, o.boylam) : 0;
+            liste.push({ o: o, uz: uz });
         }
     });
-    if (koords.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return; }
+
+    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return;
+ }
+
+    if (tur === "yakin" || tur === "uzak") {
+        if (!benimKonum) {
+            alert("Konumunuza göre sıralayabilmek için lütfen önce yukarıdaki Uzaklık Hesapla butonuna basın.");
+            return;
+        }
+        liste.sort(function(a, b){
+            return (tur === "yakin") ? (a.uz - b.uz) : (b.uz - a.uz);
+        });
+    }
+
+    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });
     var url = "https://www.google.com/maps/dir/" + koords.join("/");
     window.open(url, "_blank");
 }
@@ -1561,6 +1540,60 @@ function uzakliklariYaz() {
         rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " uzakta";
         rozetler[i].style.display = "inline-block";
     }
+}
+
+/* ---------- Mahalle Hızlı Filtreleri ---------- */
+function mahalleFiltreleriniKur() {
+    var kutu = document.getElementById("mahalleFiltreleri");
+    if (!kutu) return;
+    var mahalleler = {};
+    OGRENCILER.forEach(function(o){
+        if (o.mahalle) {
+            var parcalar = o.mahalle.split(/[,/\-]/);
+            var ilk = parcalar[0].trim();
+            if (ilk.length > 2) mahalleler[ilk] = true;
+        }
+    });
+    var h = "";
+    for (var m in mahalleler) {
+        h += '<button class="mahalle-cip" onclick="mahalleFiltrele(\'' + kacis(m) + '\', this)">' + kacis(m) + '</button>';
+    }
+    kutu.innerHTML = h;
+}
+function mahalleFiltrele(mahalle, btn) {
+    var arama = document.getElementById("arama");
+    if (aktifMahalleFiltre === mahalle) {
+        aktifMahalleFiltre = "";
+        btn.classList.remove("aktif");
+        arama.value = "";
+    } else {
+        document.querySelectorAll(".mahalle-cip").forEach(function(c){ c.classList.remove("aktif"); });
+        aktifMahalleFiltre = mahalle;
+        btn.classList.add("aktif");
+        arama.value = mahalle;
+    }
+    filtrele();
+}
+
+/* ---------- Sürükle - Bırak (Touch / Mouse Reorder) ---------- */
+var suruklenenIndex = null;
+function surukleBasla(e, index) {
+    suruklenenIndex = index;
+    e.target.closest(".kart").classList.add("surukleniyor");
+    if (e.dataTransfer) e.dataTransfer.setData("text/plain", index);
+}
+function surukleBitir(e) {
+    document.querySelectorAll(".kart").forEach(function(k){ k.classList.remove("surukleniyor"); });
+}
+function surukleUzerinde(e) { e.preventDefault(); }
+function surukleBirak(e, hedefIndex) {
+    e.preventDefault();
+    if (suruklenenIndex === null || suruklenenIndex === hedefIndex || aktifYerel < 0) return;
+    var d = yerelListeler[aktifYerel].uyeler;
+    var eleman = d.splice(suruklenenIndex, 1)[0];
+    d.splice(hedefIndex, 0, eleman);
+    suruklenenIndex = null;
+    yerelKaydet(); yerelCiz(); filtrele();
 }
 
 /* ---------- Yerel Hafıza & Günlük Listeler ---------- */
@@ -1617,13 +1650,6 @@ function yerelSil() {
 }
 function yerelEkle(kimlik) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.push(kimlik); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }
 function yerelCikar(sira) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.splice(sira, 1); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }
-function yerelTasi(sira, yon) {
-    if (aktifYerel < 0) return;
-    var d = yerelListeler[aktifYerel].uyeler; var h = sira + yon;
-    if (h < 0 || h >= d.length) return;
-    var g = d[sira]; d[sira] = d[h]; d[h] = g;
-    yerelKaydet(); yerelCiz(); filtrele();
-}
 function yerelBosalt() { if (aktifYerel < 0 || !confirm("Tüm duraklar çıkarılsın mı?")) return; yerelListeler[aktifYerel].uyeler = []; yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }
 function yerelPaylas() {
     if (aktifYerel < 0) return;
@@ -1663,7 +1689,7 @@ function yerelCiz() {
     if (aktifYerel < 0 || !yerelListeler[aktifYerel]) { bolum.innerHTML = ""; return; }
     var L = yerelListeler[aktifYerel];
     var h = '<div class="bolum-baslik-satir"><div class="bolum-basligi">' + kacis(L.ad) + " &middot; " + L.uyeler.length + " durak</div>" +
-            '<button class="rota-harita-btn" onclick="tumunuHaritadaAc(\'bolum-yerel\')">&#128506; Rotayı Aç</button></div>';
+            '<button class="rota-harita-btn" onclick="rotaMenuAc(\'bolum-yerel\')">&#128506; Rotayı Aç</button></div>';
     h += '<div class="yerel-arac">' +
          '<button class="arac-btn vurgu" onclick="yerelPaylas()">Paylaş</button>' +
          (L.uyeler.length > 1 ? '<button class="arac-btn" onclick="siralaAcKapa()">Sırala</button>' : "") +
@@ -1684,14 +1710,11 @@ function yerelCiz() {
         h += '<ul class="liste">';
         for (var i = 0; i < L.uyeler.length; i++) {
             var o = ogrBul(L.uyeler[i]); if (!o) continue;
-            var metin = o.ad + " - " + o.mahalle + "\n" + o.link;
             var latV = (o.enlem !== undefined && o.enlem !== null) ? o.enlem : "";
             var lngV = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";
-            h += '<li class="kart sirali" id="kart-' + kacis(o.id) + '" data-id="' + kacis(o.id) + '">' +
-                 '<div class="oklar">' +
-                     '<button class="ok" onclick="yerelTasi(' + i + ',-1)"' + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +
-                     '<button class="ok" onclick="yerelTasi(' + i + ',1)"' + (i === L.uyeler.length - 1 ? " disabled" : "") + ">&#9660;</button>" +
-                 "</div>" +
+            var telV = telSade(o.telefon || "");
+            h += '<li class="kart sirali" id="kart-' + kacis(o.id) + '" data-id="' + kacis(o.id) + '" draggable="true" ondragstart="surukleBasla(event, ' + i + ')" ondragend="surukleBitir(event)" ondragover="surukleUzerinde(event)" ondrop="surukleBirak(event, ' + i + ')">' +
+                 '<div class="surukle-tut">&#9776;</div>' +
                  '<div class="kart-govde">' +
                      '<div class="kart-ust">' +
                          '<button class="tik-btn" onclick="durumDegistir(\'' + kacis(o.id) + '\')">&#10003;</button>' +
@@ -1705,7 +1728,7 @@ function yerelCiz() {
                      "</div>" +
                      '<div class="butonlar">' +
                          '<button class="nav-btn gmaps" onclick="navigasyonAc(\'' + latV + '\', \'' + lngV + '\', \'' + kacis(o.link) + '\')">Yol Tarifi</button>' +
-                         '<a class="gonder" href="https://wa.me/?text=' + encodeURIComponent(metin) + '" target="_blank" rel="noopener" data-baslik="' + kacis(o.ad) + '" data-metin="' + kacis(metin) + '" onclick="return paylas(this)">WhatsApp</a>' +
+                         '<button class="gonder" onclick="waSecimAc(\'' + kacis(o.ad) + '\', \'' + kacis(o.mahalle) + '\', \'' + kacis(o.link) + '\', \'' + telV + '\')">WhatsApp</button>' +
                          '<button class="cikar" onclick="yerelCikar(' + i + ')">Çıkar</button>' +
                      "</div>" +
                  "</div></li>";
@@ -1754,17 +1777,18 @@ function filtrele() {
     var tb = document.getElementById("temizleBtn"); if (tb) tb.style.display = (kutu.value.length > 0) ? "block" : "none";
     var ss = document.getElementById("sonucSatiri"); if (ss) { ss.style.display = aramaVar ? "block" : "none"; ss.textContent = toplam + " kayıt bulundu"; }
 }
-function aramaTemizle() { var k = document.getElementById("arama"); if (!k) return; k.value = ""; filtrele(); k.focus(); }
-function paylas(d) {
-    if (navigator.share) { navigator.share({ title: d.getAttribute("data-baslik"), text: d.getAttribute("data-metin") }).catch(function(){}); return false; }
-    return true;
+function aramaTemizle() {
+    var k = document.getElementById("arama"); if (!k) return; k.value = "";
+    aktifMahalleFiltre = "";
+    document.querySelectorAll(".mahalle-cip").forEach(function(c){ c.classList.remove("aktif"); });
+    filtrele(); k.focus();
 }
 var aramaKutu = document.getElementById("arama");
 if (aramaKutu) {
     aramaKutu.oninput = filtrele;
     aramaKutu.onkeydown = function(e){ if(e.keyCode===27) aramaTemizle(); if(e.keyCode===13) aramaKutu.blur(); };
 }
-yerelYukle(); sekmeleriCiz(); filtrele(); tikleriYukle();
+yerelYukle(); sekmeleriCiz(); mahalleFiltreleriniKur(); filtrele(); tikleriYukle();
 </script>
 </body>
 </html>
