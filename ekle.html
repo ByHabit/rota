@@ -791,6 +791,15 @@ bolumler +
 '                kartlar[i].style.display = (kartlar[i].className.indexOf("sirali") !== -1) ? "flex" : "block"; gorunen++;\n' +
 '            } else { kartlar[i].style.display = "none"; }\n' +
 '        }\n' +
+'        var satirlar = bolumler[b].getElementsByClassName("ekle-satir");\n' +
+'        var satirGorunen = 0;\n' +
+'        for (var s2 = 0; s2 < satirlar.length; s2++) {\n' +
+'            var m2 = sadelestir(satirlar[s2].textContent || "");\n' +
+'            if (!aramaVar || m2.indexOf(aranan) !== -1) {\n' +
+'                satirlar[s2].style.display = "flex"; satirGorunen++;\n' +
+'            } else { satirlar[s2].style.display = "none"; }\n' +
+'        }\n' +
+'        if (yerelMi) { gorunen += satirGorunen; }\n' +
 '        var gorunsun = yerelMi ? yerelAcik : (yerelAcik ? false : (aramaVar ? (gorunen > 0) : (bolumler[b].id === aktifAnahtar)));\n' +
 '        bolumler[b].style.display = gorunsun ? "block" : "none";\n' +
 '        if (gorunsun) toplam += gorunen;\n' +
