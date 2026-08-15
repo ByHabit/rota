@@ -65,15 +65,14 @@
                color:#3DD68C; border:1px solid #1F5240; background:#152B24; border-radius:999px; }
     .tel { display:inline-block; margin-top:6px; margin-left:6px; font-size:13px; color:#3DD68C;
            text-decoration:none; font-weight:600; }
-    .butonlar { display:flex; gap:6px; margin-top:12px; }
-    .nav-btn { flex:1; text-align:center; text-decoration:none; font-weight:700; font-size:13px;
-               padding:10px 12px; border-radius:7px; display:inline-block; }
+    .butonlar { display:flex; gap:8px; margin-top:12px; }
+    .nav-btn { flex:1; text-align:center; text-decoration:none; font-weight:700; font-size:13.5px;
+               padding:11px 12px; border-radius:8px; border:none; cursor:pointer; font-family:inherit; }
     .nav-btn.gmaps { background:#FFC400; color:#14181F; }
-    .nav-btn.yandex { background:#E63946; color:#FFFFFF; }
     .gonder { flex:1; text-align:center; background:#232B36; color:#E8EDF3; text-decoration:none; font-weight:700;
-              font-size:13px; padding:10px 12px; border-radius:7px; border:1px solid #333D4B; }
-    .cikar { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-weight:700;
-             font-size:13px; padding:10px 12px; border-radius:7px; cursor:pointer; font-family:inherit; }
+              font-size:13.5px; padding:11px 12px; border-radius:8px; border:1px solid #333D4B; }
+    .cikar { flex:0 0 auto; background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-weight:700;
+             font-size:13px; padding:11px 14px; border-radius:8px; cursor:pointer; font-family:inherit; }
     .not { display:none; text-align:center; color:#8A97A8; font-size:14px; padding:24px 0; }
     .js-kapali { border-left:3px solid #FFC400; background:rgba(255,196,0,0.07); padding:12px 14px;
                  font-size:13px; color:#D9C99A; border-radius:0 8px 8px 0; margin:12px 0; }
@@ -99,6 +98,16 @@
     .konum-satir { display:none; align-items:center; gap:10px; margin-top:8px; }
     .konum-btn { padding:8px 12px; font-size:12px; font-weight:700; border-radius:6px; background:#152B24; border:1px solid #1F5240; color:#3DD68C; cursor:pointer; }
     .konum-not { font-size:11.5px; color:#8A97A8; }
+
+    /* Navigasyon Modal */
+    .modal-perde { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:100; align-items:center; justify-content:center; padding:16px; }
+    .modal-kutu { background:#1B212A; border:1px solid #333D4B; border-radius:12px; max-width:360px; width:100%; padding:20px; text-align:center; }
+    .modal-baslik { font-size:15px; font-weight:700; margin-bottom:14px; }
+    .modal-btn { display:block; width:100%; padding:12px; margin-bottom:8px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; text-align:center; font-family:inherit; border:none; cursor:pointer; }
+    .btn-gmaps { background:#FFC400; color:#14181F; }
+    .btn-yandex { background:#E63946; color:#FFF; }
+    .btn-apple { background:#333D4B; color:#E8EDF3; }
+    .btn-kapat { background:transparent; color:#8A97A8; margin-top:6px; margin-bottom:0; font-size:13px; }
 </style>
 </head>
 <body>
@@ -132,7 +141,7 @@
     <section class="bolum" id="bolum-hepsi">
         <div class="bolum-baslik-satir">
             <div class="bolum-basligi">Tüm Öğrenciler &middot; 74 kayıt</div>
-            <button class="rota-harita-btn" onclick="tumunuHaritadaAc('hepsi')">&#128506; Rotayı Aç</button>
+            <button class="rota-harita-btn" onclick="tumunuHaritadaAc('bolum-hepsi')">&#128506; Rotayı Aç</button>
         </div>
         <ul class="liste">
         <li class="kart" id="kart-omsoxipqf6t" data-id="omsoxipqf6t">
@@ -147,8 +156,7 @@
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82752360562284,29.31144049586419" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82752360562284', '29.31144049586419', 'https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%20TUZLA%20KURUM%20MERKEZ%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FYMpew7ZyDvdS6rXLA" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR TUZLA KURUM MERKEZ" data-metin="ÖZEL ÇINAR TUZLA KURUM MERKEZ - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -165,8 +173,7 @@ https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/LKzozaKLh8HCV1u29" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.96464228508893,29.265421658083284" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.96464228508893', '29.265421658083284', 'https://maps.app.goo.gl/LKzozaKLh8HCV1u29')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%202%20SULTANBEYL%C4%B0%20BAKIM%20MERKEZ%C4%B0%20-%20SULTANBEYL%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FLKzozaKLh8HCV1u29" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ" data-metin="ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ - SULTANBEYLİ
 https://maps.app.goo.gl/LKzozaKLh8HCV1u29" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -183,8 +190,7 @@ https://maps.app.goo.gl/LKzozaKLh8HCV1u29" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/jBesgV1hoMvDehRj9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.916703021607276,29.302384487519156" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.916703021607276', '29.302384487519156', 'https://maps.app.goo.gl/jBesgV1hoMvDehRj9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C3%96ZEL%20%C3%87INAR%20KURTK%C3%96Y%20BAKIM%20MERKEZ%C4%B0%20-%20KURTK%C3%96Y%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FjBesgV1hoMvDehRj9" target="_blank" rel="noopener" data-baslik="ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ" data-metin="ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ - KURTKÖY
 https://maps.app.goo.gl/jBesgV1hoMvDehRj9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -201,8 +207,7 @@ https://maps.app.goo.gl/jBesgV1hoMvDehRj9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/LnuUqnEvbEHv9pm68" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.840449121428435,29.30590713992544" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.840449121428435', '29.30590713992544', 'https://maps.app.goo.gl/LnuUqnEvbEHv9pm68')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=KAD%C4%B0R%20AK%C4%B0F%20DABAN%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FLnuUqnEvbEHv9pm68" target="_blank" rel="noopener" data-baslik="KADİR AKİF DABAN" data-metin="KADİR AKİF DABAN - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/LnuUqnEvbEHv9pm68" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -219,8 +224,7 @@ https://maps.app.goo.gl/LnuUqnEvbEHv9pm68" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/78aFkwirZ7oTXPNm9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.839885034971836,29.303992516238534" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.839885034971836', '29.303992516238534', 'https://maps.app.goo.gl/78aFkwirZ7oTXPNm9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=UMUT%20KAYA%20BOLAT%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F78aFkwirZ7oTXPNm9" target="_blank" rel="noopener" data-baslik="UMUT KAYA BOLAT" data-metin="UMUT KAYA BOLAT - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/78aFkwirZ7oTXPNm9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -237,8 +241,7 @@ https://maps.app.goo.gl/78aFkwirZ7oTXPNm9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.839735386398594,29.358181722475276" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.839735386398594', '29.358181722475276', 'https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ESLEM%20KONUK%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FiAdxPcQ8Y8Veh3j17" target="_blank" rel="noopener" data-baslik="ESLEM KONUK" data-metin="ESLEM KONUK - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -255,8 +258,7 @@ https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/UMCtRgARHmJHCp8GA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.81585490427553,29.30882590303212" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.81585490427553', '29.30882590303212', 'https://maps.app.goo.gl/UMCtRgARHmJHCp8GA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C3%9CMM%C3%9CHAN%20EY%C5%9EAN%20-%20TUZLA%20POSTAHANE%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FUMCtRgARHmJHCp8GA" target="_blank" rel="noopener" data-baslik="ÜMMÜHAN EYŞAN" data-metin="ÜMMÜHAN EYŞAN - TUZLA POSTAHANE MAHALLESİ
 https://maps.app.goo.gl/UMCtRgARHmJHCp8GA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -273,8 +275,7 @@ https://maps.app.goo.gl/UMCtRgARHmJHCp8GA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.84390494604853,29.361053808485227" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.84390494604853', '29.361053808485227', 'https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=KARDELEN%20TURGUT%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FMFrDWKokzDK3Wr1d6" target="_blank" rel="noopener" data-baslik="KARDELEN TURGUT" data-metin="KARDELEN TURGUT - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -291,8 +292,7 @@ https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82967798397194,29.309705128835645" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82967798397194', '29.309705128835645', 'https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ESMA%20G%C3%96LC%C3%9C%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FpBKtESPuLkKqYQ4FA" target="_blank" rel="noopener" data-baslik="ESMA GÖLCÜ" data-metin="ESMA GÖLCÜ - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -309,8 +309,7 @@ https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/p6kyGm76WQe32eq1A" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.8393531027831,29.356849151111447" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.8393531027831', '29.356849151111447', 'https://maps.app.goo.gl/p6kyGm76WQe32eq1A')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=EL%C4%B0F%20YAZG%C3%9CL%C3%9C%20DEM%C4%B0RBOZAN%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fp6kyGm76WQe32eq1A" target="_blank" rel="noopener" data-baslik="ELİF YAZGÜLÜ DEMİRBOZAN" data-metin="ELİF YAZGÜLÜ DEMİRBOZAN - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/p6kyGm76WQe32eq1A" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -327,8 +326,7 @@ https://maps.app.goo.gl/p6kyGm76WQe32eq1A" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.848736893617236,29.36273927116436" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.848736893617236', '29.36273927116436', 'https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=HAZAL%20G%C3%9CLL%C3%9C%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F5Xr65Aaf5gz8qyhx6" target="_blank" rel="noopener" data-baslik="HAZAL GÜLLÜ" data-metin="HAZAL GÜLLÜ - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -345,8 +343,7 @@ https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.79378104279207,29.369318184657438" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.79378104279207', '29.369318184657438', 'https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=EM%C4%B0R%20YILMAZ%20-%20BAYRAMO%C4%9ELU%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fncs5Wq2sGZKDARwg9" target="_blank" rel="noopener" data-baslik="EMİR YILMAZ" data-metin="EMİR YILMAZ - BAYRAMOĞLU
 https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -363,8 +360,7 @@ https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.79377292035501,29.369328913493074" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.79377292035501', '29.369328913493074', 'https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=M%C4%B0RA%C3%87%20KIRMIZIG%C3%96Z%20-%20BAYRAMO%C4%9ELU%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fncs5Wq2sGZKDARwg9" target="_blank" rel="noopener" data-baslik="MİRAÇ KIRMIZIGÖZ" data-metin="MİRAÇ KIRMIZIGÖZ - BAYRAMOĞLU
 https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -381,8 +377,7 @@ https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/pWt5AEzNnkmS7icX7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.833591227860715,29.3056667" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.833591227860715', '29.3056667', 'https://maps.app.goo.gl/pWt5AEzNnkmS7icX7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=EMRE%20YILMAZ%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FpWt5AEzNnkmS7icX7" target="_blank" rel="noopener" data-baslik="EMRE YILMAZ" data-metin="EMRE YILMAZ - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/pWt5AEzNnkmS7icX7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -399,8 +394,7 @@ https://maps.app.goo.gl/pWt5AEzNnkmS7icX7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/tekZtsueRzdq2Ku66" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.88275162040222,29.339031715760825" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.88275162040222', '29.339031715760825', 'https://maps.app.goo.gl/tekZtsueRzdq2Ku66')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ADEM%20VEZ%C4%B0R%20-%20TUZLA%20AYDINLI%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FtekZtsueRzdq2Ku66" target="_blank" rel="noopener" data-baslik="ADEM VEZİR" data-metin="ADEM VEZİR - TUZLA AYDINLI MAHALLESİ
 https://maps.app.goo.gl/tekZtsueRzdq2Ku66" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -417,8 +411,7 @@ https://maps.app.goo.gl/tekZtsueRzdq2Ku66" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.90084393706418,29.37922229455615" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.90084393706418', '29.37922229455615', 'https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=HAM%C4%B0T%20CO%C5%9EKUN%20-%20TUZLA%20OHANLI%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FAex4k3vnPtYV3Zfa8" target="_blank" rel="noopener" data-baslik="HAMİT COŞKUN" data-metin="HAMİT COŞKUN - TUZLA OHANLI ORTA MAHALLE
 https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -435,8 +428,7 @@ https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/PSgZVBaRMTyoexRM6" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.924605955905264,29.423318184657447" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.924605955905264', '29.423318184657447', 'https://maps.app.goo.gl/PSgZVBaRMTyoexRM6')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=FURKAN%20FAT%C4%B0H%20-%20TUZLA%20AKFIRAT%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FPSgZVBaRMTyoexRM6" target="_blank" rel="noopener" data-baslik="FURKAN FATİH" data-metin="FURKAN FATİH - TUZLA AKFIRAT
 https://maps.app.goo.gl/PSgZVBaRMTyoexRM6" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -453,8 +445,7 @@ https://maps.app.goo.gl/PSgZVBaRMTyoexRM6" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/bA8JH6RTLcHr132fA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.868525003497304,29.298868343113487" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.868525003497304', '29.298868343113487', 'https://maps.app.goo.gl/bA8JH6RTLcHr132fA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=EY%C3%9CP%20CEVDET%20-%20ESENYALI%20EV%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FbA8JH6RTLcHr132fA" target="_blank" rel="noopener" data-baslik="EYÜP CEVDET" data-metin="EYÜP CEVDET - ESENYALI EV
 https://maps.app.goo.gl/bA8JH6RTLcHr132fA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -471,8 +462,7 @@ https://maps.app.goo.gl/bA8JH6RTLcHr132fA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/VmyKBdYFconiDQLG7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.8313087624167,29.32290597116436" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.8313087624167', '29.32290597116436', 'https://maps.app.goo.gl/VmyKBdYFconiDQLG7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=EDANUR%20%C3%96N%20-%20TUZLA%20%C4%B0STASYON%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FVmyKBdYFconiDQLG7" target="_blank" rel="noopener" data-baslik="EDANUR ÖN" data-metin="EDANUR ÖN - TUZLA İSTASYON MAHALLESİ
 https://maps.app.goo.gl/VmyKBdYFconiDQLG7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -489,8 +479,7 @@ https://maps.app.goo.gl/VmyKBdYFconiDQLG7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.84630396619189,29.36195708465744" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.84630396619189', '29.36195708465744', 'https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C4%B0BRAH%C4%B0M%20ERG%C4%B0N%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fa9FHfkGG4iQjEdoe9" target="_blank" rel="noopener" data-baslik="İBRAHİM ERGİN" data-metin="İBRAHİM ERGİN - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -507,8 +496,7 @@ https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/QRHrK8A8V2QV2a548" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83110614496546,29.36257452698617" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83110614496546', '29.36257452698617', 'https://maps.app.goo.gl/QRHrK8A8V2QV2a548')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C3%96MER%20ALPER%20G%C3%9CNDO%C4%9EDU%20-%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FQRHrK8A8V2QV2a548" target="_blank" rel="noopener" data-baslik="ÖMER ALPER GÜNDOĞDU" data-metin="ÖMER ALPER GÜNDOĞDU - ŞİFA MAHALLESİ
 https://maps.app.goo.gl/QRHrK8A8V2QV2a548" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -525,8 +513,7 @@ https://maps.app.goo.gl/QRHrK8A8V2QV2a548" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/g97ogr2Uvy7sST8T8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83053096408319,29.31208964232873" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83053096408319', '29.31208964232873', 'https://maps.app.goo.gl/g97ogr2Uvy7sST8T8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C3%96MER%20YILMAZ%20UKUS%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fg97ogr2Uvy7sST8T8" target="_blank" rel="noopener" data-baslik="ÖMER YILMAZ UKUS" data-metin="ÖMER YILMAZ UKUS - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/g97ogr2Uvy7sST8T8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -543,8 +530,7 @@ https://maps.app.goo.gl/g97ogr2Uvy7sST8T8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/PRXgPan4QNFX4MWv7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82659803563569,29.32717928465744" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82659803563569', '29.32717928465744', 'https://maps.app.goo.gl/PRXgPan4QNFX4MWv7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ESLEM%20HAL%C4%B0ME%20DEM%C4%B0RC%C4%B0%20-%20TUZLA%20%C4%B0STASYON%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FPRXgPan4QNFX4MWv7" target="_blank" rel="noopener" data-baslik="ESLEM HALİME DEMİRCİ" data-metin="ESLEM HALİME DEMİRCİ - TUZLA İSTASYON MAHALLESİ
 https://maps.app.goo.gl/PRXgPan4QNFX4MWv7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -561,8 +547,7 @@ https://maps.app.goo.gl/PRXgPan4QNFX4MWv7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/9jPZoWmERwF3YoeDA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.888034308076854,29.34545708465744" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.888034308076854', '29.34545708465744', 'https://maps.app.goo.gl/9jPZoWmERwF3YoeDA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=MEHMET%20EFE%20ASLANDA%C4%9E%20-%20TUZLA%20ORHANLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F9jPZoWmERwF3YoeDA" target="_blank" rel="noopener" data-baslik="MEHMET EFE ASLANDAĞ" data-metin="MEHMET EFE ASLANDAĞ - TUZLA ORHANLI
 https://maps.app.goo.gl/9jPZoWmERwF3YoeDA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -579,8 +564,7 @@ https://maps.app.goo.gl/9jPZoWmERwF3YoeDA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/yM5yppFH8mJS93St8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.829589911889336,29.309873784657448" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.829589911889336', '29.309873784657448', 'https://maps.app.goo.gl/yM5yppFH8mJS93St8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=AHMET%20MEL%C4%B0H%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FyM5yppFH8mJS93St8" target="_blank" rel="noopener" data-baslik="AHMET MELİH" data-metin="AHMET MELİH - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/yM5yppFH8mJS93St8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -597,8 +581,7 @@ https://maps.app.goo.gl/yM5yppFH8mJS93St8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/rbHgSym4arEJkGFfA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82510271295649,29.311551113493085" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82510271295649', '29.311551113493085', 'https://maps.app.goo.gl/rbHgSym4arEJkGFfA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ELANUR%20G%C3%96KC%C3%9CL%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FrbHgSym4arEJkGFfA" target="_blank" rel="noopener" data-baslik="ELANUR GÖKCÜL" data-metin="ELANUR GÖKCÜL - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/rbHgSym4arEJkGFfA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -615,8 +598,7 @@ https://maps.app.goo.gl/rbHgSym4arEJkGFfA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/fNo7EcHvf3poTrDW8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.8171237496169,29.305145242328717" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.8171237496169', '29.305145242328717', 'https://maps.app.goo.gl/fNo7EcHvf3poTrDW8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ZEYNEP%20ESMA%20KAPAN%20-%20TUZLA%20POSTAHANE%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FfNo7EcHvf3poTrDW8" target="_blank" rel="noopener" data-baslik="ZEYNEP ESMA KAPAN" data-metin="ZEYNEP ESMA KAPAN - TUZLA POSTAHANE MAHALLESİ
 https://maps.app.goo.gl/fNo7EcHvf3poTrDW8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -633,8 +615,7 @@ https://maps.app.goo.gl/fNo7EcHvf3poTrDW8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82978096569006,29.320583299999996" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82978096569006', '29.320583299999996', 'https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=AHMET%20ADAR%20DO%C4%9EAN%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F3Dqr8A9YjqWWUp3f6" target="_blank" rel="noopener" data-baslik="AHMET ADAR DOĞAN" data-metin="AHMET ADAR DOĞAN - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -651,8 +632,7 @@ https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/oExhexLoBKAMYcHg7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83296724120572,29.361027800000002" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83296724120572', '29.361027800000002', 'https://maps.app.goo.gl/oExhexLoBKAMYcHg7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=YUSUF%20AYAZ%20B%C4%B0L%C4%B0R%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FoExhexLoBKAMYcHg7" target="_blank" rel="noopener" data-baslik="YUSUF AYAZ BİLİR" data-metin="YUSUF AYAZ BİLİR - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/oExhexLoBKAMYcHg7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -669,8 +649,7 @@ https://maps.app.goo.gl/oExhexLoBKAMYcHg7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/oExhexLoBKAMYcHg7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.832991594123136,29.361006342328725" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.832991594123136', '29.361006342328725', 'https://maps.app.goo.gl/oExhexLoBKAMYcHg7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=BAYRAM%20B%C4%B0L%C4%B0R%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FoExhexLoBKAMYcHg7" target="_blank" rel="noopener" data-baslik="BAYRAM BİLİR" data-metin="BAYRAM BİLİR - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/oExhexLoBKAMYcHg7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -687,8 +666,7 @@ https://maps.app.goo.gl/oExhexLoBKAMYcHg7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/PVhfScb2sNuh1sv26" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83965706034635,29.35686744232872" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83965706034635', '29.35686744232872', 'https://maps.app.goo.gl/PVhfScb2sNuh1sv26')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C4%B0BRAH%C4%B0M%20TOROS%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FPVhfScb2sNuh1sv26" target="_blank" rel="noopener" data-baslik="İBRAHİM TOROS" data-metin="İBRAHİM TOROS - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/PVhfScb2sNuh1sv26" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -705,8 +683,7 @@ https://maps.app.goo.gl/PVhfScb2sNuh1sv26" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/TegUf8B4BMyFEgu6A" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.831035634587934,29.31462378465745" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.831035634587934', '29.31462378465745', 'https://maps.app.goo.gl/TegUf8B4BMyFEgu6A')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=KEREM%20YA%C4%9EIZ%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FTegUf8B4BMyFEgu6A" target="_blank" rel="noopener" data-baslik="KEREM YAĞIZ" data-metin="KEREM YAĞIZ - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/TegUf8B4BMyFEgu6A" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -723,8 +700,7 @@ https://maps.app.goo.gl/TegUf8B4BMyFEgu6A" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/NXSrXCcjmNR41QxX8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83128096247628,29.362484884657444" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83128096247628', '29.362484884657444', 'https://maps.app.goo.gl/NXSrXCcjmNR41QxX8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=FURKAN%20G%C3%9CLCAN%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FNXSrXCcjmNR41QxX8" target="_blank" rel="noopener" data-baslik="FURKAN GÜLCAN" data-metin="FURKAN GÜLCAN - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/NXSrXCcjmNR41QxX8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -741,8 +717,7 @@ https://maps.app.goo.gl/NXSrXCcjmNR41QxX8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/DBPywNPqcYmb4Aro7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.869269307477694,29.301361100000005" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.869269307477694', '29.301361100000005', 'https://maps.app.goo.gl/DBPywNPqcYmb4Aro7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=YUSUF%20AYAZ%20B%C4%B0L%C4%B0R%20-%20ESENYALI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FDBPywNPqcYmb4Aro7" target="_blank" rel="noopener" data-baslik="YUSUF AYAZ BİLİR" data-metin="YUSUF AYAZ BİLİR - ESENYALI
 https://maps.app.goo.gl/DBPywNPqcYmb4Aro7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -759,8 +734,7 @@ https://maps.app.goo.gl/DBPywNPqcYmb4Aro7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83210614294528,29.366239271164357" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83210614294528', '29.366239271164357', 'https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ELANUR%20%C4%B0NAN%20-%20%C3%87AYIROVA%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FGByuDp9LZHiJ8VUX6" target="_blank" rel="noopener" data-baslik="ELANUR İNAN" data-metin="ELANUR İNAN - ÇAYIROVA
 https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -777,8 +751,7 @@ https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.8275491019536,29.359944987945113" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.8275491019536', '29.359944987945113', 'https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ADEM%20%C3%96ZG%C3%9CL%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FMEtv6iwkDfQ6Mokv8" target="_blank" rel="noopener" data-baslik="ADEM ÖZGÜL" data-metin="ADEM ÖZGÜL - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -795,8 +768,7 @@ https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/3JmoKjy2jvHhznKx7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.88274147528472,29.338901484657445" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.88274147528472', '29.338901484657445', 'https://maps.app.goo.gl/3JmoKjy2jvHhznKx7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=AR%C4%B0F%20EMRE%20%C5%9EANAL%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F3JmoKjy2jvHhznKx7" target="_blank" rel="noopener" data-baslik="ARİF EMRE ŞANAL" data-metin="ARİF EMRE ŞANAL - TUZLA AYDINLI
 https://maps.app.goo.gl/3JmoKjy2jvHhznKx7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -813,8 +785,7 @@ https://maps.app.goo.gl/3JmoKjy2jvHhznKx7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.86212605040979,29.33550063845405" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.86212605040979', '29.33550063845405', 'https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C4%B0CLAL%20SARE%20-%20TUZLA%20AYDINLI%20TOK%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FeLnUxxCrJ3c4cyf18" target="_blank" rel="noopener" data-baslik="İCLAL SARE" data-metin="İCLAL SARE - TUZLA AYDINLI TOKİ
 https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -831,8 +802,7 @@ https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.81775754456905,29.314308214808992" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.81775754456905', '29.314308214808992', 'https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=DERYA%20BAYAT%20-%20TUZLA%20CAM%C4%B0%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FqfUfzQHNqSAsoQVA8" target="_blank" rel="noopener" data-baslik="DERYA BAYAT" data-metin="DERYA BAYAT - TUZLA CAMİ MAHALLESİ
 https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -849,8 +819,7 @@ https://maps.app.goo.gl/qfUfzQHNqSAsoQVA8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.867470326706396,29.322927147892358" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.867470326706396', '29.322927147892358', 'https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=SEMRA%20U%C3%87AR%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FGuQhJ8G6xpzGnCMVA" target="_blank" rel="noopener" data-baslik="SEMRA UÇAR" data-metin="SEMRA UÇAR - TUZLA AYDINLI
 https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -867,8 +836,7 @@ https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.91753792530437,29.306190123010396" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.91753792530437', '29.306190123010396', 'https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=AZ%C4%B0Z%20AKDEN%C4%B0Z%20-%20KURTK%C3%96Y%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FWN2ALV6s7ogVnBCr9" target="_blank" rel="noopener" data-baslik="AZİZ AKDENİZ" data-metin="AZİZ AKDENİZ - KURTKÖY
 https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -885,8 +853,7 @@ https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/iKwPGNiA63Lr1ka46" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.824152595878154,29.315241657777005" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.824152595878154', '29.315241657777005', 'https://maps.app.goo.gl/iKwPGNiA63Lr1ka46')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=GAMZE%20ES%C4%B0LA%20BOLAT%20-%20TUZLA%20%C4%B0STASYON%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FiKwPGNiA63Lr1ka46" target="_blank" rel="noopener" data-baslik="GAMZE ESİLA BOLAT" data-metin="GAMZE ESİLA BOLAT - TUZLA İSTASYON MAHALLESİ
 https://maps.app.goo.gl/iKwPGNiA63Lr1ka46" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -903,8 +870,7 @@ https://maps.app.goo.gl/iKwPGNiA63Lr1ka46" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.9013000829281,29.378178365960444" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.9013000829281', '29.378178365960444', 'https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=NURF%C4%B0DAN%20%C5%9EAH%C4%B0N%20-%20TUZLA%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FDnXtcp8LMjkVnR6n9" target="_blank" rel="noopener" data-baslik="NURFİDAN ŞAHİN" data-metin="NURFİDAN ŞAHİN - TUZLA ORTA MAHALLE
 https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -921,8 +887,7 @@ https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.91024541158632,29.391192804699898" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.91024541158632', '29.391192804699898', 'https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=KEREM%20ED%C4%B0S%20-%20TUZLA%20TEPE%C3%96REN%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FpTYjbAC4v8C7d3VF7" target="_blank" rel="noopener" data-baslik="KEREM EDİS" data-metin="KEREM EDİS - TUZLA TEPEÖREN
 https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -939,8 +904,7 @@ https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/miR73asUTD5xYgzN8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.87138751278701,29.325847264285983" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.87138751278701', '29.325847264285983', 'https://maps.app.goo.gl/miR73asUTD5xYgzN8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=SELAHATT%C4%B0N%20YAS%C4%B0N%20YILMAZ%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FmiR73asUTD5xYgzN8" target="_blank" rel="noopener" data-baslik="SELAHATTİN YASİN YILMAZ" data-metin="SELAHATTİN YASİN YILMAZ - TUZLA AYDINLI
 https://maps.app.goo.gl/miR73asUTD5xYgzN8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -957,8 +921,7 @@ https://maps.app.goo.gl/miR73asUTD5xYgzN8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.868444122764565,29.328606713493077" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.868444122764565', '29.328606713493077', 'https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ERAY%20BULUT%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FRpNAAC9o6oBhvd7r9" target="_blank" rel="noopener" data-baslik="ERAY BULUT" data-metin="ERAY BULUT - TUZLA AYDINLI
 https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -975,8 +938,7 @@ https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83787236541071,29.30639962883564" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83787236541071', '29.30639962883564', 'https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=AY%C5%9EENUR%20%C3%87A%C4%9ELAYAN%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FjWPGLxxHcbDoDpmV9" target="_blank" rel="noopener" data-baslik="AYŞENUR ÇAĞLAYAN" data-metin="AYŞENUR ÇAĞLAYAN - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -993,8 +955,7 @@ https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.828617356826314,29.301800810550052" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.828617356826314', '29.301800810550052', 'https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=MUHAMMED%20AL%C4%B0%20RIZA%20CANBAKAL%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fiwwb2zL5KyiwcyPUA" target="_blank" rel="noopener" data-baslik="MUHAMMED ALİ RIZA CANBAKAL" data-metin="MUHAMMED ALİ RIZA CANBAKAL - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1011,8 +972,7 @@ https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.78680271704639,29.36256520212205" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.78680271704639', '29.36256520212205', 'https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=HAMZA%20EFE%20TOSUN%20-%20BAYRAMO%C4%9ELU%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F4Nj3bWtMMD49eBcd9" target="_blank" rel="noopener" data-baslik="HAMZA EFE TOSUN" data-metin="HAMZA EFE TOSUN - BAYRAMOĞLU
 https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1029,8 +989,7 @@ https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/osVBHfQAogCpoqvB7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.78966652047707,29.370472199999995" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.78966652047707', '29.370472199999995', 'https://maps.app.goo.gl/osVBHfQAogCpoqvB7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=EMRE%20SEL%C3%87UK%20-%20DARICA%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FosVBHfQAogCpoqvB7" target="_blank" rel="noopener" data-baslik="EMRE SELÇUK" data-metin="EMRE SELÇUK - DARICA
 https://maps.app.goo.gl/osVBHfQAogCpoqvB7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1047,8 +1006,7 @@ https://maps.app.goo.gl/osVBHfQAogCpoqvB7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/bekAQADBrvEMUFo36" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82632593142359,29.307640337954496" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82632593142359', '29.307640337954496', 'https://maps.app.goo.gl/bekAQADBrvEMUFo36')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ES%C4%B0LA%20%C4%B0%C5%9ELER%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FbekAQADBrvEMUFo36" target="_blank" rel="noopener" data-baslik="ESİLA İŞLER" data-metin="ESİLA İŞLER - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/bekAQADBrvEMUFo36" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1065,8 +1023,7 @@ https://maps.app.goo.gl/bekAQADBrvEMUFo36" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/69JXcYPhaUXGKRCN7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83997199425894,29.303121828835636" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83997199425894', '29.303121828835636', 'https://maps.app.goo.gl/69JXcYPhaUXGKRCN7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=%C4%B0LAYDA%20%C5%9EENOL%20-%20TUZLA%20EVL%C4%B0YA%20%C3%87ELEB%C4%B0%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F69JXcYPhaUXGKRCN7" target="_blank" rel="noopener" data-baslik="İLAYDA ŞENOL" data-metin="İLAYDA ŞENOL - TUZLA EVLİYA ÇELEBİ MAHALLESİ
 https://maps.app.goo.gl/69JXcYPhaUXGKRCN7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1083,8 +1040,7 @@ https://maps.app.goo.gl/69JXcYPhaUXGKRCN7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/uzpifBe3C3s4hsSe8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83017798283948,29.312527799999998" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83017798283948', '29.312527799999998', 'https://maps.app.goo.gl/uzpifBe3C3s4hsSe8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=YUSUF%20%C3%87AL%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FuzpifBe3C3s4hsSe8" target="_blank" rel="noopener" data-baslik="YUSUF ÇAL" data-metin="YUSUF ÇAL - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/uzpifBe3C3s4hsSe8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1101,8 +1057,7 @@ https://maps.app.goo.gl/uzpifBe3C3s4hsSe8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/h47BL3UwjycAD8zS9" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.841439524088464,29.366967813493083" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.841439524088464', '29.366967813493083', 'https://maps.app.goo.gl/h47BL3UwjycAD8zS9')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=M%C4%B0KA%C4%B0L%20KALINTA%C5%9E%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fh47BL3UwjycAD8zS9" target="_blank" rel="noopener" data-baslik="MİKAİL KALINTAŞ" data-metin="MİKAİL KALINTAŞ - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/h47BL3UwjycAD8zS9" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1119,8 +1074,7 @@ https://maps.app.goo.gl/h47BL3UwjycAD8zS9" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.833047193990396,29.35792928465744" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.833047193990396', '29.35792928465744', 'https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=MET%C4%B0N%20KARSLI%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FqKUnZPkSfa5fiNsa7" target="_blank" rel="noopener" data-baslik="METİN KARSLI" data-metin="METİN KARSLI - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1137,8 +1091,7 @@ https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83221946528022,29.35424999999999" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83221946528022', '29.35424999999999', 'https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ABDULLAH%20%C3%87EL%C4%B0K%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FTx8mevk6ygtiAVBw8" target="_blank" rel="noopener" data-baslik="ABDULLAH ÇELİK" data-metin="ABDULLAH ÇELİK - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1155,8 +1108,7 @@ https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82857023189332,29.35962817116436" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82857023189332', '29.35962817116436', 'https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=YA%C4%9EMUR%20%C3%87A%C4%9EIL%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FmTTc2hZTQoK3ZJQF7" target="_blank" rel="noopener" data-baslik="YAĞMUR ÇAĞIL" data-metin="YAĞMUR ÇAĞIL - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1173,8 +1125,7 @@ https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.8436472617208,29.364661971269904" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.8436472617208', '29.364661971269904', 'https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ZEYNEP%20KARAMAN%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F1y6gdSaLSFS2X1ts7" target="_blank" rel="noopener" data-baslik="ZEYNEP KARAMAN" data-metin="ZEYNEP KARAMAN - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1191,8 +1142,7 @@ https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/xAcAqRSETknnJrZq5" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83434232001036,29.31270789302038" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83434232001036', '29.31270789302038', 'https://maps.app.goo.gl/xAcAqRSETknnJrZq5')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=Y%C3%9CCEHAN%20TA%C5%9EOVA%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FxAcAqRSETknnJrZq5" target="_blank" rel="noopener" data-baslik="YÜCEHAN TAŞOVA" data-metin="YÜCEHAN TAŞOVA - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/xAcAqRSETknnJrZq5" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1209,8 +1159,7 @@ https://maps.app.goo.gl/xAcAqRSETknnJrZq5" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/PY4uTYUkcbFs28CX6" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83234625754406,29.313524349050862" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83234625754406', '29.313524349050862', 'https://maps.app.goo.gl/PY4uTYUkcbFs28CX6')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=FEYZA%20SENA%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FPY4uTYUkcbFs28CX6" target="_blank" rel="noopener" data-baslik="FEYZA SENA" data-metin="FEYZA SENA - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/PY4uTYUkcbFs28CX6" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1227,8 +1176,7 @@ https://maps.app.goo.gl/PY4uTYUkcbFs28CX6" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/x28RzWPEyueyZ7gBA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.86621717401141,29.34123927116437" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.86621717401141', '29.34123927116437', 'https://maps.app.goo.gl/x28RzWPEyueyZ7gBA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=M%C4%B0NA%20BOYSAN%20-%20TUZLA%20AYDINLI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fx28RzWPEyueyZ7gBA" target="_blank" rel="noopener" data-baslik="MİNA BOYSAN" data-metin="MİNA BOYSAN - TUZLA AYDINLI
 https://maps.app.goo.gl/x28RzWPEyueyZ7gBA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1245,8 +1193,7 @@ https://maps.app.goo.gl/x28RzWPEyueyZ7gBA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.90185369960096,29.38219579412973" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.90185369960096', '29.38219579412973', 'https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=BEYTULLAH%20YAVUZ%20-%20TUZLA%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FR4Ejz3Jr58p1rLmH7" target="_blank" rel="noopener" data-baslik="BEYTULLAH YAVUZ" data-metin="BEYTULLAH YAVUZ - TUZLA ORTA MAHALLE
 https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1263,8 +1210,7 @@ https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/5wsiiuuEvF5kczM2A" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.901315358921615,29.381052005173366" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.901315358921615', '29.381052005173366', 'https://maps.app.goo.gl/5wsiiuuEvF5kczM2A')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=FATMANUR%20%C3%96ZT%C3%9CRK%20-%20TUZLA%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F5wsiiuuEvF5kczM2A" target="_blank" rel="noopener" data-baslik="FATMANUR ÖZTÜRK" data-metin="FATMANUR ÖZTÜRK - TUZLA ORTA MAHALLE
 https://maps.app.goo.gl/5wsiiuuEvF5kczM2A" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1281,8 +1227,7 @@ https://maps.app.goo.gl/5wsiiuuEvF5kczM2A" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.87992704471022,29.339082762308486" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.87992704471022', '29.339082762308486', 'https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=Y%C4%B0%C4%9E%C4%B0T%20EFE%20G%C3%96KYAR%20-%20KONA%C5%9ELI%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fnkch2rFY8sE4f9Qf6" target="_blank" rel="noopener" data-baslik="YİĞİT EFE GÖKYAR" data-metin="YİĞİT EFE GÖKYAR - KONAŞLI
 https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1299,8 +1244,7 @@ https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/1juBzDQBKDgjVec16" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82903515274744,29.360940555133293" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82903515274744', '29.360940555133293', 'https://maps.app.goo.gl/1juBzDQBKDgjVec16')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=AHMET%20%C3%87A%C4%9EIN%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F1juBzDQBKDgjVec16" target="_blank" rel="noopener" data-baslik="AHMET ÇAĞIN" data-metin="AHMET ÇAĞIN - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/1juBzDQBKDgjVec16" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1317,8 +1261,7 @@ https://maps.app.goo.gl/1juBzDQBKDgjVec16" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/zNZZftpFAzo1s5bSA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.9016834228326,29.378306506508356" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.9016834228326', '29.378306506508356', 'https://maps.app.goo.gl/zNZZftpFAzo1s5bSA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=RAB%C4%B0A%20SA%C4%9ELIK%20-%20TUZLA%20ORTA%20MAHALLE%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FzNZZftpFAzo1s5bSA" target="_blank" rel="noopener" data-baslik="RABİA SAĞLIK" data-metin="RABİA SAĞLIK - TUZLA ORTA MAHALLE
 https://maps.app.goo.gl/zNZZftpFAzo1s5bSA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1335,8 +1278,7 @@ https://maps.app.goo.gl/zNZZftpFAzo1s5bSA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/BSo2j3AeihYZKmL68" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83642015220152,29.307605427425298" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83642015220152', '29.307605427425298', 'https://maps.app.goo.gl/BSo2j3AeihYZKmL68')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=BURCU%20ATE%C5%9E%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FBSo2j3AeihYZKmL68" target="_blank" rel="noopener" data-baslik="BURCU ATEŞ" data-metin="BURCU ATEŞ - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/BSo2j3AeihYZKmL68" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1353,8 +1295,7 @@ https://maps.app.goo.gl/BSo2j3AeihYZKmL68" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/U63FCY1pdVcskTyZ7" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.822608685796176,29.30730266506917" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.822608685796176', '29.30730266506917', 'https://maps.app.goo.gl/U63FCY1pdVcskTyZ7')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=YUSUF%20BOZDO%C4%9EAN%20-%20TUZLA%20POSTAHANE%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FU63FCY1pdVcskTyZ7" target="_blank" rel="noopener" data-baslik="YUSUF BOZDOĞAN" data-metin="YUSUF BOZDOĞAN - TUZLA POSTAHANE MAHALLESİ
 https://maps.app.goo.gl/U63FCY1pdVcskTyZ7" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1371,8 +1312,7 @@ https://maps.app.goo.gl/U63FCY1pdVcskTyZ7" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83616173475196,29.301234884657436" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83616173475196', '29.301234884657436', 'https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=TUZLA%20BELED%C4%B0YES%C4%B0%20ENGELS%C4%B0Z%20YA%C5%9EAM%20MERKEZ%C4%B0%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FP5Ljd8BV4WDmwWuAA" target="_blank" rel="noopener" data-baslik="TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ" data-metin="TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1389,8 +1329,7 @@ https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83023315760372,29.355640632324654" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83023315760372', '29.355640632324654', 'https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=BERKAY%20%C3%87AYIR%20-%20TUZLA%20%C5%9E%C4%B0FA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FZ43xuHVK6pxB9cLi8" target="_blank" rel="noopener" data-baslik="BERKAY ÇAYIR" data-metin="BERKAY ÇAYIR - TUZLA ŞİFA MAHALLESİ
 https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1407,8 +1346,7 @@ https://maps.app.goo.gl/Z43xuHVK6pxB9cLi8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/GnDxQpBBT7D2CVg27" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.82824831272407,29.318162896584802" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.82824831272407', '29.318162896584802', 'https://maps.app.goo.gl/GnDxQpBBT7D2CVg27')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=TALHA%20KICAN%C3%87%20CAN%20-%20TUZLA%20%C4%B0STASYON%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2FGnDxQpBBT7D2CVg27" target="_blank" rel="noopener" data-baslik="TALHA KICANÇ CAN" data-metin="TALHA KICANÇ CAN - TUZLA İSTASYON MAHALLESİ
 https://maps.app.goo.gl/GnDxQpBBT7D2CVg27" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1425,8 +1363,7 @@ https://maps.app.goo.gl/GnDxQpBBT7D2CVg27" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83039469980715,29.310945710077966" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83039469980715', '29.310945710077966', 'https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=ENES%20ARAS%20-%20TUZLA%20YAYLA%20MAHALLES%C4%B0%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2F8Hsi23xs6yYb4WAF8" target="_blank" rel="noopener" data-baslik="ENES ARAS" data-metin="ENES ARAS - TUZLA YAYLA MAHALLESİ
 https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1443,8 +1380,7 @@ https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8" onclick="return paylas(this)">WhatsAp
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://www.google.com/maps/dir/?api=1&amp;destination=40.832743,29.312556" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.832743,29.312556" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.832743', '29.312556', 'https://www.google.com/maps/dir/?api=1&amp;destination=40.832743,29.312556')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=Aytekin%20G%C3%9CNEL%20-%20Tuzla%20Yayla%20Mahallesi%0Ahttps%3A%2F%2Fwww.google.com%2Fmaps%2Fdir%2F%3Fapi%3D1%26destination%3D40.832743%2C29.312556" target="_blank" rel="noopener" data-baslik="Aytekin GÜNEL" data-metin="Aytekin GÜNEL - Tuzla Yayla Mahallesi
 https://www.google.com/maps/dir/?api=1&amp;destination=40.832743,29.312556" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1461,8 +1397,7 @@ https://www.google.com/maps/dir/?api=1&amp;destination=40.832743,29.312556" oncl
                 </div>
             </div>
             <div class="butonlar">
-                <a class="nav-btn gmaps" href="https://maps.app.goo.gl/z61duRuNLfqKeJeV8" target="_blank" rel="noopener">Maps</a>
-                <a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~40.83616689170353,29.372001811494332" target="_blank" rel="noopener">Yandex</a>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.83616689170353', '29.372001811494332', 'https://maps.app.goo.gl/z61duRuNLfqKeJeV8')">Yol Tarifi</button>
                 <a class="gonder" href="https://wa.me/?text=EM%C4%B0RHAN%20%C3%96ZDEM%C4%B0R%20-%20%C3%87AYIROVA%0Ahttps%3A%2F%2Fmaps.app.goo.gl%2Fz61duRuNLfqKeJeV8" target="_blank" rel="noopener" data-baslik="EMİRHAN ÖZDEMİR" data-metin="EMİRHAN ÖZDEMİR - ÇAYIROVA
 https://maps.app.goo.gl/z61duRuNLfqKeJeV8" onclick="return paylas(this)">WhatsApp</a>
             </div>
@@ -1472,6 +1407,17 @@ https://maps.app.goo.gl/z61duRuNLfqKeJeV8" onclick="return paylas(this)">WhatsAp
     <section class="bolum" id="bolum-yerel" style="display:none;"></section>
 
     <div class="not" id="bosNot">Eşleşen kayıt bulunamadı.</div>
+</div>
+
+<!-- Navigasyon Seçim Penceresi -->
+<div class="modal-perde" id="navModal" onclick="navModalKapat(event)">
+    <div class="modal-kutu">
+        <div class="modal-baslik">Navigasyon Seçin</div>
+        <a class="modal-btn btn-gmaps" id="navLinkGoogle" href="#" target="_blank">Google Haritalar</a>
+        <a class="modal-btn btn-yandex" id="navLinkYandex" href="#" target="_blank">Yandex Navigasyon</a>
+        <a class="modal-btn btn-apple" id="navLinkApple" href="#" target="_blank">Apple Haritalar</a>
+        <button class="modal-btn btn-kapat" onclick="document.getElementById('navModal').style.display='none'">Vazgeç</button>
+    </div>
 </div>
 
 <script>
@@ -1514,6 +1460,24 @@ function ogrBul(kimlik) {
 
 function telSade(n) { return String(n || "").replace(/[^0-9+]/g, ""); }
 
+/* ---------- Navigasyon Seçici ---------- */
+function navigasyonAc(lat, lng, link) {
+    if (!lat || !lng) {
+        window.open(link, "_blank");
+        return;
+    }
+    var gUrl = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
+    var yUrl = "https://yandex.com.tr/harita/?rtext=~" + lat + "," + lng;
+    var aUrl = "http://maps.apple.com/?daddr=" + lat + "," + lng;
+    document.getElementById("navLinkGoogle").href = gUrl;
+    document.getElementById("navLinkYandex").href = yUrl;
+    document.getElementById("navLinkApple").href = aUrl;
+    document.getElementById("navModal").style.display = "flex";
+}
+function navModalKapat(e) {
+    if (e.target.id === "navModal") { document.getElementById("navModal").style.display = "none"; }
+}
+
 /* ---------- Servis Modu (Alındı İşareti) ---------- */
 function tikleriYukle() {
     try { alinanlar = JSON.parse(localStorage.getItem(TIK_ANAHTAR)) || {}; } catch(e) { alinanlar = {}; }
@@ -1540,21 +1504,23 @@ function tikleriSifirla() {
     els.forEach(function(el){ el.classList.remove("alindi"); });
 }
 
-/* ---------- Toplu Harita Rotası Aç ---------- */
-function tumunuHaritadaAc(tur) {
-    var liste = [];
-    if (tur === "hepsi") { liste = OGRENCILER; }
-    else if (tur.indexOf("g") === 0) {
-        var gIndex = parseInt(tur.substring(1));
-        if (GUZERGAHLAR[gIndex]) {
-            GUZERGAHLAR[gIndex].uyeler.forEach(function(uid){ var o = ogrBul(uid); if(o) liste.push(o); });
-        }
-    } else if (tur === "yerel" && aktifYerel >= 0) {
-        yerelListeler[aktifYerel].uyeler.forEach(function(uid){ var o = ogrBul(uid); if(o) liste.push(o); });
+/* ---------- Sadece Seçili/Aktif Listenin Rotasını Aç ---------- */
+function tumunuHaritadaAc(bolumId) {
+    var hedefBolum = null;
+    if (bolumId) {
+        hedefBolum = document.getElementById(bolumId);
+    } else if (aktifYerel >= 0) {
+        hedefBolum = document.getElementById("bolum-yerel");
+    } else {
+        hedefBolum = document.getElementById(aktifAnahtar);
     }
+    if (!hedefBolum) return;
+    var kartlar = hedefBolum.querySelectorAll(".kart");
     var koords = [];
-    liste.forEach(function(o){
-        if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {
+    kartlar.forEach(function(k){
+        var id = k.getAttribute("data-id");
+        var o = ogrBul(id);
+        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {
             koords.push(o.enlem + "," + o.boylam);
         }
     });
@@ -1697,7 +1663,7 @@ function yerelCiz() {
     if (aktifYerel < 0 || !yerelListeler[aktifYerel]) { bolum.innerHTML = ""; return; }
     var L = yerelListeler[aktifYerel];
     var h = '<div class="bolum-baslik-satir"><div class="bolum-basligi">' + kacis(L.ad) + " &middot; " + L.uyeler.length + " durak</div>" +
-            '<button class="rota-harita-btn" onclick="tumunuHaritadaAc(\'yerel\')">&#128506; Rotayı Aç</button></div>';
+            '<button class="rota-harita-btn" onclick="tumunuHaritadaAc(\'bolum-yerel\')">&#128506; Rotayı Aç</button></div>';
     h += '<div class="yerel-arac">' +
          '<button class="arac-btn vurgu" onclick="yerelPaylas()">Paylaş</button>' +
          (L.uyeler.length > 1 ? '<button class="arac-btn" onclick="siralaAcKapa()">Sırala</button>' : "") +
@@ -1719,7 +1685,8 @@ function yerelCiz() {
         for (var i = 0; i < L.uyeler.length; i++) {
             var o = ogrBul(L.uyeler[i]); if (!o) continue;
             var metin = o.ad + " - " + o.mahalle + "\n" + o.link;
-            var yanBtn = (o.enlem) ? '<a class="nav-btn yandex" href="https://yandex.com.tr/harita/?rtext=~' + o.enlem + ',' + o.boylam + '" target="_blank" rel="noopener">Yandex</a>' : "";
+            var latV = (o.enlem !== undefined && o.enlem !== null) ? o.enlem : "";
+            var lngV = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";
             h += '<li class="kart sirali" id="kart-' + kacis(o.id) + '" data-id="' + kacis(o.id) + '">' +
                  '<div class="oklar">' +
                      '<button class="ok" onclick="yerelTasi(' + i + ',-1)"' + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +
@@ -1737,8 +1704,7 @@ function yerelCiz() {
                          "</div>" +
                      "</div>" +
                      '<div class="butonlar">' +
-                         '<a class="nav-btn gmaps" href="' + kacis(o.link) + '" target="_blank" rel="noopener">Maps</a>' +
-                         yanBtn +
+                         '<button class="nav-btn gmaps" onclick="navigasyonAc(\'' + latV + '\', \'' + lngV + '\', \'' + kacis(o.link) + '\')">Yol Tarifi</button>' +
                          '<a class="gonder" href="https://wa.me/?text=' + encodeURIComponent(metin) + '" target="_blank" rel="noopener" data-baslik="' + kacis(o.ad) + '" data-metin="' + kacis(metin) + '" onclick="return paylas(this)">WhatsApp</a>' +
                          '<button class="cikar" onclick="yerelCikar(' + i + ')">Çıkar</button>' +
                      "</div>" +
