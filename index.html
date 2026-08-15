@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12161C">
@@ -51,7 +51,12 @@
     .kart.alindi { opacity:0.4; border-color:#1F5240; background:#101714; }
     .kart.alindi .tik-btn { background:#3DD68C; color:#14181F; border-color:#3DD68C; }
     .kart.sirali { display:flex; gap:12px; align-items:flex-start; }
-    .surukle-tut { width:32px; height:42px; display:flex; align-items:center; justify-content:center; color:#5E6C7E; font-size:18px; cursor:grab; touch-action:none; flex:0 0 auto; }
+    .surukle-tut { width:32px; height:34px; display:flex; align-items:center; justify-content:center; color:#5E6C7E; font-size:18px; cursor:grab; touch-action:none; flex:0 0 auto; }
+    .tut-sutun { display:flex; flex-direction:column; align-items:center; gap:3px; flex:0 0 auto; }
+    .ok { width:32px; height:30px; padding:0; border:1px solid #333D4B; background:#232B36; color:#8A97A8;
+          border-radius:7px; font-size:12px; line-height:1; cursor:pointer; font-family:inherit; }
+    .ok:active { border-color:#9B8CFF; color:#E8EDF3; }
+    .ok:disabled { opacity:0.25; }
     .kart-govde { flex:1; min-width:0; }
     .kart-ust { display:flex; gap:12px; align-items:flex-start; }
     .tik-btn { width:32px; height:32px; border-radius:8px; border:2px solid #333D4B; background:#232B36;
@@ -1389,6 +1394,13 @@ var u = document.getElementById("jsUyari"); if (u) { u.style.display = "none"; }
 var sk = document.getElementById("sekmeler"); if (sk) { sk.style.display = "flex"; }
 var ks = document.getElementById("konumSatiri"); if (ks && navigator.geolocation) { ks.style.display = "flex"; }
 
+function jsKacis(m) {
+    return String(m === undefined || m === null ? "" : m)
+        .replace(/\\/g, "\\\\").replace(/'/g, "\\'")
+        .replace(/&/g, "&amp;").replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 function kacis(m) {
     return String(m === undefined || m === null ? "" : m)
         .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -1596,6 +1608,16 @@ function surukleBirak(e, hedefIndex) {
     yerelKaydet(); yerelCiz(); filtrele();
 }
 
+/* Ok dugmeleriyle tasima: dokunmatikte surukleme calismazsa yedek yol */
+function yerelTasi(sira, yon) {
+    if (aktifYerel < 0) { return; }
+    var d = yerelListeler[aktifYerel].uyeler;
+    var hedef = sira + yon;
+    if (hedef < 0 || hedef >= d.length) { return; }
+    var g = d[sira]; d[sira] = d[hedef]; d[hedef] = g;
+    yerelKaydet(); yerelCiz(); filtrele();
+}
+
 /* ---------- Yerel Hafıza & Günlük Listeler ---------- */
 function yerelYukle() { try { yerelListeler = JSON.parse(localStorage.getItem(ANAHTAR)) || []; } catch(e) {} }
 function yerelKaydet() { try { localStorage.setItem(ANAHTAR, JSON.stringify(yerelListeler)); } catch(e) {} }
@@ -1714,10 +1736,14 @@ function yerelCiz() {
             var lngV = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";
             var telV = telSade(o.telefon || "");
             h += '<li class="kart sirali" id="kart-' + kacis(o.id) + '" data-id="' + kacis(o.id) + '" draggable="true" ondragstart="surukleBasla(event, ' + i + ')" ondragend="surukleBitir(event)" ondragover="surukleUzerinde(event)" ondrop="surukleBirak(event, ' + i + ')">' +
-                 '<div class="surukle-tut">&#9776;</div>' +
+                 '<div class="tut-sutun">' +
+                     '<button class="ok" onclick="yerelTasi(' + i + ',-1)"' + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +
+                     '<div class="surukle-tut">&#9776;</div>' +
+                     '<button class="ok" onclick="yerelTasi(' + i + ',1)"' + (i === L.uyeler.length - 1 ? " disabled" : "") + ">&#9660;</button>" +
+                 '</div>' +
                  '<div class="kart-govde">' +
                      '<div class="kart-ust">' +
-                         '<button class="tik-btn" onclick="durumDegistir(\'' + kacis(o.id) + '\')">&#10003;</button>' +
+                         '<button class="tik-btn" onclick="durumDegistir(\'' + jsKacis(o.id) + '\')">&#10003;</button>' +
                          '<div class="kisi">' +
                              '<h2><span class="sira-no">' + (i + 1) + "</span>" + kacis(o.ad) + "</h2>" +
                              "<p>" + kacis(o.mahalle) + "</p>" +
@@ -1727,8 +1753,8 @@ function yerelCiz() {
                          "</div>" +
                      "</div>" +
                      '<div class="butonlar">' +
-                         '<button class="nav-btn gmaps" onclick="navigasyonAc(\'' + latV + '\', \'' + lngV + '\', \'' + kacis(o.link) + '\')">Yol Tarifi</button>' +
-                         '<button class="gonder" onclick="waSecimAc(\'' + kacis(o.ad) + '\', \'' + kacis(o.mahalle) + '\', \'' + kacis(o.link) + '\', \'' + telV + '\')">WhatsApp</button>' +
+                         '<button class="nav-btn gmaps" onclick="navigasyonAc(\'' + latV + '\', \'' + lngV + '\', \'' + jsKacis(o.link) + '\')">Yol Tarifi</button>' +
+                         '<button class="gonder" onclick="waSecimAc(\'' + jsKacis(o.ad) + '\', \'' + jsKacis(o.mahalle) + '\', \'' + jsKacis(o.link) + '\', \'' + telV + '\')">WhatsApp</button>' +
                          '<button class="cikar" onclick="yerelCikar(' + i + ')">Çıkar</button>' +
                      "</div>" +
                  "</div></li>";
