@@ -12,7 +12,12 @@
     body { margin:0; padding:0 0 50px 0; background:#12161C; color:#E8EDF3;
            font-family:"Segoe UI", system-ui, -apple-system, Roboto, sans-serif; font-size:15px; }
     .sarma { max-width:520px; margin:0 auto; padding:0 16px; }
-    header { padding:24px 0 14px 0; border-bottom:1px solid #333D4B; margin-bottom:20px; }
+    header { padding:24px 0 14px 0; border-bottom:1px solid #333D4B; margin-bottom:20px;
+             display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .yenile-btn { background:transparent; border:1px solid #333D4B; color:#8A97A8; font-size:11px;
+                  font-weight:700; border-radius:6px; padding:8px 12px; cursor:pointer;
+                  font-family:inherit; flex:0 0 auto; width:auto; margin:0; }
+    .yenile-btn:active { border-color:#FFC400; color:#FFC400; }
     h1 { margin:0; font-size:18px; letter-spacing:2px; text-transform:uppercase; font-weight:700; }
     h1 span { color:#FFC400; }
     .alt { color:#8A97A8; font-size:12px; margin-top:4px; }
@@ -41,8 +46,11 @@
 <body>
 <div class="sarma">
     <header>
-        <h1>Öğrenci <span>Ekle</span></h1>
-        <div class="alt">Telefondan hızlı kayıt</div>
+        <div>
+            <h1>Öğrenci <span>Ekle</span></h1>
+            <div class="alt">Telefondan hızlı kayıt</div>
+        </div>
+        <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>
     </header>
     <div class="durum" id="durum"></div>
     <div class="blok" id="ayarBlok">
@@ -207,6 +215,10 @@ function listeSayfasiUret() {
 '    .tarih { color:#8A97A8; font-size:12px; margin-top:2px; }\n' +
 '    .sifirla-btn { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-size:11px;\n' +
 '                   font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; }\n' +
+'    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; }\n' +
+'    .yenile-btn { background:transparent; border:1px solid #333D4B; color:#8A97A8; font-size:11px;\n' +
+'                  font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; font-family:inherit; }\n' +
+'    .yenile-btn:active { border-color:#FFC400; color:#FFC400; }\n' +
 '\n' +
 '    .ust { position:-webkit-sticky; position:sticky; top:0; z-index:5; background:#12161C;\n' +
 '           padding:10px 0 12px 0; box-shadow:0 6px 12px -8px rgba(0,0,0,0.9); }\n' +
@@ -314,7 +326,10 @@ function listeSayfasiUret() {
 '            <h1>Öğrenci <span>Rotaları</span></h1>\n' +
 '            <div class="tarih">Son güncelleme: ' + htmlKacis(tarih) + '</div>\n' +
 '        </div>\n' +
-'        <button class="sifirla-btn" onclick="tikleriSifirla()">Servisi Sıfırla</button>\n' +
+'        <div class="bas-dugmeler">\n' +
+'            <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>\n' +
+'            <button class="sifirla-btn" onclick="tikleriSifirla()">Servisi Sıfırla</button>\n' +
+'        </div>\n' +
 '    </header>\n' +
 '\n' +
 '    <div class="js-kapali" id="jsUyari">Tarayıcı JavaScript desteklemiyor.</div>\n' +
@@ -390,6 +405,12 @@ bolumler +
 'var u = document.getElementById("jsUyari"); if (u) { u.style.display = "none"; }\n' +
 'var sk = document.getElementById("sekmeler"); if (sk) { sk.style.display = "flex"; }\n' +
 'var ks = document.getElementById("konumSatiri"); if (ks && navigator.geolocation) { ks.style.display = "flex"; }\n' +
+'\n' +
+'/* Adresin sonuna taze bir zaman damgasi koyup yeniden yukler. */\n' +
+'function sayfayiYenile() {\n' +
+'    var temiz = location.href.split("#")[0].split("?")[0];\n' +
+'    location.replace(temiz + "?v=" + Date.now());\n' +
+'}\n' +
 '\n' +
 'function jsKacis(m) {\n' +
 '    return String(m === undefined || m === null ? "" : m)\n' +
@@ -832,6 +853,12 @@ function b64Oku(veri) { return decodeURIComponent(escape(atob(String(veri).repla
 
 var ogrenciler = [];
 var guzergahlar = [];
+
+/* Adresin sonuna taze bir zaman damgasi koyup yeniden yukler. */
+function sayfayiYenile() {
+    var temiz = location.href.split("#")[0].split("?")[0];
+    location.replace(temiz + "?v=" + Date.now());
+}
 
 function el(k) { return document.getElementById(k); }
 function bildir(mesaj, tur) { var d = el("durum"); d.className = "durum " + (tur || "bilgi"); d.innerHTML = htmlKacis(mesaj); window.scrollTo(0, 0); }
