@@ -1795,6 +1795,15 @@ function filtrele() {
                 kartlar[i].style.display = (kartlar[i].className.indexOf("sirali") !== -1) ? "flex" : "block"; gorunen++;
             } else { kartlar[i].style.display = "none"; }
         }
+        var satirlar = bolumler[b].getElementsByClassName("ekle-satir");
+        var satirGorunen = 0;
+        for (var s2 = 0; s2 < satirlar.length; s2++) {
+            var m2 = sadelestir(satirlar[s2].textContent || "");
+            if (!aramaVar || m2.indexOf(aranan) !== -1) {
+                satirlar[s2].style.display = "flex"; satirGorunen++;
+            } else { satirlar[s2].style.display = "none"; }
+        }
+        if (yerelMi) { gorunen += satirGorunen; }
         var gorunsun = yerelMi ? yerelAcik : (yerelAcik ? false : (aramaVar ? (gorunen > 0) : (bolumler[b].id === aktifAnahtar)));
         bolumler[b].style.display = gorunsun ? "block" : "none";
         if (gorunsun) toplam += gorunen;
