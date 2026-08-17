@@ -1514,6 +1514,20 @@ function durumDegistir(id) {
         else el.classList.remove("alindi");
     });
 }
+/* Verilen kimliklerin alindi isaretini kaldirir (hafizadan ve ekrandan). */
+function tikleriKaldir(idler) {
+    if (!idler || idler.length === 0) return 0;
+    var sayi = 0;
+    for (var i = 0; i < idler.length; i++) {
+        var id = idler[i];
+        if (alinanlar[id]) { delete alinanlar[id]; sayi++; }
+        var els = document.querySelectorAll("[data-id='" + id + "']");
+        for (var j = 0; j < els.length; j++) { els[j].classList.remove("alindi"); }
+    }
+    try { localStorage.setItem(TIK_ANAHTAR, JSON.stringify(alinanlar)); } catch(e){}
+    return sayi;
+}
+
 function tikleriSifirla() {
     if (!confirm("Tüm durakların alındı işareti sıfırlansın mı?")) return;
     alinanlar = {};
@@ -1713,7 +1727,8 @@ function yerelAdDegistir() {
     yerelKaydet(); sekmeleriCiz(); yerelCiz();
 }
 function yerelSil() {
-    if (aktifYerel < 0 || !confirm("Bu liste silinsin mi?")) return;
+    if (aktifYerel < 0 || !confirm("Bu liste silinsin mi? Listedeki durakların alındı işaretleri de temizlenir.")) return;
+    tikleriKaldir(yerelListeler[aktifYerel].uyeler);
     yerelListeler.splice(aktifYerel, 1);
     yerelKaydet(); sekmeSec("bolum-hepsi");
 }
@@ -1726,8 +1741,18 @@ function yerelEkle(kimlik) {
     if (ak) { ak.value = ""; ak.blur(); }
     sekmeleriCiz(); yerelCiz(); filtrele();
 }
-function yerelCikar(sira) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.splice(sira, 1); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }
-function yerelBosalt() { if (aktifYerel < 0 || !confirm("Tüm duraklar çıkarılsın mı?")) return; yerelListeler[aktifYerel].uyeler = []; yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }
+function yerelCikar(sira) {
+    if (aktifYerel < 0) return;
+    var cikan = yerelListeler[aktifYerel].uyeler.splice(sira, 1);
+    tikleriKaldir(cikan);
+    yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele();
+}
+function yerelBosalt() {
+    if (aktifYerel < 0 || !confirm("Tüm duraklar çıkarılsın mı? Alındı işaretleri de temizlenir.")) return;
+    tikleriKaldir(yerelListeler[aktifYerel].uyeler);
+    yerelListeler[aktifYerel].uyeler = [];
+    yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele();
+}
 function yerelPaylas() {
     if (aktifYerel < 0) return;
     var L = yerelListeler[aktifYerel]; var metin = L.ad + "\n\n"; var n = 0;
