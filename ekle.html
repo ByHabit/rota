@@ -91,6 +91,16 @@ function htmlKacis(metin) {
         .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+function jsKacis(metin) {
+    return String(metin === undefined || metin === null ? "" : metin)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
 function telSadelestir(numara) { return String(numara || "").replace(/[^0-9+]/g, ""); }
 
 function koordinatCoz(metin) {
