@@ -658,9 +658,11 @@ bolumler +
 'function yerelSec(sira) { aktifYerel = sira; aktifAnahtar = "yerel-" + sira; sekmeleriCiz(); yerelCiz(); filtrele(); window.scrollTo(0,0); }\n' +
 'function yerelOlustur() {\n' +
 '    var t = new Date(); var oneri = ("0" + t.getDate()).slice(-2) + "." + ("0" + (t.getMonth() + 1)).slice(-2) + " Sabah";\n' +
-'    var ad = prompt("Liste adı:", oneri);\n' +
-'    if (!ad) return;\n' +
-'    yerelListeler.push({ ad: ad.trim(), uyeler: [] });\n' +
+'    var ad = prompt("Liste adı (boş bırakırsan " + oneri + " olur):", "");\n' +
+'    if (ad === null) return;\n' +
+'    ad = ad.replace(/^\\s+|\\s+$/g, "");\n' +
+'    if (!ad) { ad = oneri; }\n' +
+'    yerelListeler.push({ ad: ad, uyeler: [] });\n' +
 '    yerelKaydet(); yerelSec(yerelListeler.length - 1);\n' +
 '}\n' +
 'function yerelAdDegistir() {\n' +
@@ -675,7 +677,15 @@ bolumler +
 '    yerelListeler.splice(aktifYerel, 1);\n' +
 '    yerelKaydet(); sekmeSec("bolum-hepsi");\n' +
 '}\n' +
-'function yerelEkle(kimlik) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.push(kimlik); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }\n' +
+'function yerelEkle(kimlik) {\n' +
+'    if (aktifYerel < 0) return;\n' +
+'    yerelListeler[aktifYerel].uyeler.push(kimlik);\n' +
+'    yerelKaydet();\n' +
+'    /* Ekledikten sonra arama kutusunu temizle ki tum liste yeniden gorunsun */\n' +
+'    var ak = document.getElementById("arama");\n' +
+'    if (ak) { ak.value = ""; ak.blur(); }\n' +
+'    sekmeleriCiz(); yerelCiz(); filtrele();\n' +
+'}\n' +
 'function yerelCikar(sira) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.splice(sira, 1); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }\n' +
 'function yerelBosalt() { if (aktifYerel < 0 || !confirm("Tüm duraklar çıkarılsın mı?")) return; yerelListeler[aktifYerel].uyeler = []; yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }\n' +
 'function yerelPaylas() {\n' +
