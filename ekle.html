@@ -91,6 +91,16 @@ function htmlKacis(metin) {
         .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+function jsKacis(metin) {
+    return String(metin === undefined || metin === null ? "" : metin)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
 function telSadelestir(numara) { return String(numara || "").replace(/[^0-9+]/g, ""); }
 
 function koordinatCoz(metin) {
@@ -159,10 +169,6 @@ function listeSayfasiUret() {
     var tarih = new Date().toLocaleDateString('tr-TR');
 
     var sekmeler = '        <button class="sekme aktif" data-anahtar="bolum-hepsi" onclick="sekmeSec(\'bolum-hepsi\')">Tümü</button>\n';
-    for (var g = 0; g < guzergahlar.length; g++) {
-        sekmeler += '        <button class="sekme" data-anahtar="bolum-g' + g + '" onclick="sekmeSec(\'bolum-g' + g + '\')">' +
-                    htmlKacis(guzergahlar[g].ad) + '</button>\n';
-    }
 
     var bolumler = '    <section class="bolum" id="bolum-hepsi">\n';
     bolumler += '        <div class="bolum-baslik-satir">\n' +
@@ -172,24 +178,6 @@ function listeSayfasiUret() {
     bolumler += '        <ul class="liste">\n';
     for (var i = 0; i < ogrenciler.length; i++) { bolumler += kartUret(ogrenciler[i], 0); }
     bolumler += '        </ul>\n    </section>\n';
-
-    for (var g2 = 0; g2 < guzergahlar.length; g2++) {
-        var guz = guzergahlar[g2];
-        bolumler += '    <section class="bolum" id="bolum-g' + g2 + '">\n';
-        bolumler += '        <div class="bolum-baslik-satir">\n' +
-                    '            <div class="bolum-basligi">' + htmlKacis(guz.ad) + ' &middot; ' + guz.uyeler.length + ' durak</div>\n' +
-                    '            <button class="rota-harita-btn" onclick="rotaMenuAc(\'bolum-g' + g2 + '\')">&#128506; Rotayı Aç</button>\n' +
-                    '        </div>\n';
-        bolumler += '        <ul class="liste">\n';
-        var sayi = 0;
-        for (var u = 0; u < guz.uyeler.length; u++) {
-            var o = ogrenciBul(guz.uyeler[u]);
-            if (!o) { continue; }
-            sayi++;
-            bolumler += kartUret(o, sayi);
-        }
-        bolumler += '        </ul>\n    </section>\n';
-    }
 
     var veriMetni = JSON.stringify(ogrenciler).replace(/</g, "\\u003c");
     var guzergahMetni = JSON.stringify(guzergahlar).replace(/</g, "\\u003c");
