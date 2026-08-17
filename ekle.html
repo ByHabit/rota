@@ -878,8 +878,21 @@ function ayarlariAc() { el("ayarBlok").style.display = "block"; el("ayarAc").sty
 function apiAdresi(dosya) { return "https://api.github.com/repos/" + el("kullanici").value.trim() + "/" + el("depo").value.trim() + "/contents/" + dosya; }
 function baslik() { return { "Authorization": "Bearer " + el("token").value.trim(), "Accept": "application/vnd.github+json", "Content-Type": "application/json" }; }
 
+/* Ag hatalarinda kendiliginden yeniden dener */
+function agIstek(adres, secenekler, kalanDeneme) {
+    if (kalanDeneme === undefined) { kalanDeneme = 2; }
+    return fetch(adres, secenekler).catch(function (hata) {
+        if (kalanDeneme <= 0) {
+            throw new Error("Ağ hatası: istek gönderilemedi. Bağlantını kontrol et.");
+        }
+        bildir("Bağlantı koptu, yeniden deneniyor...", "bilgi");
+        return new Promise(function (coz) { setTimeout(coz, 1500); })
+            .then(function () { return agIstek(adres, secenekler, kalanDeneme - 1); });
+    });
+}
+
 function shaAl(dosya) {
-    return fetch(apiAdresi(dosya) + "?t=" + Date.now(), { headers: baslik() })
+    return agIstek(apiAdresi(dosya) + "?t=" + Date.now(), { headers: baslik() })
         .then(function(c){ return c.status === 404 ? null : c.json(); })
         .then(function(v){ return (v && v.sha) ? v.sha : null; })
         .catch(function(){ return null; });
@@ -888,7 +901,7 @@ function dosyaYaz(dosya, icerik, mesaj) {
     return shaAl(dosya).then(function(guncelSha){
         var govde = { message: mesaj, content: b64Yaz(icerik) };
         if (guncelSha) govde.sha = guncelSha;
-        return fetch(apiAdresi(dosya), { method: "PUT", headers: baslik(), body: JSON.stringify(govde) })
+        return agIstek(apiAdresi(dosya), { method: "PUT", headers: baslik(), body: JSON.stringify(govde) })
             .then(function(c){ return c.json().then(function(v){ if(!c.ok) throw new Error(dosya + " yazılamadı"); return v.content.sha; }); });
     });
 }
@@ -897,7 +910,7 @@ function baglan() {
         bildir("Üç alanın da dolu olması gerekiyor.", "hata"); return;
     }
     ayarKaydet(); bildir("Bağlanılıyor...", "bilgi");
-    fetch(apiAdresi("veriler.json") + "?t=" + Date.now(), { headers: baslik() })
+    agIstek(apiAdresi("veriler.json") + "?t=" + Date.now(), { headers: baslik() })
         .then(function(c){
             if (c.status === 401) throw new Error("Erişim anahtarı geçersiz.");
             if (!c.ok) throw new Error("GitHub yanıtı: " + c.status);
