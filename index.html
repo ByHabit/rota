@@ -1698,9 +1698,11 @@ function sekmeSec(hedef) { aktifAnahtar = hedef; aktifYerel = -1; sekmeleriCiz()
 function yerelSec(sira) { aktifYerel = sira; aktifAnahtar = "yerel-" + sira; sekmeleriCiz(); yerelCiz(); filtrele(); window.scrollTo(0,0); }
 function yerelOlustur() {
     var t = new Date(); var oneri = ("0" + t.getDate()).slice(-2) + "." + ("0" + (t.getMonth() + 1)).slice(-2) + " Sabah";
-    var ad = prompt("Liste adı:", oneri);
-    if (!ad) return;
-    yerelListeler.push({ ad: ad.trim(), uyeler: [] });
+    var ad = prompt("Liste adı (boş bırakırsan " + oneri + " olur):", "");
+    if (ad === null) return;
+    ad = ad.replace(/^\s+|\s+$/g, "");
+    if (!ad) { ad = oneri; }
+    yerelListeler.push({ ad: ad, uyeler: [] });
     yerelKaydet(); yerelSec(yerelListeler.length - 1);
 }
 function yerelAdDegistir() {
@@ -1715,7 +1717,15 @@ function yerelSil() {
     yerelListeler.splice(aktifYerel, 1);
     yerelKaydet(); sekmeSec("bolum-hepsi");
 }
-function yerelEkle(kimlik) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.push(kimlik); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }
+function yerelEkle(kimlik) {
+    if (aktifYerel < 0) return;
+    yerelListeler[aktifYerel].uyeler.push(kimlik);
+    yerelKaydet();
+    /* Ekledikten sonra arama kutusunu temizle ki tum liste yeniden gorunsun */
+    var ak = document.getElementById("arama");
+    if (ak) { ak.value = ""; ak.blur(); }
+    sekmeleriCiz(); yerelCiz(); filtrele();
+}
 function yerelCikar(sira) { if (aktifYerel < 0) return; yerelListeler[aktifYerel].uyeler.splice(sira, 1); yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }
 function yerelBosalt() { if (aktifYerel < 0 || !confirm("Tüm duraklar çıkarılsın mı?")) return; yerelListeler[aktifYerel].uyeler = []; yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele(); }
 function yerelPaylas() {
