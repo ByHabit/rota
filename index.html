@@ -87,6 +87,9 @@
     .cikar { flex:0 0 auto; background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-weight:700;
              font-size:13px; padding:11px 14px; border-radius:8px; cursor:pointer; font-family:inherit; }
     .not { display:none; text-align:center; color:#8A97A8; font-size:14px; padding:24px 0; }
+    .alt-baglanti { text-align:center; font-size:13px; color:#8A97A8; margin-top:26px;
+                    padding-top:18px; border-top:1px solid #262F3B; }
+    .alt-baglanti a { color:#FFC400; text-decoration:none; font-weight:600; }
     .js-kapali { border-left:3px solid #FFC400; background:rgba(255,196,0,0.07); padding:12px 14px;
                  font-size:13px; color:#D9C99A; border-radius:0 8px 8px 0; margin:12px 0; }
     .yerel-arac { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 6px 0; }
@@ -128,7 +131,7 @@
     <header>
         <div>
             <h1>Öğrenci <span>Rotaları</span></h1>
-            <div class="tarih">Son güncelleme: 18.08.2026</div>
+            <div class="tarih">Son güncelleme: 19.08.2026</div>
         </div>
         <div class="bas-dugmeler">
             <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>
@@ -1398,6 +1401,10 @@
     <section class="bolum" id="bolum-yerel" style="display:none;"></section>
 
     <div class="not" id="bosNot">Eşleşen kayıt bulunamadı.</div>
+
+    <div class="alt-baglanti">
+        <a href="./ekle.html">Öğrenci ekle</a> &nbsp;&middot;&nbsp; <a href="./yonetim.html">Yönetim paneli</a>
+    </div>
 </div>
 
 <!-- Navigasyon Seçim Penceresi -->
