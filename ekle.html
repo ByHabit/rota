@@ -541,9 +541,55 @@ bolumler +
 '        });\n' +
 '    }\n' +
 '\n' +
+'    /* Siralama uygulandiysa ekrandaki listeyi de ayni siraya getir ki\n' +
+'       Haritadaki 1-2-3 ile listedeki numaralar ortusUn. */\n' +
+'    if ((tur === "yakin" || tur === "uzak") && aktifYerel >= 0 &&\n' +
+'        (seciliRotaBolumId === "bolum-yerel" || !seciliRotaBolumId)) {\n' +
+'        var yeniSira = [];\n' +
+'        for (var y = 0; y < liste.length; y++) { yeniSira.push(liste[y].o.id); }\n' +
+'        /* Koordinati olmayanlar rotaya giremez ama listede kalmali: sona eklenir */\n' +
+'        var eskiler = yerelListeler[aktifYerel].uyeler;\n' +
+'        for (var e2 = 0; e2 < eskiler.length; e2++) {\n' +
+'            if (yeniSira.indexOf(eskiler[e2]) === -1) { yeniSira.push(eskiler[e2]); }\n' +
+'        }\n' +
+'        yerelListeler[aktifYerel].uyeler = yeniSira;\n' +
+'        yerelKaydet(); yerelCiz(); filtrele();\n' +
+'    }\n' +
+'\n' +
+'    /* Google Haritalar bir rotada sinirli sayida durak destekler. */\n' +
+'    var SINIR = 10;\n' +
+'    var kalan = 0;\n' +
+'    if (liste.length > SINIR) {\n' +
+'        kalan = liste.length - SINIR;\n' +
+'        if (!confirm("Google Haritalar tek rotada en fazla " + SINIR + " durak alabiliyor.\\n\\n" +\n' +
+'                     "Ilk " + SINIR + " durak acilacak, kalan " + kalan + " durak icin " +\n' +
+'                     "bittiginde tekrar Rotayi Ac de.\\n\\nDevam edilsin mi?")) { return; }\n' +
+'        liste = liste.slice(0, SINIR);\n' +
+'    }\n' +
+'\n' +
 '    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
 '    var url = "https://www.google.com/maps/dir/" + koords.join("/");\n' +
 '    window.open(url, "_blank");\n' +
+'}\n' +
+'\n' +
+'/* Rota sirasindaki isimleri numarali metin olarak paylas.\n' +
+'   Google Haritalar durak adi gosteremedigi icin isim listesi ayrica lazim. */\n' +
+'function durakListesiPaylas() {\n' +
+'    if (aktifYerel < 0) return;\n' +
+'    var L = yerelListeler[aktifYerel];\n' +
+'    var metin = L.ad + " - Durak Sirasi\\n\\n";\n' +
+'    var n = 0;\n' +
+'    for (var i = 0; i < L.uyeler.length; i++) {\n' +
+'        var o = ogrBul(L.uyeler[i]);\n' +
+'        if (!o) continue;\n' +
+'        n++;\n' +
+'        metin += n + ". " + o.ad + " - " + o.mahalle;\n' +
+'        if (o.telefon) { metin += " (" + o.telefon + ")"; }\n' +
+'        metin += "\\n";\n' +
+'    }\n' +
+'    if (n === 0) { alert("Liste bos."); return; }\n' +
+'    if (navigator.share) { navigator.share({ title: L.ad, text: metin }).catch(function(){}); }\n' +
+'    else { window.open("https://wa.me/?text=" + encodeURIComponent(metin), "_blank"); }\n' +
 '}\n' +
 '\n' +
 '/* ---------- Mesafe Hesapları ---------- */\n' +
@@ -761,6 +807,7 @@ bolumler +
 '            \x27<button class="rota-harita-btn" onclick="rotaMenuAc(\\\'bolum-yerel\\\')">&#128506; Rotayı Aç</button></div>\x27;\n' +
 '    h += \x27<div class="yerel-arac">\x27 +\n' +
 '         \x27<button class="arac-btn vurgu" onclick="yerelPaylas()">Paylaş</button>\x27 +\n' +
+'         \x27<button class="arac-btn" onclick="durakListesiPaylas()">Durak Sırası</button>\x27 +\n' +
 '         (L.uyeler.length > 1 ? \x27<button class="arac-btn" onclick="siralaAcKapa()">Sırala</button>\x27 : "") +\n' +
 '         \x27<button class="arac-btn" onclick="yerelAdDegistir()">Ad Değiştir</button>\x27 +\n' +
 '         \x27<button class="arac-btn tehlike" onclick="yerelBosalt()">Boşalt</button>\x27 +\n' +
