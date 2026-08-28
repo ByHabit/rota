@@ -335,9 +335,14 @@
             "link": "https://maps.app.goo.gl/g97ogr2Uvy7sST8T8",
             "id": "omsoxipqfoc",
             "mesafe": "350 METRE",
-            "enlem": 40.83053096408319,
-            "boylam": 29.31208964232873,
-            "telefonlar": []
+            "enlem": 40.830531,
+            "boylam": 29.31209,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 536 299 20 14"
+                }
+            ]
         },
         {
             "ad": "ESLEM HALİME DEMİRCİ",
@@ -345,9 +350,14 @@
             "link": "https://maps.app.goo.gl/PRXgPan4QNFX4MWv7",
             "id": "omsoxipqfgi",
             "mesafe": "2.8 KM",
-            "enlem": 40.82659803563569,
-            "boylam": 29.32717928465744,
-            "telefonlar": []
+            "enlem": 40.826598,
+            "boylam": 29.327179,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 538 775 06 05"
+                }
+            ]
         },
         {
             "ad": "MEHMET EFE ASLANDAĞ",
@@ -355,9 +365,14 @@
             "link": "https://maps.app.goo.gl/9jPZoWmERwF3YoeDA",
             "id": "omsoxipqfqz",
             "mesafe": "12.6 KM",
-            "enlem": 40.888034308076854,
-            "boylam": 29.34545708465744,
-            "telefonlar": []
+            "enlem": 40.888034,
+            "boylam": 29.345457,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 553 276 08 24"
+                }
+            ]
         },
         {
             "ad": "AHMET MELİH",
@@ -365,9 +380,14 @@
             "link": "https://maps.app.goo.gl/yM5yppFH8mJS93St8",
             "id": "omsoxipqf1o",
             "mesafe": "450 METRE",
-            "enlem": 40.829589911889336,
-            "boylam": 29.309873784657448,
-            "telefonlar": []
+            "enlem": 40.82959,
+            "boylam": 29.309874,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 534 363 28 27"
+                }
+            ]
         },
         {
             "ad": "ELANUR GÖKCÜL",
@@ -375,9 +395,14 @@
             "link": "https://maps.app.goo.gl/rbHgSym4arEJkGFfA",
             "id": "omsoxipqf15",
             "mesafe": "400 METRE",
-            "enlem": 40.82510271295649,
-            "boylam": 29.311551113493085,
-            "telefonlar": []
+            "enlem": 40.825103,
+            "boylam": 29.311551,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 531 084 29 43"
+                }
+            ]
         },
         {
             "ad": "ZEYNEP ESMA KAPAN",
@@ -385,9 +410,14 @@
             "link": "https://maps.app.goo.gl/fNo7EcHvf3poTrDW8",
             "id": "omsoxipqfku",
             "mesafe": "1.4 KM",
-            "enlem": 40.8171237496169,
-            "boylam": 29.305145242328717,
-            "telefonlar": []
+            "enlem": 40.817124,
+            "boylam": 29.305145,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 545 422 97 87"
+                }
+            ]
         },
         {
             "ad": "AHMET ADAR DOĞAN",
@@ -395,9 +425,18 @@
             "link": "https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6",
             "id": "omsoxipqfo8",
             "mesafe": "1.1 KM",
-            "enlem": 40.82978096569006,
-            "boylam": 29.320583299999996,
-            "telefonlar": []
+            "enlem": 40.829781,
+            "boylam": 29.320583,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 537 427 76 96"
+                },
+                {
+                    "etiket": "Babası",
+                    "numara": "0 536 405 65 26"
+                }
+            ]
         },
         {
             "ad": "YUSUF AYAZ BİLİR",
@@ -405,9 +444,18 @@
             "link": "https://maps.app.goo.gl/dijc97tJgRGSghqx9",
             "id": "omsoxipqfu",
             "mesafe": "6.4 KM",
-            "enlem": 40.83263418068122,
-            "boylam": 29.360913470899018,
-            "telefonlar": []
+            "enlem": 40.832634,
+            "boylam": 29.360913,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 538 609 70 13"
+                },
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 535 079 16 54"
+                }
+            ]
         },
         {
             "ad": "BAYRAM BİLİR",
