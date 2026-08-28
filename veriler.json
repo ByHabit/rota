@@ -263,9 +263,22 @@
             "link": "https://maps.app.goo.gl/bA8JH6RTLcHr132fA",
             "id": "omsoxipqfgj",
             "mesafe": "6.8 KM",
-            "enlem": 40.868525003497304,
-            "boylam": 29.298868343113487,
-            "telefonlar": []
+            "enlem": 40.868525,
+            "boylam": 29.298868,
+            "telefonlar": [
+                {
+                    "etiket": "Kendisi",
+                    "numara": "0 531 945 70 65"
+                },
+                {
+                    "etiket": "Babası",
+                    "numara": "0 535 043 40 04"
+                },
+                {
+                    "etiket": "BabaAnnesi",
+                    "numara": "0 539 951 60 15"
+                }
+            ]
         },
         {
             "ad": "EDANUR ÖN",
