@@ -320,9 +320,14 @@
             "link": "https://maps.app.goo.gl/QRHrK8A8V2QV2a548",
             "id": "omsoxipqfgk",
             "mesafe": "6.4 KM",
-            "enlem": 40.83110614496546,
-            "boylam": 29.36257452698617,
-            "telefonlar": []
+            "enlem": 40.831106,
+            "boylam": 29.362575,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 546 949 43 95"
+                }
+            ]
         },
         {
             "ad": "ÖMER YILMAZ UKUS",
