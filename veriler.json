@@ -17,9 +17,22 @@
             "link": "https://maps.app.goo.gl/2FDGEQUePPGw9UFQ8",
             "id": "omsoxipqf3t",
             "mesafe": "28 KM",
-            "enlem": 40.963656900785374,
-            "boylam": 29.265645652674554,
-            "telefonlar": []
+            "enlem": 40.963657,
+            "boylam": 29.265646,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 216 634 77 02"
+                },
+                {
+                    "etiket": "",
+                    "numara": "0 216 634 77 03"
+                },
+                {
+                    "etiket": "WHATSAPP",
+                    "numara": "0 530 156 98 38"
+                }
+            ]
         },
         {
             "ad": "ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ",
@@ -27,9 +40,22 @@
             "link": "https://maps.app.goo.gl/jBesgV1hoMvDehRj9",
             "id": "omsoxipqfen",
             "mesafe": "19 KM",
-            "enlem": 40.916703021607276,
-            "boylam": 29.302384487519156,
-            "telefonlar": []
+            "enlem": 40.916703,
+            "boylam": 29.302384,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 216 595 04 15"
+                },
+                {
+                    "etiket": "",
+                    "numara": "0 216 595 04 16"
+                },
+                {
+                    "etiket": "WHATSAPP",
+                    "numara": "0 545 682 42 98"
+                }
+            ]
         },
         {
             "ad": "KADİR AKİF DABAN",
