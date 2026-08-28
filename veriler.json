@@ -493,9 +493,14 @@
             "link": "https://maps.app.goo.gl/TegUf8B4BMyFEgu6A",
             "id": "omsoxipqfof",
             "mesafe": "550 METRE",
-            "enlem": 40.831035634587934,
-            "boylam": 29.31462378465745,
-            "telefonlar": []
+            "enlem": 40.831036,
+            "boylam": 29.314624,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 536 971 69 56"
+                }
+            ]
         },
         {
             "ad": "FURKAN GÜLCAN",
@@ -503,9 +508,14 @@
             "link": "https://maps.app.goo.gl/NXSrXCcjmNR41QxX8",
             "id": "omsoxipqf7s",
             "mesafe": "6.4 KM",
-            "enlem": 40.83128096247628,
-            "boylam": 29.362484884657444,
-            "telefonlar": []
+            "enlem": 40.831281,
+            "boylam": 29.362485,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 554 821 58 64"
+                }
+            ]
         },
         {
             "ad": "YUSUF AYAZ BİLİR",
@@ -513,9 +523,18 @@
             "link": "https://maps.app.goo.gl/DBPywNPqcYmb4Aro7",
             "id": "omsoxipqfhp",
             "mesafe": "7.3 KM",
-            "enlem": 40.869269307477694,
-            "boylam": 29.301361100000005,
-            "telefonlar": []
+            "enlem": 40.869269,
+            "boylam": 29.301361,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 538 609 70 13"
+                },
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 535 079 16 54"
+                }
+            ]
         },
         {
             "ad": "ELANUR İNAN",
@@ -523,9 +542,18 @@
             "link": "https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6",
             "id": "omsoxipqfcp",
             "mesafe": "6.9 KM",
-            "enlem": 40.83210614294528,
-            "boylam": 29.366239271164357,
-            "telefonlar": []
+            "enlem": 40.832106,
+            "boylam": 29.366239,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 530 435 43 87"
+                },
+                {
+                    "etiket": "Babası",
+                    "numara": "0 532 631 23 87"
+                }
+            ]
         },
         {
             "ad": "ADEM ÖZGÜL",
@@ -533,9 +561,14 @@
             "link": "https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8",
             "id": "omsoxipqf2b",
             "mesafe": "6 KM",
-            "enlem": 40.8275491019536,
-            "boylam": 29.359944987945113,
-            "telefonlar": []
+            "enlem": 40.827549,
+            "boylam": 29.359945,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 541 538 43 19"
+                }
+            ]
         },
         {
             "ad": "ARİF EMRE ŞANAL",
