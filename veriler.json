@@ -286,9 +286,14 @@
             "link": "https://maps.app.goo.gl/VmyKBdYFconiDQLG7",
             "id": "omsoxipqf8",
             "mesafe": "2 KM",
-            "enlem": 40.8313087624167,
-            "boylam": 29.32290597116436,
-            "telefonlar": []
+            "enlem": 40.831309,
+            "boylam": 29.322906,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 543 973 95 40"
+                }
+            ]
         },
         {
             "ad": "İBRAHİM ERGİN",
@@ -296,9 +301,18 @@
             "link": "https://maps.app.goo.gl/a9FHfkGG4iQjEdoe9",
             "id": "omsoxipqfbs",
             "mesafe": "7.4 KM",
-            "enlem": 40.84630396619189,
-            "boylam": 29.36195708465744,
-            "telefonlar": []
+            "enlem": 40.846304,
+            "boylam": 29.361957,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 537 356 41 39"
+                },
+                {
+                    "etiket": "Babası",
+                    "numara": "0 538 693 00 30"
+                }
+            ]
         },
         {
             "ad": "ÖMER ALPER GÜNDOĞDU",
