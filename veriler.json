@@ -463,9 +463,14 @@
             "link": "https://maps.app.goo.gl/dijc97tJgRGSghqx9",
             "id": "omsoxipqf8v",
             "mesafe": "6.4 KM",
-            "enlem": 40.83263418068122,
-            "boylam": 29.360913470899018,
-            "telefonlar": []
+            "enlem": 40.832634,
+            "boylam": 29.360913,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 543 275 30 40"
+                }
+            ]
         },
         {
             "ad": "İBRAHİM TOROS",
@@ -473,9 +478,14 @@
             "link": "https://maps.app.goo.gl/PVhfScb2sNuh1sv26",
             "id": "omsoxipqfce",
             "mesafe": "6.5 KM",
-            "enlem": 40.83965706034635,
-            "boylam": 29.35686744232872,
-            "telefonlar": []
+            "enlem": 40.839657,
+            "boylam": 29.356867,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 541 939 77 51"
+                }
+            ]
         },
         {
             "ad": "KEREM YAĞIZ",
