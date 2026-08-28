@@ -880,6 +880,29 @@
             "link": "https://maps.app.goo.gl/L3s1oeUaBwkqtTw98",
             "enlem": 40.978986455009164,
             "boylam": 29.21760505036953
+        },
+        {
+            "id": "omtd4kcbzfg",
+            "ad": "Çınar Engelli Bakım Merkezi",
+            "mahalle": "ATAŞEHİR",
+            "mesafe": "28.5 KM",
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 216 471 50 13"
+                },
+                {
+                    "etiket": "",
+                    "numara": "0 216 471 50 14"
+                },
+                {
+                    "etiket": "WHATSAPP",
+                    "numara": "0 554 151 88 38"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/NTcFUqVW2S6MSRQk6",
+            "enlem": 40.98147260428164,
+            "boylam": 29.157274059071412
         }
     ],
     "guzergahlar": []
