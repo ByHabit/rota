@@ -981,9 +981,14 @@
             "mahalle": "ÇAYIROVA",
             "mesafe": "9.3 KM",
             "link": "https://maps.app.goo.gl/AXKRSkhzMdt6sf2x7",
-            "enlem": 40.86016338678091,
-            "boylam": 29.372663855626556,
-            "telefonlar": []
+            "enlem": 40.860163,
+            "boylam": 29.372664,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 539 357 10 54"
+                }
+            ]
         },
         {
             "id": "omtd4e20cp",
