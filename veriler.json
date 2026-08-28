@@ -861,6 +861,25 @@
             "enlem": 40.86016338678091,
             "boylam": 29.372663855626556,
             "telefonlar": []
+        },
+        {
+            "id": "omtd4e20cp",
+            "ad": "Özel Çınaraltı Engelli Bakım Merkezi",
+            "mahalle": "Samandıra",
+            "mesafe": "24 KM",
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 216 311 04 55"
+                },
+                {
+                    "etiket": "",
+                    "numara": "0 216 311 04 56"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/L3s1oeUaBwkqtTw98",
+            "enlem": 40.978986455009164,
+            "boylam": 29.21760505036953
         }
     ],
     "guzergahlar": []
