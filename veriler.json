@@ -576,9 +576,14 @@
             "link": "https://maps.app.goo.gl/3JmoKjy2jvHhznKx7",
             "id": "omsoxipqfah",
             "mesafe": "10.6 KM",
-            "enlem": 40.88274147528472,
-            "boylam": 29.338901484657445,
-            "telefonlar": []
+            "enlem": 40.882741,
+            "boylam": 29.338901,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 534 397 92 95"
+                }
+            ]
         },
         {
             "ad": "İCLAL SARE",
@@ -586,9 +591,18 @@
             "link": "https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18",
             "id": "omsoxipqfla",
             "mesafe": "8.5 KM",
-            "enlem": 40.86212605040979,
-            "boylam": 29.33550063845405,
-            "telefonlar": []
+            "enlem": 40.862126,
+            "boylam": 29.335501,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 531 287 43 14"
+                },
+                {
+                    "etiket": "Babası",
+                    "numara": "0 537 918 41 82"
+                }
+            ]
         },
         {
             "ad": "SEMRA UÇAR",
@@ -596,9 +610,18 @@
             "link": "https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA",
             "id": "omsoxipqf6j",
             "mesafe": "8.3 KM",
-            "enlem": 40.867470326706396,
-            "boylam": 29.322927147892358,
-            "telefonlar": []
+            "enlem": 40.86747,
+            "boylam": 29.322927,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 553 989 00 85"
+                },
+                {
+                    "etiket": "Babası",
+                    "numara": "0 536 290 12 00"
+                }
+            ]
         },
         {
             "ad": "AZİZ AKDENİZ",
@@ -606,9 +629,14 @@
             "link": "https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9",
             "id": "omsoxipqfa",
             "mesafe": "18.8 KM",
-            "enlem": 40.91753792530437,
-            "boylam": 29.306190123010396,
-            "telefonlar": []
+            "enlem": 40.917538,
+            "boylam": 29.30619,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 552 209 97 67"
+                }
+            ]
         },
         {
             "ad": "GAMZE ESİLA BOLAT",
@@ -616,9 +644,14 @@
             "link": "https://maps.app.goo.gl/iKwPGNiA63Lr1ka46",
             "id": "omsoxipqfnl",
             "mesafe": "850 METRE",
-            "enlem": 40.824152595878154,
-            "boylam": 29.315241657777005,
-            "telefonlar": []
+            "enlem": 40.824153,
+            "boylam": 29.315242,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 551 174 77 71"
+                }
+            ]
         },
         {
             "ad": "NURFİDAN ŞAHİN",
@@ -626,9 +659,14 @@
             "link": "https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9",
             "id": "omsoxipqfcw",
             "mesafe": "14.8 KM",
-            "enlem": 40.9013000829281,
-            "boylam": 29.378178365960444,
-            "telefonlar": []
+            "enlem": 40.9013,
+            "boylam": 29.378178,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 541 606 48 11"
+                }
+            ]
         },
         {
             "ad": "KEREM EDİS",
@@ -636,9 +674,18 @@
             "link": "https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7",
             "id": "omsoxipqf3h",
             "mesafe": "15.9 KM",
-            "enlem": 40.91024541158632,
-            "boylam": 29.391192804699898,
-            "telefonlar": []
+            "enlem": 40.910245,
+            "boylam": 29.391193,
+            "telefonlar": [
+                {
+                    "etiket": "Kendisi",
+                    "numara": "0 544 374 50 35"
+                },
+                {
+                    "etiket": "Velisi",
+                    "numara": "0 543 827 27 01"
+                }
+            ]
         },
         {
             "ad": "SELAHATTİN YASİN YILMAZ",
@@ -646,9 +693,14 @@
             "link": "https://maps.app.goo.gl/miR73asUTD5xYgzN8",
             "id": "omsoxipqfqp",
             "mesafe": "8.8 KM",
-            "enlem": 40.87138751278701,
-            "boylam": 29.325847264285983,
-            "telefonlar": []
+            "enlem": 40.871388,
+            "boylam": 29.325847,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 534 787 78 67"
+                }
+            ]
         },
         {
             "ad": "ERAY BULUT",
@@ -656,9 +708,18 @@
             "link": "https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9",
             "id": "omsoxipqfpw",
             "mesafe": "8.5 KM",
-            "enlem": 40.868444122764565,
-            "boylam": 29.328606713493077,
-            "telefonlar": []
+            "enlem": 40.868444,
+            "boylam": 29.328607,
+            "telefonlar": [
+                {
+                    "etiket": "Abisi",
+                    "numara": "0 531 361 25 53"
+                },
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 545 361 53 53"
+                }
+            ]
         },
         {
             "ad": "AYŞENUR ÇAĞLAYAN",
@@ -666,9 +727,14 @@
             "link": "https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9",
             "id": "omsoxipqfbw",
             "mesafe": "1.7 KM",
-            "enlem": 40.83787236541071,
-            "boylam": 29.30639962883564,
-            "telefonlar": []
+            "enlem": 40.837872,
+            "boylam": 29.3064,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 545 240 85 32"
+                }
+            ]
         },
         {
             "ad": "MUHAMMED ALİ RIZA CANBAKAL",
