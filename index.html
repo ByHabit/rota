@@ -131,7 +131,7 @@
     <header>
         <div>
             <h1>Öğrenci <span>Rotaları</span></h1>
-            <div class="tarih">Son güncelleme: 29.08.2026</div>
+            <div class="tarih">Son güncelleme: 30.08.2026</div>
         </div>
         <div class="bas-dugmeler">
             <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>
@@ -1589,6 +1589,13 @@ function ogrBul(kimlik) {
 }
 
 function telSade(n) { return String(n || "").replace(/[^0-9+]/g, ""); }
+
+/* Kayittaki numaralari her zaman dizi olarak dondurur: [{etiket, numara}] */
+function telefonlariAl(o) {
+    if (o && Object.prototype.toString.call(o.telefonlar) === "[object Array]") { return o.telefonlar; }
+    if (o && o.telefon) { return [{ etiket: "", numara: o.telefon }]; }
+    return [];
+}
 
 function modalKapat(e, id) {
     if (e.target.id === id) { document.getElementById(id).style.display = "none"; }
