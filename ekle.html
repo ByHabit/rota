@@ -487,6 +487,13 @@ bolumler +
 '\n' +
 'function telSade(n) { return String(n || "").replace(/[^0-9+]/g, ""); }\n' +
 '\n' +
+'/* Kayittaki numaralari her zaman dizi olarak dondurur: [{etiket, numara}] */\n' +
+'function telefonlariAl(o) {\n' +
+'    if (o && Object.prototype.toString.call(o.telefonlar) === "[object Array]") { return o.telefonlar; }\n' +
+'    if (o && o.telefon) { return [{ etiket: "", numara: o.telefon }]; }\n' +
+'    return [];\n' +
+'}\n' +
+'\n' +
 'function modalKapat(e, id) {\n' +
 '    if (e.target.id === id) { document.getElementById(id).style.display = "none"; }\n' +
 '}\n' +
