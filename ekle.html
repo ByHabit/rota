@@ -38,9 +38,6 @@
     .durum.hata { background:rgba(255,107,94,0.1); border-left:3px solid #FF6B5E; color:#FFB3AC; display:block; }
     .durum.bilgi { background:rgba(255,196,0,0.08); border-left:3px solid #FFC400; color:#D9C99A; display:block; }
     .sayi { font-size:12px; color:#8A97A8; text-align:center; margin-top:6px; }
-    .tel-ikili { display:flex; gap:8px; }
-    .tel-ikili .tel-etiket { flex:0 0 40%; }
-    .tel-ikili .tel-numara { flex:1 1 auto; }
     .kucuk-baglanti { display:block; text-align:center; color:#8A97A8; font-size:13px; margin-top:18px; }
     .kucuk-baglanti a { color:#FFC400; }
     .katla { font-size:13px; color:#8A97A8; text-align:center; padding:6px; cursor:pointer; }
@@ -75,16 +72,8 @@
         <input type="text" id="mahalle" placeholder="Örnek: Tuzla Yayla Mahallesi">
         <label for="mesafe">Mesafe / Not <span class="ops">(zorunlu değil)</span></label>
         <input type="text" id="mesafe" placeholder="Örnek: 3,4 km">
-        <label>Telefon Numaraları <span class="ops">(zorunlu değil)</span></label>
-        <div class="tel-ikili">
-            <input type="text" id="etiket1" class="tel-etiket" placeholder="Kendisi">
-            <input type="tel" id="telefon1" class="tel-numara" placeholder="0 530 000 00 00">
-        </div>
-        <div class="tel-ikili">
-            <input type="text" id="etiket2" class="tel-etiket" placeholder="Veli">
-            <input type="tel" id="telefon2" class="tel-numara" placeholder="0 530 000 00 00">
-        </div>
-        <div class="ipucu">Rakamları bitişik yazsan yeterli, kaydederken düzgün biçime çevrilir.</div>
+        <label for="telefon">Telefon <span class="ops">(zorunlu değil)</span></label>
+        <input type="tel" id="telefon" placeholder="Örnek: 0 530 000 00 00">
         <label for="link">Google Maps Konum Linki</label>
         <input type="text" id="link" autocapitalize="off" spellcheck="false" placeholder="https://maps.app.goo.gl/...">
         <label for="koordinat">Koordinat <span class="ops">(canlı mesafe için)</span></label>
@@ -113,40 +102,6 @@ function jsKacis(metin) {
 }
 
 function telSadelestir(numara) { return String(numara || "").replace(/[^0-9+]/g, ""); }
-
-function telBicimle(numara) {
-    var ham = String(numara || "").replace(/[^0-9+]/g, "");
-    if (!ham) { return ""; }
-
-    var artiVar = ham.charAt(0) === "+";
-    var rakam = ham.replace(/\+/g, "");
-
-    if (rakam.length === 12 && rakam.slice(0, 2) === "90") {
-        rakam = rakam.slice(2);
-        return "+90 " + rakam.slice(0,3) + " " + rakam.slice(3,6) + " " + rakam.slice(6,8) + " " + rakam.slice(8,10);
-    }
-    if (rakam.length === 11 && rakam.charAt(0) === "0") {
-        return "0 " + rakam.slice(1,4) + " " + rakam.slice(4,7) + " " + rakam.slice(7,9) + " " + rakam.slice(9,11);
-    }
-    if (rakam.length === 10) {
-        return "0 " + rakam.slice(0,3) + " " + rakam.slice(3,6) + " " + rakam.slice(6,8) + " " + rakam.slice(8,10);
-    }
-    return artiVar ? "+" + rakam : rakam;
-}
-
-function telefonlariAl(o) {
-    if (o && Object.prototype.toString.call(o.telefonlar) === "[object Array]") { return o.telefonlar; }
-    if (o && o.telefon) { return [{ etiket: "", numara: o.telefon }]; }
-    return [];
-}
-
-function telefonMetni(o) {
-    var d = telefonlariAl(o), p = [];
-    for (var i = 0; i < d.length; i++) {
-        p.push((d[i].etiket ? d[i].etiket + " " : "") + d[i].numara);
-    }
-    return p.join(" ");
-}
 
 function koordinatCoz(metin) {
     var m = String(metin || "").trim();
@@ -185,17 +140,14 @@ function kartUret(o, numara) {
     }
 
     var telSatir = "";
-    var telListe = telefonlariAl(o);
-    for (var tt = 0; tt < telListe.length; tt++) {
-        telSatir += '                <a class="tel" href="tel:' + htmlKacis(telSadelestir(telListe[tt].numara)) + '">&#128222; ' +
-                    (telListe[tt].etiket ? htmlKacis(telListe[tt].etiket) + ': ' : '') +
-                    htmlKacis(telListe[tt].numara) + '</a>\n';
+    if (o.telefon) {
+        telSatir = '                <a class="tel" href="tel:' + htmlKacis(telSadelestir(o.telefon)) + '">&#128222; ' + htmlKacis(o.telefon) + '</a>\n';
     }
 
     var basNo = numara ? '<span class="sira-no">' + numara + '</span>' : "";
     var latVal = (o.enlem !== undefined && o.enlem !== null) ? o.enlem : "";
     var lngVal = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";
-    var telVal = telListe.length > 0 ? telSadelestir(telListe[0].numara) : "";
+    var telVal = telSadelestir(o.telefon || "");
 
     return '        <li class="kart" id="kart-' + htmlKacis(o.id) + '" data-id="' + htmlKacis(o.id) + '">\n' +
 '            <div class="kart-ust">\n' +
@@ -487,13 +439,6 @@ bolumler +
 '\n' +
 'function telSade(n) { return String(n || "").replace(/[^0-9+]/g, ""); }\n' +
 '\n' +
-'/* Kayittaki numaralari her zaman dizi olarak dondurur: [{etiket, numara}] */\n' +
-'function telefonlariAl(o) {\n' +
-'    if (o && Object.prototype.toString.call(o.telefonlar) === "[object Array]") { return o.telefonlar; }\n' +
-'    if (o && o.telefon) { return [{ etiket: "", numara: o.telefon }]; }\n' +
-'    return [];\n' +
-'}\n' +
-'\n' +
 'function modalKapat(e, id) {\n' +
 '    if (e.target.id === id) { document.getElementById(id).style.display = "none"; }\n' +
 '}\n' +
@@ -639,10 +584,7 @@ bolumler +
 '        if (!o) continue;\n' +
 '        n++;\n' +
 '        metin += n + ". " + o.ad + " - " + o.mahalle;\n' +
-'        var td = telefonlariAl(o);\n' +
-'        for (var tz = 0; tz < td.length; tz++) {\n' +
-'            metin += "\\n   " + (td[tz].etiket ? td[tz].etiket + ": " : "") + td[tz].numara;\n' +
-'        }\n' +
+'        if (o.telefon) { metin += " (" + o.telefon + ")"; }\n' +
 '        metin += "\\n";\n' +
 '    }\n' +
 '    if (n === 0) { alert("Liste bos."); return; }\n' +
@@ -886,13 +828,7 @@ bolumler +
 '            var o = ogrBul(L.uyeler[i]); if (!o) continue;\n' +
 '            var latV = (o.enlem !== undefined && o.enlem !== null) ? o.enlem : "";\n' +
 '            var lngV = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";\n' +
-'            var telD = telefonlariAl(o);\n' +
-'            var telV = telD.length > 0 ? telSade(telD[0].numara) : "";\n' +
-'            var telHtml = "";\n' +
-'            for (var tq = 0; tq < telD.length; tq++) {\n' +
-'                telHtml += \x27<a class="tel" href="tel:\x27 + kacis(telSade(telD[tq].numara)) + \x27">&#128222; \x27 +\n' +
-'                           (telD[tq].etiket ? kacis(telD[tq].etiket) + ": " : "") + kacis(telD[tq].numara) + "</a>";\n' +
-'            }\n' +
+'            var telV = telSade(o.telefon || "");\n' +
 '            h += \x27<li class="kart sirali" id="kart-\x27 + kacis(o.id) + \x27" data-id="\x27 + kacis(o.id) + \x27" draggable="true" ondragstart="surukleBasla(event, \x27 + i + \x27)" ondragend="surukleBitir(event)" ondragover="surukleUzerinde(event)" ondrop="surukleBirak(event, \x27 + i + \x27)">\x27 +\n' +
 '                 \x27<div class="tut-sutun">\x27 +\n' +
 '                     \x27<button class="ok" onclick="yerelTasi(\x27 + i + \x27,-1)"\x27 + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +\n' +
@@ -907,7 +843,7 @@ bolumler +
 '                             "<p>" + kacis(o.mahalle) + "</p>" +\n' +
 '                             (o.mesafe ? \x27<span class="rozet-mesafe">\x27 + kacis(o.mesafe) + "</span>" : "") +\n' +
 '                             (o.enlem ? \x27<span class="uzaklik" data-lat="\x27 + o.enlem + \x27" data-lng="\x27 + o.boylam + \x27"></span>\x27 : "") +\n' +
-'                             telHtml +\n' +
+'                             (o.telefon ? \x27<a class="tel" href="tel:\x27 + kacis(telSade(o.telefon)) + \x27">&#128222; \x27 + kacis(o.telefon) + "</a>" : "") +\n' +
 '                         "</div>" +\n' +
 '                     "</div>" +\n' +
 '                     \x27<div class="butonlar">\x27 +\n' +
@@ -1082,13 +1018,7 @@ function konumuKullan() {
 }
 function kaydet() {
     var ad = el("ad").value.trim(); var mahalle = el("mahalle").value.trim();
-    var mesafe = el("mesafe").value.trim();
-    var telefonlar = [];
-    for (var tn = 1; tn <= 2; tn++) {
-        var nv = el("telefon" + tn).value.replace(/^\s+|\s+$/g, "");
-        if (!nv) continue;
-        telefonlar.push({ etiket: el("etiket" + tn).value.replace(/^\s+|\s+$/g, ""), numara: telBicimle(nv) });
-    }
+    var mesafe = el("mesafe").value.trim(); var telefon = el("telefon").value.trim();
     var link = el("link").value.trim(); var koordMetin = el("koordinat").value.trim();
     if (!ad) { bildir("Ad soyad boş bırakılamaz.", "hata"); el("ad").focus(); return; }
     if (!mahalle) { bildir("Mahalle boş bırakılamaz.", "hata"); el("mahalle").focus(); return; }
@@ -1098,7 +1028,7 @@ function kaydet() {
         koord = koordinatCoz(koordMetin);
         if (!koord) { bildir("Koordinat okunamadı. Örnek: 40.815432, 29.301887", "hata"); el("koordinat").focus(); return; }
     }
-    var kayit = { id: yeniKimlik(), ad: ad, mahalle: mahalle, mesafe: mesafe, telefonlar: telefonlar, link: link };
+    var kayit = { id: yeniKimlik(), ad: ad, mahalle: mahalle, mesafe: mesafe, telefon: telefon, link: link };
     if (koord) { kayit.enlem = koord.enlem; kayit.boylam = koord.boylam; }
     ogrenciler.push(kayit);
     el("kaydetBtn").disabled = true; el("kaydetBtn").innerHTML = "Kaydediliyor...";
@@ -1109,10 +1039,7 @@ function kaydet() {
             return dosyaYaz("index.html", listeSayfasiUret(), "Liste güncellendi (" + damga + ")");
         })
         .then(function(){
-            el("ad").value = ""; el("mahalle").value = ""; el("mesafe").value = "";
-            el("telefon1").value = ""; el("telefon2").value = "";
-            el("etiket1").value = ""; el("etiket2").value = "";
-            el("link").value = ""; el("koordinat").value = "";
+            el("ad").value = ""; el("mahalle").value = ""; el("mesafe").value = ""; el("telefon").value = ""; el("link").value = ""; el("koordinat").value = "";
             el("kaydetBtn").disabled = false; el("kaydetBtn").innerHTML = "Kaydet ve Yayınla";
             el("sayi").innerHTML = "Listede " + ogrenciler.length + " öğrenci var.";
             bildir(ad + " kaydedildi ve yayınlandı.", "ok");
