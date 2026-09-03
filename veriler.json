@@ -67,8 +67,12 @@
             "boylam": 29.305907,
             "telefonlar": [
                 {
-                    "etiket": "",
+                    "etiket": "ANNESİ",
                     "numara": "0 540 005 47 16"
+                },
+                {
+                    "etiket": "BABASI",
+                    "numara": "0 552 025 70 53"
                 }
             ]
         },
