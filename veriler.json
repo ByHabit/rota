@@ -976,9 +976,18 @@
             "mahalle": "TUZLA YAYLA MAHALLESİ",
             "mesafe": "450 METRE",
             "link": "https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8",
-            "enlem": 40.83039469980715,
-            "boylam": 29.310945710077966,
-            "telefonlar": []
+            "enlem": 40.830395,
+            "boylam": 29.310946,
+            "telefonlar": [
+                {
+                    "etiket": "EV TEL:",
+                    "numara": "0 216 446 23 97"
+                },
+                {
+                    "etiket": "ABİSİ",
+                    "numara": "0 216 446 23 97"
+                }
+            ]
         },
         {
             "id": "omstbjbgqln",
