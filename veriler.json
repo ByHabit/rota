@@ -756,9 +756,14 @@
             "link": "https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9",
             "id": "omsoxipqf3n",
             "mesafe": "11.2 KM",
-            "enlem": 40.78680271704639,
-            "boylam": 29.36256520212205,
-            "telefonlar": []
+            "enlem": 40.786803,
+            "boylam": 29.362565,
+            "telefonlar": [
+                {
+                    "etiket": "ELMAS",
+                    "numara": "0 501 493 36 47"
+                }
+            ]
         },
         {
             "ad": "EMRE SELÇUK",
@@ -766,9 +771,14 @@
             "link": "https://maps.app.goo.gl/osVBHfQAogCpoqvB7",
             "id": "omsoxipqf3r",
             "mesafe": "10.2 KM",
-            "enlem": 40.78966652047707,
-            "boylam": 29.370472199999995,
-            "telefonlar": []
+            "enlem": 40.789667,
+            "boylam": 29.370472,
+            "telefonlar": [
+                {
+                    "etiket": "ANNE",
+                    "numara": "0 551 827 57 41"
+                }
+            ]
         },
         {
             "ad": "ESİLA İŞLER",
@@ -776,9 +786,14 @@
             "link": "https://maps.app.goo.gl/bekAQADBrvEMUFo36",
             "id": "omsoxipqfop",
             "mesafe": "500 METRE",
-            "enlem": 40.82632593142359,
-            "boylam": 29.307640337954496,
-            "telefonlar": []
+            "enlem": 40.826326,
+            "boylam": 29.30764,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 539 465 04 24"
+                }
+            ]
         },
         {
             "ad": "İLAYDA ŞENOL",
@@ -786,9 +801,14 @@
             "link": "https://maps.app.goo.gl/69JXcYPhaUXGKRCN7",
             "id": "omsoxipqf86",
             "mesafe": "2.1 KM",
-            "enlem": 40.83997199425894,
-            "boylam": 29.303121828835636,
-            "telefonlar": []
+            "enlem": 40.839972,
+            "boylam": 29.303122,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 535 010 59 93"
+                }
+            ]
         },
         {
             "ad": "YUSUF ÇAL",
@@ -796,9 +816,14 @@
             "link": "https://maps.app.goo.gl/uzpifBe3C3s4hsSe8",
             "id": "omsoxipqfjn",
             "mesafe": "350 METRE",
-            "enlem": 40.83017798283948,
-            "boylam": 29.312527799999998,
-            "telefonlar": []
+            "enlem": 40.830178,
+            "boylam": 29.312528,
+            "telefonlar": [
+                {
+                    "etiket": "ANNE",
+                    "numara": "0 542 785 17 00"
+                }
+            ]
         },
         {
             "ad": "MİKAİL KALINTAŞ",
@@ -806,9 +831,14 @@
             "link": "https://maps.app.goo.gl/h47BL3UwjycAD8zS9",
             "id": "omsoxipqf62",
             "mesafe": "7.6 KM",
-            "enlem": 40.841439524088464,
-            "boylam": 29.366967813493083,
-            "telefonlar": []
+            "enlem": 40.84144,
+            "boylam": 29.366968,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 531 869 10 65"
+                }
+            ]
         },
         {
             "ad": "METİN KARSLI",
@@ -816,9 +846,18 @@
             "link": "https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7",
             "id": "omsoxipqfe7",
             "mesafe": "6.1 KM",
-            "enlem": 40.833047193990396,
-            "boylam": 29.35792928465744,
-            "telefonlar": []
+            "enlem": 40.833047,
+            "boylam": 29.357929,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 532 273 86 31"
+                },
+                {
+                    "etiket": "",
+                    "numara": "0 552 847 91 61"
+                }
+            ]
         },
         {
             "ad": "ABDULLAH ÇELİK",
@@ -826,9 +865,14 @@
             "link": "https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8",
             "id": "omsoxipqfmm",
             "mesafe": "5.7 KM",
-            "enlem": 40.83221946528022,
-            "boylam": 29.35424999999999,
-            "telefonlar": []
+            "enlem": 40.832219,
+            "boylam": 29.35425,
+            "telefonlar": [
+                {
+                    "etiket": "ANNE",
+                    "numara": "0 549 193 34 61"
+                }
+            ]
         },
         {
             "ad": "YAĞMUR ÇAĞIL",
@@ -836,9 +880,14 @@
             "link": "https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7",
             "id": "omsoxipqfq0",
             "mesafe": "5.9 KM",
-            "enlem": 40.82857023189332,
-            "boylam": 29.35962817116436,
-            "telefonlar": []
+            "enlem": 40.82857,
+            "boylam": 29.359628,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 507 483 54 46"
+                }
+            ]
         },
         {
             "ad": "ZEYNEP KARAMAN",
@@ -846,9 +895,14 @@
             "link": "https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7",
             "id": "omsoxipqfbq",
             "mesafe": "7.4 KM",
-            "enlem": 40.8436472617208,
-            "boylam": 29.364661971269904,
-            "telefonlar": []
+            "enlem": 40.843647,
+            "boylam": 29.364662,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 538 611 29 68"
+                }
+            ]
         },
         {
             "ad": "YÜCEHAN TAŞOVA",
@@ -856,9 +910,14 @@
             "link": "https://maps.app.goo.gl/xAcAqRSETknnJrZq5",
             "id": "omsoxipqfhs",
             "mesafe": "850 METRE",
-            "enlem": 40.83434232001036,
-            "boylam": 29.31270789302038,
-            "telefonlar": []
+            "enlem": 40.834342,
+            "boylam": 29.312708,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 537 489 19 14"
+                }
+            ]
         },
         {
             "ad": "FEYZA SENA",
@@ -866,9 +925,14 @@
             "link": "https://maps.app.goo.gl/PY4uTYUkcbFs28CX6",
             "id": "omsoxipqf53",
             "mesafe": "600 METRE",
-            "enlem": 40.83234625754406,
-            "boylam": 29.313524349050862,
-            "telefonlar": []
+            "enlem": 40.832346,
+            "boylam": 29.313524,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 534 822 05 27"
+                }
+            ]
         },
         {
             "ad": "MİNA BOYSAN",
@@ -876,9 +940,14 @@
             "link": "https://maps.app.goo.gl/x28RzWPEyueyZ7gBA",
             "id": "omsoxipqfr3",
             "mesafe": "8.4 KM",
-            "enlem": 40.86621717401141,
-            "boylam": 29.34123927116437,
-            "telefonlar": []
+            "enlem": 40.866217,
+            "boylam": 29.341239,
+            "telefonlar": [
+                {
+                    "etiket": "ANNE",
+                    "numara": "0 534 742 68 29"
+                }
+            ]
         },
         {
             "ad": "BEYTULLAH YAVUZ",
@@ -886,9 +955,18 @@
             "link": "https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7",
             "id": "omsoxipqfgr",
             "mesafe": "14.3 KM",
-            "enlem": 40.90185369960096,
-            "boylam": 29.38219579412973,
-            "telefonlar": []
+            "enlem": 40.901854,
+            "boylam": 29.382196,
+            "telefonlar": [
+                {
+                    "etiket": "ANNE",
+                    "numara": "0 543 761 33 89"
+                },
+                {
+                    "etiket": "BABA",
+                    "numara": "0 554 952 74 61"
+                }
+            ]
         },
         {
             "ad": "FATMANUR ÖZTÜRK",
@@ -896,9 +974,14 @@
             "link": "https://maps.app.goo.gl/5wsiiuuEvF5kczM2A",
             "id": "omsoxipqflt",
             "mesafe": "14.2 KM",
-            "enlem": 40.901315358921615,
-            "boylam": 29.381052005173366,
-            "telefonlar": []
+            "enlem": 40.901315,
+            "boylam": 29.381052,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 534 329 54 92"
+                }
+            ]
         },
         {
             "ad": "YİĞİT EFE GÖKYAR",
@@ -906,9 +989,14 @@
             "link": "https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6",
             "id": "omsoxipqfm3",
             "mesafe": "9.3 KM",
-            "enlem": 40.87992704471022,
-            "boylam": 29.339082762308486,
-            "telefonlar": []
+            "enlem": 40.879927,
+            "boylam": 29.339083,
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 555 159 96 59"
+                }
+            ]
         },
         {
             "ad": "AHMET ÇAĞIN",
