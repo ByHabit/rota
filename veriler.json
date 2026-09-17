@@ -1311,6 +1311,25 @@
             "link": "https://maps.app.goo.gl/FqkPFfsFUWo75oTf7",
             "enlem": 40.89058827793273,
             "boylam": 29.347484844212442
+        },
+        {
+            "id": "omu5tln9ca8",
+            "ad": "HAMZA EFE TOSUN OKUL",
+            "mahalle": "BAYRAMOĞLU",
+            "mesafe": "9.8 KM",
+            "telefonlar": [
+                {
+                    "etiket": "ELMAS",
+                    "numara": "0 501 493 36 47"
+                },
+                {
+                    "etiket": "KENDİSİ",
+                    "numara": "0 545 494 30 40"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/ExexwedZABzM6mfu5",
+            "enlem": 40.787447753947774,
+            "boylam": 29.371712214049776
         }
     ],
     "guzergahlar": []
