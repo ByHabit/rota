@@ -762,6 +762,10 @@
                 {
                     "etiket": "ELMAS",
                     "numara": "0 501 493 36 47"
+                },
+                {
+                    "etiket": "KENDİSİ",
+                    "numara": "0 545 494 30 40"
                 }
             ]
         },
@@ -1292,6 +1296,21 @@
             "link": "https://maps.app.goo.gl/A3UW3uc3CNqcW8HT8",
             "enlem": 40.90497432781644,
             "boylam": 29.37403158102774
+        },
+        {
+            "id": "omu5tah477f",
+            "ad": "OSMAN UMUT ÜNAL",
+            "mahalle": "TUZLA AYDINLI, ORHANLIYA YAKIN",
+            "mesafe": "",
+            "telefonlar": [
+                {
+                    "etiket": "ANNESİ AYŞE",
+                    "numara": "0 538 515 64 18"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/FqkPFfsFUWo75oTf7",
+            "enlem": 40.89058827793273,
+            "boylam": 29.347484844212442
         }
     ],
     "guzergahlar": []
