@@ -89,6 +89,20 @@
 
     .bos-liste { color: var(--soluk); font-size: 14px; padding: 10px 0; }
 
+    .tel-satir { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+    .tel-satir input.tel-etiket { flex: 0 0 130px; margin-bottom: 0; }
+    .tel-satir input.tel-numara { flex: 1 1 auto; margin-bottom: 0; }
+    .tel-sil {
+        flex: 0 0 auto; padding: 10px 13px; font-size: 15px; background: transparent;
+        border: 1px solid var(--cizgi); color: var(--kirmizi); border-radius: 8px; line-height: 1;
+    }
+    .tel-sil:hover { border-color: var(--kirmizi); }
+    .ekle-numara {
+        background: transparent; border: 1px dashed var(--cizgi); color: var(--soluk);
+        font-size: 13px; padding: 10px 16px; margin-bottom: 10px;
+    }
+    .ekle-numara:hover { border-color: var(--amber); color: var(--amber); }
+
     .liste-arama-sar { position: relative; margin-bottom: 14px; }
     .liste-arama {
         width: 100%; padding: 12px 46px 12px 14px; margin: 0;
@@ -243,9 +257,15 @@
                 <input type="text" id="yeniMesafe" placeholder="Örn: 3,4 km">
             </div>
             <div>
-                <label for="yeniTelefon">Telefon <span class="ops">(zorunlu değil)</span></label>
-                <input type="tel" id="yeniTelefon" placeholder="Örn: 0 530 000 00 00">
             </div>
+        </div>
+
+        <label>Telefon Numaraları <span class="ops">(zorunlu değil, birden fazla olabilir)</span></label>
+        <div id="telefonSatirlari"></div>
+        <button type="button" class="ekle-numara" onclick="telefonSatiriEkle()">+ Numara Ekle</button>
+        <div class="ipucu">
+            Rakamları bitişik yazsan da yeterli: <b>05307887194</b> yazınca <b>0 530 788 71 94</b> olarak kaydedilir.
+            Etiket kutusuna kimin numarası olduğunu yazabilirsin (Kendisi, Veli, Anne gibi).
         </div>
         <label for="yeniLink">Google Maps Konum Linki</label>
         <input type="text" id="yeniLink" placeholder="https://maps.app.goo.gl/...">
@@ -324,6 +344,44 @@ function b64Yaz(metin) { return btoa(unescape(encodeURIComponent(metin))); }
 function b64Oku(veri) { return decodeURIComponent(escape(atob(String(veri).replace(/\s/g, "")))); }
 
 function telSadelestir(numara) { return String(numara || "").replace(/[^0-9+]/g, ""); }
+
+/* 05307887194 -> 0 530 788 71 94   |   905307887194 -> +90 530 788 71 94
+   Taninmayan bicimleri oldugu gibi birakir. */
+function telBicimle(numara) {
+    var ham = String(numara || "").replace(/[^0-9+]/g, "");
+    if (!ham) { return ""; }
+
+    var artiVar = ham.charAt(0) === "+";
+    var rakam = ham.replace(/\+/g, "");
+
+    if (rakam.length === 12 && rakam.slice(0, 2) === "90") {
+        rakam = rakam.slice(2);
+        return "+90 " + rakam.slice(0,3) + " " + rakam.slice(3,6) + " " + rakam.slice(6,8) + " " + rakam.slice(8,10);
+    }
+    if (rakam.length === 11 && rakam.charAt(0) === "0") {
+        return "0 " + rakam.slice(1,4) + " " + rakam.slice(4,7) + " " + rakam.slice(7,9) + " " + rakam.slice(9,11);
+    }
+    if (rakam.length === 10) {
+        return "0 " + rakam.slice(0,3) + " " + rakam.slice(3,6) + " " + rakam.slice(6,8) + " " + rakam.slice(8,10);
+    }
+    return artiVar ? "+" + rakam : rakam;
+}
+
+/* Kayittaki numaralari her zaman dizi olarak dondurur: [{etiket, numara}] */
+function telefonlariAl(o) {
+    if (o && Object.prototype.toString.call(o.telefonlar) === "[object Array]") { return o.telefonlar; }
+    if (o && o.telefon) { return [{ etiket: "", numara: o.telefon }]; }
+    return [];
+}
+
+/* Arama ve paylasim icin duz metin */
+function telefonMetni(o) {
+    var d = telefonlariAl(o), p = [];
+    for (var i = 0; i < d.length; i++) {
+        p.push((d[i].etiket ? d[i].etiket + " " : "") + d[i].numara);
+    }
+    return p.join(" ");
+}
 
 function koordinatCoz(metin) {
     var m = String(metin || "").trim();
@@ -446,11 +504,64 @@ function jsonYukle(olay) {
 /* ============================================================
    ÖĞRENCİ FORMU
    ============================================================ */
+/* ---- Telefon satirlari ---- */
+function telefonSatiriEkle(etiket, numara) {
+    var kap = el("telefonSatirlari");
+    var satir = document.createElement("div");
+    satir.className = "tel-satir";
+
+    var eKutu = document.createElement("input");
+    eKutu.type = "text";
+    eKutu.className = "tel-etiket";
+    eKutu.placeholder = "Kendisi / Veli";
+    eKutu.value = etiket || "";
+
+    var nKutu = document.createElement("input");
+    nKutu.type = "tel";
+    nKutu.className = "tel-numara";
+    nKutu.placeholder = "0 530 000 00 00";
+    nKutu.value = numara || "";
+    nKutu.onblur = function () { nKutu.value = telBicimle(nKutu.value); };
+
+    var sil = document.createElement("button");
+    sil.type = "button";
+    sil.className = "tel-sil";
+    sil.innerHTML = "&times;";
+    sil.title = "Bu numarayı kaldır";
+    sil.onclick = function () { kap.removeChild(satir); };
+
+    satir.appendChild(eKutu);
+    satir.appendChild(nKutu);
+    satir.appendChild(sil);
+    kap.appendChild(satir);
+    return nKutu;
+}
+
+function telefonSatirlariniKur(liste) {
+    el("telefonSatirlari").innerHTML = "";
+    if (!liste || liste.length === 0) { telefonSatiriEkle("", ""); return; }
+    for (var i = 0; i < liste.length; i++) {
+        telefonSatiriEkle(liste[i].etiket, liste[i].numara);
+    }
+}
+
+function telefonlariTopla() {
+    var satirlar = el("telefonSatirlari").getElementsByClassName("tel-satir");
+    var sonuc = [];
+    for (var i = 0; i < satirlar.length; i++) {
+        var e = satirlar[i].getElementsByClassName("tel-etiket")[0].value.replace(/^\s+|\s+$/g, "");
+        var n = satirlar[i].getElementsByClassName("tel-numara")[0].value.replace(/^\s+|\s+$/g, "");
+        if (!n) { continue; }
+        sonuc.push({ etiket: e, numara: telBicimle(n) });
+    }
+    return sonuc;
+}
+
 function formuIsle() {
     var ad = el("yeniAd").value.trim();
     var mahalle = el("yeniMahalle").value.trim();
     var mesafe = el("yeniMesafe").value.trim();
-    var telefon = el("yeniTelefon").value.trim();
+    var telefonlar = telefonlariTopla();
     var link = el("yeniLink").value.trim();
     var koordMetin = el("yeniKoordinat").value.trim();
 
@@ -467,13 +578,15 @@ function formuIsle() {
     if (duzenlenenSira >= 0) {
         var mevcut = ogrenciler[duzenlenenSira];
         mevcut.ad = ad; mevcut.mahalle = mahalle; mevcut.mesafe = mesafe;
-        mevcut.telefon = telefon; mevcut.link = link;
+        mevcut.telefonlar = telefonlar;
+        delete mevcut.telefon;
+        mevcut.link = link;
         if (koord) { mevcut.enlem = koord.enlem; mevcut.boylam = koord.boylam; }
         else { delete mevcut.enlem; delete mevcut.boylam; }
         gunlukYaz(ad + " güncellendi. Kaydetmeyi unutma.", "ok");
         duzenlemeIptal();
     } else {
-        var kayit = { id: yeniKimlik(), ad: ad, mahalle: mahalle, mesafe: mesafe, telefon: telefon, link: link };
+        var kayit = { id: yeniKimlik(), ad: ad, mahalle: mahalle, mesafe: mesafe, telefonlar: telefonlar, link: link };
         if (koord) { kayit.enlem = koord.enlem; kayit.boylam = koord.boylam; }
         ogrenciler.push(kayit);
         gunlukYaz(ad + " listeye eklendi. Kaydetmeyi unutma.", "ok");
@@ -484,7 +597,8 @@ function formuIsle() {
 
 function formuTemizle() {
     el("yeniAd").value = ""; el("yeniMahalle").value = "";
-    el("yeniMesafe").value = ""; el("yeniTelefon").value = ""; el("yeniLink").value = "";
+    el("yeniMesafe").value = ""; el("yeniLink").value = "";
+    telefonSatirlariniKur([]);
     el("yeniKoordinat").value = "";
     el("yeniAd").focus();
 }
@@ -494,7 +608,7 @@ function kayitDuzenle(sira) {
     el("yeniAd").value = k.ad || "";
     el("yeniMahalle").value = k.mahalle || "";
     el("yeniMesafe").value = k.mesafe || "";
-    el("yeniTelefon").value = k.telefon || "";
+    telefonSatirlariniKur(telefonlariAl(k));
     el("yeniLink").value = k.link || "";
     el("yeniKoordinat").value = koordinatYaz(k);
     duzenlenenSira = sira;
@@ -584,7 +698,7 @@ function listeCiz() {
         if (aranan !== "") {
             var havuz = aramaSadelestir(
                 (o.ad || "") + " " + (o.mahalle || "") + " " +
-                (o.mesafe || "") + " " + (o.telefon || ""));
+                (o.mesafe || "") + " " + telefonMetni(o));
             if (havuz.indexOf(aranan) === -1) { continue; }
         }
         gorunen++;
@@ -595,7 +709,15 @@ function listeCiz() {
                         '<div class="kayit-ad">' + htmlKacis(o.ad) + '</div>' +
                         '<div class="kayit-mah">' + htmlKacis(o.mahalle) + '</div>' +
                         (o.mesafe ? '<div class="kayit-ek">' + htmlKacis(o.mesafe) + '</div>' : '') +
-                        (o.telefon ? '<div class="kayit-tel">' + htmlKacis(o.telefon) + '</div>' : '') +
+                        (function () {
+                            var d = telefonlariAl(o);
+                            if (d.length === 0) { return ''; }
+                            var p = [];
+                            for (var t = 0; t < d.length; t++) {
+                                p.push((d[t].etiket ? htmlKacis(d[t].etiket) + ': ' : '') + htmlKacis(d[t].numara));
+                            }
+                            return '<div class="kayit-tel">' + p.join(' &nbsp;·&nbsp; ') + '</div>';
+                        })() +
                         '<div class="kayit-link">' + (koordinatYaz(o) ? '&#9678; ' + koordinatYaz(o) + ' &middot; ' : '&#9678; koordinat yok &middot; ') + htmlKacis(o.link) + '</div>' +
                     '</div>' +
                     '<button class="mini-btn duzenle-btn" onclick="kayitDuzenle(' + i + ')">Düzenle</button>' +
@@ -655,7 +777,15 @@ function veriyiIcerAl(icerik) {
             ham[i].boylam = parseFloat(ham[i].boylam);
             if (isNaN(ham[i].enlem) || isNaN(ham[i].boylam)) { delete ham[i].enlem; delete ham[i].boylam; }
         }
-        if (ham[i].telefon === undefined) { ham[i].telefon = ""; }
+        /* Eski tek telefon alanini yeni dizi bicimine tasi */
+        if (Object.prototype.toString.call(ham[i].telefonlar) !== "[object Array]") {
+            ham[i].telefonlar = ham[i].telefon ? [{ etiket: "", numara: ham[i].telefon }] : [];
+        }
+        delete ham[i].telefon;
+        for (var t = 0; t < ham[i].telefonlar.length; t++) {
+            ham[i].telefonlar[t].numara = telBicimle(ham[i].telefonlar[t].numara);
+            if (ham[i].telefonlar[t].etiket === undefined) { ham[i].telefonlar[t].etiket = ""; }
+        }
     }
 
     ogrenciler = ham;
@@ -800,14 +930,17 @@ function kartUret(o, numara) {
     }
 
     var telSatir = "";
-    if (o.telefon) {
-        telSatir = '                <a class="tel" href="tel:' + htmlKacis(telSadelestir(o.telefon)) + '">&#128222; ' + htmlKacis(o.telefon) + '</a>\n';
+    var telListe = telefonlariAl(o);
+    for (var tt = 0; tt < telListe.length; tt++) {
+        telSatir += '                <a class="tel" href="tel:' + htmlKacis(telSadelestir(telListe[tt].numara)) + '">&#128222; ' +
+                    (telListe[tt].etiket ? htmlKacis(telListe[tt].etiket) + ': ' : '') +
+                    htmlKacis(telListe[tt].numara) + '</a>\n';
     }
 
     var basNo = numara ? '<span class="sira-no">' + numara + '</span>' : "";
     var latVal = (o.enlem !== undefined && o.enlem !== null) ? o.enlem : "";
     var lngVal = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";
-    var telVal = telSadelestir(o.telefon || "");
+    var telVal = telListe.length > 0 ? telSadelestir(telListe[0].numara) : "";
 
     return '        <li class="kart" id="kart-' + htmlKacis(o.id) + '" data-id="' + htmlKacis(o.id) + '">\n' +
 '            <div class="kart-ust">\n' +
@@ -1038,7 +1171,7 @@ bolumler +
 '<div class="modal-perde" id="waModal" onclick="modalKapat(event, \'waModal\')">\n' +
 '    <div class="modal-kutu">\n' +
 '        <div class="modal-baslik" id="waModalBaslik">WhatsApp Paylaşımı</div>\n' +
-'        <a class="modal-btn btn-yesil" id="waLinkGenel" href="#" target="_blank">Konum Bilgisini Paylaş</a>\n' +
+'        <a class="modal-btn btn-yesil" id="waLinkGenel" href="#" target="_blank" onclick="return waPaylas(this)">Konumu Paylaş (kişi seç)</a>\n' +
 '        <a class="modal-btn btn-gmaps" id="waLinkKapi" href="#" target="_blank">Veliye "Kapıdayız" Mesajı At</a>\n' +
 '        <button class="modal-btn btn-kapat" onclick="document.getElementById(\'waModal\').style.display=\'none\'">Vazgeç</button>\n' +
 '    </div>\n' +
@@ -1099,6 +1232,13 @@ bolumler +
 '\n' +
 'function telSade(n) { return String(n || "").replace(/[^0-9+]/g, ""); }\n' +
 '\n' +
+'/* Kayittaki numaralari her zaman dizi olarak dondurur: [{etiket, numara}] */\n' +
+'function telefonlariAl(o) {\n' +
+'    if (o && Object.prototype.toString.call(o.telefonlar) === "[object Array]") { return o.telefonlar; }\n' +
+'    if (o && o.telefon) { return [{ etiket: "", numara: o.telefon }]; }\n' +
+'    return [];\n' +
+'}\n' +
+'\n' +
 'function modalKapat(e, id) {\n' +
 '    if (e.target.id === id) { document.getElementById(id).style.display = "none"; }\n' +
 '}\n' +
@@ -1113,15 +1253,48 @@ bolumler +
 '}\n' +
 '\n' +
 '/* ---------- WhatsApp Seçici ---------- */\n' +
+'/* WhatsApp yalnizca ulke kodlu numarayi kabul eder:\n' +
+'   05014933647 -> 905014933647 ; cevrilemezse bos doner. */\n' +
+'function waNumara(tel) {\n' +
+'    var r = String(tel || "").replace(/[^0-9]/g, "");\n' +
+'    if (r.length === 12 && r.slice(0,2) === "90") { return r; }\n' +
+'    if (r.length === 11 && r.charAt(0) === "0") { return "90" + r.slice(1); }\n' +
+'    if (r.length === 10) { return "90" + r; }\n' +
+'    return "";\n' +
+'}\n' +
+'\n' +
+'var waPaylasVerisi = null;\n' +
+'\n' +
 'function waSecimAc(ad, mahalle, link, tel) {\n' +
 '    document.getElementById("waModalBaslik").textContent = ad;\n' +
 '    var paylasMetni = ad + " - " + mahalle + "\\n" + link;\n' +
-'    var gUrl = tel ? "https://wa.me/" + tel + "?text=" + encodeURIComponent(paylasMetni) : "https://wa.me/?text=" + encodeURIComponent(paylasMetni);\n' +
-'    var kapiMetni = "Sayın veli, öğrencimizi almak için servis aracımız adresinize yaklaşmaktadır.";\n' +
-'    var kUrl = tel ? "https://wa.me/" + tel + "?text=" + encodeURIComponent(kapiMetni) : "https://wa.me/?text=" + encodeURIComponent(kapiMetni);\n' +
-'    document.getElementById("waLinkGenel").href = gUrl;\n' +
-'    document.getElementById("waLinkKapi").href = kUrl;\n' +
+'    waPaylasVerisi = { baslik: ad, metin: paylasMetni };\n' +
+'\n' +
+'    /* Konum paylasimi her zaman kisi secme ekranini acar */\n' +
+'    document.getElementById("waLinkGenel").href = "https://wa.me/?text=" + encodeURIComponent(paylasMetni);\n' +
+'\n' +
+'    /* Kapidayiz mesaji sadece gecerli numara varsa gosterilir */\n' +
+'    var n = waNumara(tel);\n' +
+'    var kapiDugme = document.getElementById("waLinkKapi");\n' +
+'    if (n) {\n' +
+'        var kapiMetni = "Sayın veli, öğrencimizi almak için servis aracımız adresinize yaklaşmaktadır.";\n' +
+'        kapiDugme.href = "https://wa.me/" + n + "?text=" + encodeURIComponent(kapiMetni);\n' +
+'        kapiDugme.style.display = "block";\n' +
+'    } else {\n' +
+'        kapiDugme.style.display = "none";\n' +
+'    }\n' +
 '    document.getElementById("waModal").style.display = "flex";\n' +
+'}\n' +
+'\n' +
+'/* Telefonun kendi paylas menusu varsa onu kullan: WhatsApp, SMS, Telegram... */\n' +
+'function waPaylas(baglanti) {\n' +
+'    if (navigator.share && waPaylasVerisi) {\n' +
+'        navigator.share({ title: waPaylasVerisi.baslik, text: waPaylasVerisi.metin }).catch(function(){});\n' +
+'        document.getElementById("waModal").style.display = "none";\n' +
+'        return false;\n' +
+'    }\n' +
+'    document.getElementById("waModal").style.display = "none";\n' +
+'    return true;\n' +
 '}\n' +
 '\n' +
 '/* ---------- Servis Modu (Alındı İşareti) ---------- */\n' +
@@ -1244,7 +1417,10 @@ bolumler +
 '        if (!o) continue;\n' +
 '        n++;\n' +
 '        metin += n + ". " + o.ad + " - " + o.mahalle;\n' +
-'        if (o.telefon) { metin += " (" + o.telefon + ")"; }\n' +
+'        var td = telefonlariAl(o);\n' +
+'        for (var tz = 0; tz < td.length; tz++) {\n' +
+'            metin += "\\n   " + (td[tz].etiket ? td[tz].etiket + ": " : "") + td[tz].numara;\n' +
+'        }\n' +
 '        metin += "\\n";\n' +
 '    }\n' +
 '    if (n === 0) { alert("Liste bos."); return; }\n' +
@@ -1488,7 +1664,13 @@ bolumler +
 '            var o = ogrBul(L.uyeler[i]); if (!o) continue;\n' +
 '            var latV = (o.enlem !== undefined && o.enlem !== null) ? o.enlem : "";\n' +
 '            var lngV = (o.boylam !== undefined && o.boylam !== null) ? o.boylam : "";\n' +
-'            var telV = telSade(o.telefon || "");\n' +
+'            var telD = telefonlariAl(o);\n' +
+'            var telV = telD.length > 0 ? telSade(telD[0].numara) : "";\n' +
+'            var telHtml = "";\n' +
+'            for (var tq = 0; tq < telD.length; tq++) {\n' +
+'                telHtml += \x27<a class="tel" href="tel:\x27 + kacis(telSade(telD[tq].numara)) + \x27">&#128222; \x27 +\n' +
+'                           (telD[tq].etiket ? kacis(telD[tq].etiket) + ": " : "") + kacis(telD[tq].numara) + "</a>";\n' +
+'            }\n' +
 '            h += \x27<li class="kart sirali" id="kart-\x27 + kacis(o.id) + \x27" data-id="\x27 + kacis(o.id) + \x27" draggable="true" ondragstart="surukleBasla(event, \x27 + i + \x27)" ondragend="surukleBitir(event)" ondragover="surukleUzerinde(event)" ondrop="surukleBirak(event, \x27 + i + \x27)">\x27 +\n' +
 '                 \x27<div class="tut-sutun">\x27 +\n' +
 '                     \x27<button class="ok" onclick="yerelTasi(\x27 + i + \x27,-1)"\x27 + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +\n' +
@@ -1503,7 +1685,7 @@ bolumler +
 '                             "<p>" + kacis(o.mahalle) + "</p>" +\n' +
 '                             (o.mesafe ? \x27<span class="rozet-mesafe">\x27 + kacis(o.mesafe) + "</span>" : "") +\n' +
 '                             (o.enlem ? \x27<span class="uzaklik" data-lat="\x27 + o.enlem + \x27" data-lng="\x27 + o.boylam + \x27"></span>\x27 : "") +\n' +
-'                             (o.telefon ? \x27<a class="tel" href="tel:\x27 + kacis(telSade(o.telefon)) + \x27">&#128222; \x27 + kacis(o.telefon) + "</a>" : "") +\n' +
+'                             telHtml +\n' +
 '                         "</div>" +\n' +
 '                     "</div>" +\n' +
 '                     \x27<div class="butonlar">\x27 +\n' +
@@ -1587,8 +1769,8 @@ bolumler +
    TELEFON EKLEME SAYFASI ÜRETİCİ
    ============================================================ */
 function ekleSayfasiUret() {
-    var aktarilan = [htmlKacis, jsKacis, telSadelestir, koordinatCoz, ogrenciBul,
-                     yeniKimlik, kartUret, listeSayfasiUret, b64Yaz, b64Oku];
+    var aktarilan = [htmlKacis, jsKacis, telSadelestir, telBicimle, telefonlariAl, telefonMetni,
+                     koordinatCoz, ogrenciBul, yeniKimlik, kartUret, listeSayfasiUret, b64Yaz, b64Oku];
     var kaynak = "";
     for (var i = 0; i < aktarilan.length; i++) { kaynak += aktarilan[i].toString() + "\n\n"; }
 
@@ -1666,6 +1848,9 @@ function ekleSayfasiUret() {
 '    .durum.hata { background:rgba(255,107,94,0.1); border-left:3px solid #FF6B5E; color:#FFB3AC; display:block; }\n' +
 '    .durum.bilgi { background:rgba(255,196,0,0.08); border-left:3px solid #FFC400; color:#D9C99A; display:block; }\n' +
 '    .sayi { font-size:12px; color:#8A97A8; text-align:center; margin-top:6px; }\n' +
+'    .tel-ikili { display:flex; gap:8px; }\n' +
+'    .tel-ikili .tel-etiket { flex:0 0 40%; }\n' +
+'    .tel-ikili .tel-numara { flex:1 1 auto; }\n' +
 '    .kucuk-baglanti { display:block; text-align:center; color:#8A97A8; font-size:13px; margin-top:18px; }\n' +
 '    .kucuk-baglanti a { color:#FFC400; }\n' +
 '    .katla { font-size:13px; color:#8A97A8; text-align:center; padding:6px; cursor:pointer; }\n' +
@@ -1700,8 +1885,16 @@ function ekleSayfasiUret() {
 '        <input type="text" id="mahalle" placeholder="Örnek: Tuzla Yayla Mahallesi">\n' +
 '        <label for="mesafe">Mesafe / Not <span class="ops">(zorunlu değil)</span></label>\n' +
 '        <input type="text" id="mesafe" placeholder="Örnek: 3,4 km">\n' +
-'        <label for="telefon">Telefon <span class="ops">(zorunlu değil)</span></label>\n' +
-'        <input type="tel" id="telefon" placeholder="Örnek: 0 530 000 00 00">\n' +
+'        <label>Telefon Numaraları <span class="ops">(zorunlu değil)</span></label>\n' +
+'        <div class="tel-ikili">\n' +
+'            <input type="text" id="etiket1" class="tel-etiket" placeholder="Kendisi">\n' +
+'            <input type="tel" id="telefon1" class="tel-numara" placeholder="0 530 000 00 00">\n' +
+'        </div>\n' +
+'        <div class="tel-ikili">\n' +
+'            <input type="text" id="etiket2" class="tel-etiket" placeholder="Veli">\n' +
+'            <input type="tel" id="telefon2" class="tel-numara" placeholder="0 530 000 00 00">\n' +
+'        </div>\n' +
+'        <div class="ipucu">Rakamları bitişik yazsan yeterli, kaydederken düzgün biçime çevrilir.</div>\n' +
 '        <label for="link">Google Maps Konum Linki</label>\n' +
 '        <input type="text" id="link" autocapitalize="off" spellcheck="false" placeholder="https://maps.app.goo.gl/...">\n' +
 '        <label for="koordinat">Koordinat <span class="ops">(canlı mesafe için)</span></label>\n' +
@@ -1805,7 +1998,13 @@ kaynak +
 '}\n' +
 'function kaydet() {\n' +
 '    var ad = el("ad").value.trim(); var mahalle = el("mahalle").value.trim();\n' +
-'    var mesafe = el("mesafe").value.trim(); var telefon = el("telefon").value.trim();\n' +
+'    var mesafe = el("mesafe").value.trim();\n' +
+'    var telefonlar = [];\n' +
+'    for (var tn = 1; tn <= 2; tn++) {\n' +
+'        var nv = el("telefon" + tn).value.replace(/^\\s+|\\s+$/g, "");\n' +
+'        if (!nv) continue;\n' +
+'        telefonlar.push({ etiket: el("etiket" + tn).value.replace(/^\\s+|\\s+$/g, ""), numara: telBicimle(nv) });\n' +
+'    }\n' +
 '    var link = el("link").value.trim(); var koordMetin = el("koordinat").value.trim();\n' +
 '    if (!ad) { bildir("Ad soyad boş bırakılamaz.", "hata"); el("ad").focus(); return; }\n' +
 '    if (!mahalle) { bildir("Mahalle boş bırakılamaz.", "hata"); el("mahalle").focus(); return; }\n' +
@@ -1815,7 +2014,7 @@ kaynak +
 '        koord = koordinatCoz(koordMetin);\n' +
 '        if (!koord) { bildir("Koordinat okunamadı. Örnek: 40.815432, 29.301887", "hata"); el("koordinat").focus(); return; }\n' +
 '    }\n' +
-'    var kayit = { id: yeniKimlik(), ad: ad, mahalle: mahalle, mesafe: mesafe, telefon: telefon, link: link };\n' +
+'    var kayit = { id: yeniKimlik(), ad: ad, mahalle: mahalle, mesafe: mesafe, telefonlar: telefonlar, link: link };\n' +
 '    if (koord) { kayit.enlem = koord.enlem; kayit.boylam = koord.boylam; }\n' +
 '    ogrenciler.push(kayit);\n' +
 '    el("kaydetBtn").disabled = true; el("kaydetBtn").innerHTML = "Kaydediliyor...";\n' +
@@ -1826,7 +2025,10 @@ kaynak +
 '            return dosyaYaz("index.html", listeSayfasiUret(), "Liste güncellendi (" + damga + ")");\n' +
 '        })\n' +
 '        .then(function(){\n' +
-'            el("ad").value = ""; el("mahalle").value = ""; el("mesafe").value = ""; el("telefon").value = ""; el("link").value = ""; el("koordinat").value = "";\n' +
+'            el("ad").value = ""; el("mahalle").value = ""; el("mesafe").value = "";\n' +
+'            el("telefon1").value = ""; el("telefon2").value = "";\n' +
+'            el("etiket1").value = ""; el("etiket2").value = "";\n' +
+'            el("link").value = ""; el("koordinat").value = "";\n' +
 '            el("kaydetBtn").disabled = false; el("kaydetBtn").innerHTML = "Kaydet ve Yayınla";\n' +
 '            el("sayi").innerHTML = "Listede " + ogrenciler.length + " öğrenci var.";\n' +
 '            bildir(ad + " kaydedildi ve yayınlandı.", "ok");\n' +
@@ -1852,6 +2054,7 @@ kaynak +
    BAŞLANGIÇ
    ============================================================ */
 ayarlariOku();
+telefonSatirlariniKur([]);   /* form acilista bir bos numara satiri gostersin */
 yollariGuncelle();
 hepsiniCiz();
 
