@@ -1639,14 +1639,28 @@ bolumler +
 '    yerelListeler[aktifYerel].uyeler = [];\n' +
 '    yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele();\n' +
 '}\n' +
+'/* Listenin tamami: sira, ad, mahalle, mesafe, telefonlar ve konum linki */\n' +
 'function yerelPaylas() {\n' +
 '    if (aktifYerel < 0) return;\n' +
-'    var L = yerelListeler[aktifYerel]; var metin = L.ad + "\\n\\n"; var n = 0;\n' +
+'    var L = yerelListeler[aktifYerel];\n' +
+'    var sat = [];\n' +
+'    var n = 0;\n' +
 '    for (var i = 0; i < L.uyeler.length; i++) {\n' +
-'        var o = ogrBul(L.uyeler[i]); if (!o) continue;\n' +
-'        n++; metin += n + ". " + o.ad + " - " + o.mahalle + "\\n" + o.link + "\\n\\n";\n' +
+'        var o = ogrBul(L.uyeler[i]);\n' +
+'        if (!o) continue;\n' +
+'        n++;\n' +
+'        sat.push(n + ". " + o.ad);\n' +
+'        sat.push("   " + o.mahalle);\n' +
+'        if (o.mesafe) { sat.push("   Mesafe: " + o.mesafe); }\n' +
+'        var td = telefonlariAl(o);\n' +
+'        for (var t = 0; t < td.length; t++) {\n' +
+'            sat.push("   " + (td[t].etiket ? td[t].etiket : "Telefon") + ": " + td[t].numara);\n' +
+'        }\n' +
+'        sat.push("   " + o.link);\n' +
+'        sat.push("");\n' +
 '    }\n' +
 '    if (n === 0) { alert("Liste boş."); return; }\n' +
+'    var metin = L.ad + " (" + n + " durak)\\n\\n" + sat.join("\\n");\n' +
 '    if (navigator.share) { navigator.share({ title: L.ad, text: metin }).catch(function(){}); }\n' +
 '    else { window.open("https://wa.me/?text=" + encodeURIComponent(metin), "_blank"); }\n' +
 '}\n' +
