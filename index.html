@@ -131,7 +131,7 @@
     <header>
         <div>
             <h1>Öğrenci <span>Rotaları</span></h1>
-            <div class="tarih">Son güncelleme: 17.09.2026</div>
+            <div class="tarih">Son güncelleme: 18.09.2026</div>
         </div>
         <div class="bas-dugmeler">
             <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>
@@ -1716,7 +1716,7 @@
 <div class="modal-perde" id="waModal" onclick="modalKapat(event, 'waModal')">
     <div class="modal-kutu">
         <div class="modal-baslik" id="waModalBaslik">WhatsApp Paylaşımı</div>
-        <a class="modal-btn btn-yesil" id="waLinkGenel" href="#" target="_blank">Konum Bilgisini Paylaş</a>
+        <a class="modal-btn btn-yesil" id="waLinkGenel" href="#" target="_blank" onclick="return waPaylas(this)">Konumu Paylaş (kişi seç)</a>
         <a class="modal-btn btn-gmaps" id="waLinkKapi" href="#" target="_blank">Veliye "Kapıdayız" Mesajı At</a>
         <button class="modal-btn btn-kapat" onclick="document.getElementById('waModal').style.display='none'">Vazgeç</button>
     </div>
@@ -1798,15 +1798,48 @@ function navigasyonAc(lat, lng, link) {
 }
 
 /* ---------- WhatsApp Seçici ---------- */
+/* WhatsApp yalnizca ulke kodlu numarayi kabul eder:
+   05014933647 -> 905014933647 ; cevrilemezse bos doner. */
+function waNumara(tel) {
+    var r = String(tel || "").replace(/[^0-9]/g, "");
+    if (r.length === 12 && r.slice(0,2) === "90") { return r; }
+    if (r.length === 11 && r.charAt(0) === "0") { return "90" + r.slice(1); }
+    if (r.length === 10) { return "90" + r; }
+    return "";
+}
+
+var waPaylasVerisi = null;
+
 function waSecimAc(ad, mahalle, link, tel) {
     document.getElementById("waModalBaslik").textContent = ad;
     var paylasMetni = ad + " - " + mahalle + "\n" + link;
-    var gUrl = tel ? "https://wa.me/" + tel + "?text=" + encodeURIComponent(paylasMetni) : "https://wa.me/?text=" + encodeURIComponent(paylasMetni);
-    var kapiMetni = "Sayın veli, öğrencimizi almak için servis aracımız adresinize yaklaşmaktadır.";
-    var kUrl = tel ? "https://wa.me/" + tel + "?text=" + encodeURIComponent(kapiMetni) : "https://wa.me/?text=" + encodeURIComponent(kapiMetni);
-    document.getElementById("waLinkGenel").href = gUrl;
-    document.getElementById("waLinkKapi").href = kUrl;
+    waPaylasVerisi = { baslik: ad, metin: paylasMetni };
+
+    /* Konum paylasimi her zaman kisi secme ekranini acar */
+    document.getElementById("waLinkGenel").href = "https://wa.me/?text=" + encodeURIComponent(paylasMetni);
+
+    /* Kapidayiz mesaji sadece gecerli numara varsa gosterilir */
+    var n = waNumara(tel);
+    var kapiDugme = document.getElementById("waLinkKapi");
+    if (n) {
+        var kapiMetni = "Sayın veli, öğrencimizi almak için servis aracımız adresinize yaklaşmaktadır.";
+        kapiDugme.href = "https://wa.me/" + n + "?text=" + encodeURIComponent(kapiMetni);
+        kapiDugme.style.display = "block";
+    } else {
+        kapiDugme.style.display = "none";
+    }
     document.getElementById("waModal").style.display = "flex";
+}
+
+/* Telefonun kendi paylas menusu varsa onu kullan: WhatsApp, SMS, Telegram... */
+function waPaylas(baglanti) {
+    if (navigator.share && waPaylasVerisi) {
+        navigator.share({ title: waPaylasVerisi.baslik, text: waPaylasVerisi.metin }).catch(function(){});
+        document.getElementById("waModal").style.display = "none";
+        return false;
+    }
+    document.getElementById("waModal").style.display = "none";
+    return true;
 }
 
 /* ---------- Servis Modu (Alındı İşareti) ---------- */
