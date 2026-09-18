@@ -2185,14 +2185,28 @@ function yerelBosalt() {
     yerelListeler[aktifYerel].uyeler = [];
     yerelKaydet(); sekmeleriCiz(); yerelCiz(); filtrele();
 }
+/* Listenin tamami: sira, ad, mahalle, mesafe, telefonlar ve konum linki */
 function yerelPaylas() {
     if (aktifYerel < 0) return;
-    var L = yerelListeler[aktifYerel]; var metin = L.ad + "\n\n"; var n = 0;
+    var L = yerelListeler[aktifYerel];
+    var sat = [];
+    var n = 0;
     for (var i = 0; i < L.uyeler.length; i++) {
-        var o = ogrBul(L.uyeler[i]); if (!o) continue;
-        n++; metin += n + ". " + o.ad + " - " + o.mahalle + "\n" + o.link + "\n\n";
+        var o = ogrBul(L.uyeler[i]);
+        if (!o) continue;
+        n++;
+        sat.push(n + ". " + o.ad);
+        sat.push("   " + o.mahalle);
+        if (o.mesafe) { sat.push("   Mesafe: " + o.mesafe); }
+        var td = telefonlariAl(o);
+        for (var t = 0; t < td.length; t++) {
+            sat.push("   " + (td[t].etiket ? td[t].etiket : "Telefon") + ": " + td[t].numara);
+        }
+        sat.push("   " + o.link);
+        sat.push("");
     }
     if (n === 0) { alert("Liste boş."); return; }
+    var metin = L.ad + " (" + n + " durak)\n\n" + sat.join("\n");
     if (navigator.share) { navigator.share({ title: L.ad, text: metin }).catch(function(){}); }
     else { window.open("https://wa.me/?text=" + encodeURIComponent(metin), "_blank"); }
 }
