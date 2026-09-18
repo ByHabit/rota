@@ -953,7 +953,7 @@ function kartUret(o, numara) {
 '            </div>\n' +
 '            <div class="butonlar">\n' +
 '                <button class="nav-btn gmaps" onclick="navigasyonAc(\'' + latVal + '\', \'' + lngVal + '\', \'' + jsKacis(o.link) + '\')">Yol Tarifi</button>\n' +
-'                <button class="gonder" onclick="waSecimAc(\'' + jsKacis(o.ad) + '\', \'' + jsKacis(o.mahalle) + '\', \'' + jsKacis(o.link) + '\', \'' + telVal + '\')">WhatsApp</button>\n' +
+'                <button class="gonder" onclick="waSecimAc(\'' + jsKacis(o.id) + '\')">WhatsApp</button>\n' +
 '            </div>\n' +
 '        </li>\n';
 }
@@ -1265,9 +1265,46 @@ bolumler +
 '\n' +
 'var waPaylasVerisi = null;\n' +
 '\n' +
-'function waSecimAc(ad, mahalle, link, tel) {\n' +
+'/* Ogrencinin bulundugu gunluk listeyi ve sirasini bulur. */\n' +
+'function listeKonumu(id) {\n' +
+'    if (aktifYerel >= 0 && yerelListeler[aktifYerel]) {\n' +
+'        var y = yerelListeler[aktifYerel].uyeler.indexOf(id);\n' +
+'        if (y !== -1) { return { ad: yerelListeler[aktifYerel].ad, sira: y + 1,\n' +
+'                                 toplam: yerelListeler[aktifYerel].uyeler.length }; }\n' +
+'    }\n' +
+'    for (var i = 0; i < yerelListeler.length; i++) {\n' +
+'        var k = yerelListeler[i].uyeler.indexOf(id);\n' +
+'        if (k !== -1) { return { ad: yerelListeler[i].ad, sira: k + 1,\n' +
+'                                 toplam: yerelListeler[i].uyeler.length }; }\n' +
+'    }\n' +
+'    return null;\n' +
+'}\n' +
+'\n' +
+'/* Paylasilacak tam bilgi metni */\n' +
+'function waMetniUret(o) {\n' +
+'    var sat = [];\n' +
+'    var yer = listeKonumu(o.id);\n' +
+'    if (yer) { sat.push(yer.ad + " - " + yer.sira + ". durak (" + yer.toplam + " durak)"); sat.push(""); }\n' +
+'    sat.push(o.ad);\n' +
+'    sat.push(o.mahalle);\n' +
+'    if (o.mesafe) { sat.push("Mesafe: " + o.mesafe); }\n' +
+'    var td = telefonlariAl(o);\n' +
+'    for (var i = 0; i < td.length; i++) {\n' +
+'        sat.push((td[i].etiket ? td[i].etiket : "Telefon") + ": " + td[i].numara);\n' +
+'    }\n' +
+'    sat.push("");\n' +
+'    sat.push(o.link);\n' +
+'    return sat.join("\\n");\n' +
+'}\n' +
+'\n' +
+'function waSecimAc(id) {\n' +
+'    var o = ogrBul(id);\n' +
+'    if (!o) { return; }\n' +
+'    var td0 = telefonlariAl(o);\n' +
+'    var tel = td0.length > 0 ? td0[0].numara : "";\n' +
+'    var ad = o.ad, mahalle = o.mahalle, link = o.link;\n' +
 '    document.getElementById("waModalBaslik").textContent = ad;\n' +
-'    var paylasMetni = ad + " - " + mahalle + "\\n" + link;\n' +
+'    var paylasMetni = waMetniUret(o);\n' +
 '    waPaylasVerisi = { baslik: ad, metin: paylasMetni };\n' +
 '\n' +
 '    /* Konum paylasimi her zaman kisi secme ekranini acar */\n' +
@@ -1690,7 +1727,7 @@ bolumler +
 '                     "</div>" +\n' +
 '                     \x27<div class="butonlar">\x27 +\n' +
 '                         \x27<button class="nav-btn gmaps" onclick="navigasyonAc(\\\x27\x27 + latV + \x27\\\x27, \\\x27\x27 + lngV + \x27\\\x27, \\\x27\x27 + jsKacis(o.link) + \x27\\\x27)">Yol Tarifi</button>\x27 +\n' +
-'                         \x27<button class="gonder" onclick="waSecimAc(\\\x27\x27 + jsKacis(o.ad) + \x27\\\x27, \\\x27\x27 + jsKacis(o.mahalle) + \x27\\\x27, \\\x27\x27 + jsKacis(o.link) + \x27\\\x27, \\\x27\x27 + telV + \x27\\\x27)">WhatsApp</button>\x27 +\n' +
+'                         \x27<button class="gonder" onclick="waSecimAc(\\\x27\x27 + jsKacis(o.id) + \x27\\\x27)">WhatsApp</button>\x27 +\n' +
 '                         \x27<button class="cikar" onclick="yerelCikar(\x27 + i + \x27)">Çıkar</button>\x27 +\n' +
 '                     "</div>" +\n' +
 '                 "</div></li>";\n' +
