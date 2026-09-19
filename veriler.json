@@ -1330,6 +1330,19 @@
             "link": "https://maps.app.goo.gl/ExexwedZABzM6mfu5",
             "enlem": 40.787447753947774,
             "boylam": 29.371712214049776
+        },
+        {
+            "id": "omu8b7kxn3d",
+            "ad": "AYGÜL YILDIZ",
+            "mahalle": "TUZLA ŞİFA MAHALLESİ",
+            "mesafe": "",
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 537 437 56 97"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/myuRppkHT9MDjRjQ7"
         }
     ],
     "guzergahlar": []
