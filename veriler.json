@@ -1182,7 +1182,7 @@
         },
         {
             "id": "omtd4kcbzfg",
-            "ad": "Çınar Engelli Bakım Merkezi",
+            "ad": "ATAŞEHİR ÇINAR ENGELLİ BAKIM MERKEZİ",
             "mahalle": "ATAŞEHİR",
             "mesafe": "28.5 KM",
             "telefonlar": [
@@ -1200,8 +1200,8 @@
                 }
             ],
             "link": "https://maps.app.goo.gl/NTcFUqVW2S6MSRQk6",
-            "enlem": 40.98147260428164,
-            "boylam": 29.157274059071412
+            "enlem": 40.981473,
+            "boylam": 29.157274
         },
         {
             "id": "omtgyv28yrq",
@@ -1345,6 +1345,21 @@
             "link": "https://maps.app.goo.gl/myuRppkHT9MDjRjQ7",
             "enlem": 40.8375045,
             "boylam": 29.357993
+        },
+        {
+            "id": "omucsix3vqm",
+            "ad": "YUSUF ŞİRİNOĞLU",
+            "mahalle": "TUZLA YAYLA MAHALLESİ",
+            "mesafe": "",
+            "telefonlar": [
+                {
+                    "etiket": "ANNE ZÜLFİYE",
+                    "numara": "0 552 442 18 42"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/FdJdu3injSANrbmt7",
+            "enlem": 40.82980340092937,
+            "boylam": 29.31446079658482
         }
     ],
     "guzergahlar": []
