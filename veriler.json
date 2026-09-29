@@ -1380,6 +1380,21 @@
             "link": "https://maps.app.goo.gl/RaWvnsXQFCQaG26Z9",
             "enlem": 40.828712,
             "boylam": 29.354919
+        },
+        {
+            "id": "omumio1m4np",
+            "ad": "KADİR DERELİ",
+            "mahalle": "TUZLA ŞİFA MAHALLESİ",
+            "mesafe": "",
+            "telefonlar": [
+                {
+                    "etiket": "ANNE",
+                    "numara": "+90 534 708 64 69"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/ZXho3oP8XVnjGJUs8",
+            "enlem": 40.833352,
+            "boylam": 29.364622
         }
     ],
     "guzergahlar": []
