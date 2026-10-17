@@ -1438,7 +1438,16 @@ bolumler +
 '    }\n' +
 '\n' +
 '    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
-'    var url = "https://www.google.com/maps/dir/" + koords.join("/");\n' +
+'\n' +
+'    /* api=1 bicimi: son durak hedef, oncekiler ara durak.\n' +
+'       dir_action=navigate yol tarifini dogrudan baslatir, onizleme acmaz.\n' +
+'       Baslangic verilmedigi icin Maps mevcut konumu kullanir. */\n' +
+'    var hedef = koords[koords.length - 1];\n' +
+'    var ara = koords.slice(0, koords.length - 1);\n' +
+'    var url = "https://www.google.com/maps/dir/?api=1" +\n' +
+'              "&destination=" + encodeURIComponent(hedef);\n' +
+'    if (ara.length > 0) { url += "&waypoints=" + encodeURIComponent(ara.join("|")); }\n' +
+'    url += "&travelmode=driving&dir_action=navigate";\n' +
 '    window.open(url, "_blank");\n' +
 '}\n' +
 '\n' +
