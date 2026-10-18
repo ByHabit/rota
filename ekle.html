@@ -694,15 +694,12 @@ bolumler +
 '\n' +
 '    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
 '\n' +
-'    /* api=1 bicimi: son durak hedef, oncekiler ara durak.\n' +
-'       dir_action=navigate yol tarifini dogrudan baslatir, onizleme acmaz.\n' +
-'       Baslangic verilmedigi icin Maps mevcut konumu kullanir. */\n' +
-'    var hedef = koords[koords.length - 1];\n' +
-'    var ara = koords.slice(0, koords.length - 1);\n' +
-'    var url = "https://www.google.com/maps/dir/?api=1" +\n' +
-'              "&destination=" + encodeURIComponent(hedef);\n' +
-'    if (ara.length > 0) { url += "&waypoints=" + encodeURIComponent(ara.join("|")); }\n' +
-'    url += "&travelmode=driving&dir_action=navigate";\n' +
+'    /* Yol bicimi (maps/dir/A/B/C): coklu duragi en saglam tasiyan bicim.\n' +
+'       Basa bos bir bolum konur (dir//...) ki Maps baslangic olarak\n' +
+'       mevcut konumu kullansin; boylece Onizle yerine Baslat cikar.\n' +
+'       dir_action=navigate KULLANILMAZ: Google\x27in belgelerine gore\n' +
+'       coklu ara durakla birlikte calismaz, tek hedefe iner. */\n' +
+'    var url = "https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0";\n' +
 '    window.open(url, "_blank");\n' +
 '}\n' +
 '\n' +
