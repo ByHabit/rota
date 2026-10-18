@@ -131,7 +131,7 @@
     <header>
         <div>
             <h1>Öğrenci <span>Rotaları</span></h1>
-            <div class="tarih">Son güncelleme: 17.10.2026</div>
+            <div class="tarih">Son güncelleme: 18.10.2026</div>
         </div>
         <div class="bas-dugmeler">
             <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>
@@ -2080,15 +2080,12 @@ function rotaCalistir(tur) {
 
     var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });
 
-    /* api=1 bicimi: son durak hedef, oncekiler ara durak.
-       dir_action=navigate yol tarifini dogrudan baslatir, onizleme acmaz.
-       Baslangic verilmedigi icin Maps mevcut konumu kullanir. */
-    var hedef = koords[koords.length - 1];
-    var ara = koords.slice(0, koords.length - 1);
-    var url = "https://www.google.com/maps/dir/?api=1" +
-              "&destination=" + encodeURIComponent(hedef);
-    if (ara.length > 0) { url += "&waypoints=" + encodeURIComponent(ara.join("|")); }
-    url += "&travelmode=driving&dir_action=navigate";
+    /* Yol bicimi (maps/dir/A/B/C): coklu duragi en saglam tasiyan bicim.
+       Basa bos bir bolum konur (dir//...) ki Maps baslangic olarak
+       mevcut konumu kullansin; boylece Onizle yerine Baslat cikar.
+       dir_action=navigate KULLANILMAZ: Google'in belgelerine gore
+       coklu ara durakla birlikte calismaz, tek hedefe iner. */
+    var url = "https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0";
     window.open(url, "_blank");
 }
 
