@@ -1,5 +1,10 @@
 {
     "surum": 2,
+    "merkez": {
+        "ad": "Merkez",
+        "enlem": 40.827502,
+        "boylam": 29.311442
+    },
     "ogrenciler": [
         {
             "ad": "ÖZEL ÇINAR TUZLA KURUM MERKEZ",
