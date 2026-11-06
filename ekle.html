@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12161C">
@@ -214,7 +216,9 @@ function kartUret(o, numara) {
 }
 
 function listeSayfasiUret() {
-    var tarih = new Date().toLocaleDateString('tr-TR');
+    var d0 = new Date();
+    var tarih = d0.toLocaleDateString('tr-TR') + " " +
+                ("0" + d0.getHours()).slice(-2) + ":" + ("0" + d0.getMinutes()).slice(-2);
 
     var sekmeler = '        <button class="sekme aktif" data-anahtar="bolum-hepsi" onclick="sekmeSec(\'bolum-hepsi\')">Tümü</button>\n';
 
@@ -235,6 +239,8 @@ function listeSayfasiUret() {
 '<head>\n' +
 '<meta charset="UTF-8">\n' +
 '<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">\n' +
+'<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">\n' +
+'<meta http-equiv="Pragma" content="no-cache">\n' +
 '<meta name="apple-mobile-web-app-capable" content="yes">\n' +
 '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n' +
 '<meta name="theme-color" content="#12161C">\n' +
@@ -251,7 +257,11 @@ function listeSayfasiUret() {
 '    .tarih { color:#8A97A8; font-size:12px; margin-top:2px; }\n' +
 '    .sifirla-btn { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-size:11px;\n' +
 '                   font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; }\n' +
-'    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; }\n' +
+'    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; align-items:center; }\n' +
+'    .yonetim-btn { background:#232B36; border:1px solid #333D4B; color:#E8EDF3; font-size:11px;\n' +
+'                   font-weight:700; border-radius:6px; padding:7px 10px; text-decoration:none;\n' +
+'                   white-space:nowrap; }\n' +
+'    .yonetim-btn:active { border-color:#FFC400; color:#FFC400; }\n' +
 '    .yenile-btn { background:transparent; border:1px solid #333D4B; color:#8A97A8; font-size:11px;\n' +
 '                  font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; font-family:inherit; }\n' +
 '    .yenile-btn:active { border-color:#FFC400; color:#FFC400; }\n' +
@@ -367,6 +377,7 @@ function listeSayfasiUret() {
 '            <div class="tarih">Son güncelleme: ' + htmlKacis(tarih) + '</div>\n' +
 '        </div>\n' +
 '        <div class="bas-dugmeler">\n' +
+'            <a class="yonetim-btn" href="./yonetim.html">&#9881; Yönetim</a>\n' +
 '            <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>\n' +
 '            <button class="sifirla-btn" onclick="tikleriSifirla()">Servisi Sıfırla</button>\n' +
 '        </div>\n' +
@@ -452,8 +463,13 @@ bolumler +
 '\n' +
 '/* Adresin sonuna taze bir zaman damgasi koyup yeniden yukler. */\n' +
 'function sayfayiYenile() {\n' +
+'    var n = 1;\n' +
+'    try {\n' +
+'        n = parseInt(localStorage.getItem("rota_yenile_sayac") || "0", 10) + 1;\n' +
+'        localStorage.setItem("rota_yenile_sayac", String(n));\n' +
+'    } catch (e) { n = 1; }\n' +
 '    var temiz = location.href.split("#")[0].split("?")[0];\n' +
-'    location.replace(temiz + "?v=" + Date.now());\n' +
+'    location.replace(temiz + "?v=" + n + "&t=" + Date.now());\n' +
 '}\n' +
 '\n' +
 'function jsKacis(m) {\n' +
@@ -1225,8 +1241,13 @@ var guzergahlar = [];
 
 /* Adresin sonuna taze bir zaman damgasi koyup yeniden yukler. */
 function sayfayiYenile() {
+    var n = 1;
+    try {
+        n = parseInt(localStorage.getItem("rota_yenile_sayac") || "0", 10) + 1;
+        localStorage.setItem("rota_yenile_sayac", String(n));
+    } catch (e) { n = 1; }
     var temiz = location.href.split("#")[0].split("?")[0];
-    location.replace(temiz + "?v=" + Date.now());
+    location.replace(temiz + "?v=" + n + "&t=" + Date.now());
 }
 
 function el(k) { return document.getElementById(k); }
