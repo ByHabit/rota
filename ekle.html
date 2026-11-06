@@ -427,8 +427,10 @@ bolumler +
 '<!-- Rota Sıralama Menüsü -->\n' +
 '<div class="modal-perde" id="rotaModal" onclick="modalKapat(event, \'rotaModal\')">\n' +
 '    <div class="modal-kutu">\n' +
-'        <div class="modal-baslik">Harita Rotasını Nasıl Açalım?</div>\n' +
-'        <button class="modal-btn btn-yesil" onclick="rotaCalistir(\'enkisa\')">🧭 En Kısa Turu Hesapla ve Aç</button>\n' +
+'        <div class="modal-baslik">Rotayı Nasıl Kuralım?</div>\n' +
+'        <button class="modal-btn btn-yesil" onclick="rotaCalistir(\'topla\')">🚌 Buradan Topla &rarr; Merkeze</button>\n' +
+'        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'dagit\')">🏫 Merkezden Dağıt</button>\n' +
+'        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'merkezdentopla\')">🔄 Merkezden Çık, Topla, Merkeze Dön</button>\n' +
 '        <button class="modal-btn btn-gmaps" onclick="rotaCalistir(\'mevcut\')">Mevcut Sırayla Aç</button>\n' +
 '        <button class="modal-btn btn-kapat" onclick="document.getElementById(\'rotaModal\').style.display=\'none\'">Vazgeç</button>\n' +
 '    </div>\n' +
@@ -447,6 +449,7 @@ bolumler +
 '<script>\n' +
 'var OGRENCILER = ' + veriMetni + ';\n' +
 'var GUZERGAHLAR = ' + guzergahMetni + ';\n' +
+'var MERKEZ = ' + JSON.stringify(merkez).replace(/</g, "\\u003c") + ';\n' +
 'var ANAHTAR = "rota_gunluk_v1";\n' +
 'var TIK_ANAHTAR = "rota_alindi_v1";\n' +
 'var yerelListeler = [];\n' +
@@ -653,7 +656,7 @@ bolumler +
 '}\n' +
 '\n' +
 '/* Haritayi acar. Siralama zaten uygulanmis liste ile cagrilir. */\n' +
-'function rotaHaritaAc(liste) {\n' +
+'function rotaHaritaAc(liste, bitisNoktasi) {\n' +
 '    var SINIR = 10;\n' +
 '    if (liste.length > SINIR) {\n' +
 '        if (!confirm("Google Haritalar tek rotada en fazla " + SINIR + " durak alabiliyor.\\n\\n" +\n' +
@@ -661,6 +664,9 @@ bolumler +
 '        liste = liste.slice(0, SINIR);\n' +
 '    }\n' +
 '    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
+'    if (bitisNoktasi && typeof bitisNoktasi.enlem === "number") {\n' +
+'        koords.push(bitisNoktasi.enlem + "," + bitisNoktasi.boylam);\n' +
+'    }\n' +
 '    /* Basta bos bolum: Maps baslangic olarak mevcut konumu kullanir. */\n' +
 '    window.open("https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0", "_blank");\n' +
 '}\n' +
@@ -679,6 +685,8 @@ bolumler +
 '    yerelKaydet(); yerelCiz(); filtrele();\n' +
 '}\n' +
 '\n' +
+'function merkezVar() { return MERKEZ && typeof MERKEZ.enlem === "number"; }\n' +
+'\n' +
 'function rotaCalistir(tur) {\n' +
 '    document.getElementById("rotaModal").style.display = "none";\n' +
 '    var hedefBolum = null;\n' +
@@ -695,40 +703,55 @@ bolumler +
 '    });\n' +
 '    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return; }\n' +
 '\n' +
-'    if (tur !== "enkisa") { rotaHaritaAc(liste); return; }\n' +
+'    if (tur === "mevcut") { rotaHaritaAc(liste, null); return; }\n' +
 '\n' +
-'    if (!benimKonum) {\n' +
-'        alert("En kısa turu hesaplamak için önce yukarıdaki Konum butonuna basıp konumunuzu alın.");\n' +
+'    var merkezliTur = (tur === "dagit" || tur === "merkezdentopla");\n' +
+'    if (merkezliTur && !merkezVar()) {\n' +
+'        alert("Merkez koordinatı tanımlı değil. Yönetim panelinden ekleyebilirsin.");\n' +
 '        return;\n' +
 '    }\n' +
-'    if (liste.length === 1) { rotaHaritaAc(liste); return; }\n' +
+'    if (tur === "topla") {\n' +
+'        if (!benimKonum) { alert("Önce yukarıdaki Konum düğmesine basıp konumunuzu alın."); return; }\n' +
+'        if (!merkezVar()) { alert("Merkez koordinatı tanımlı değil. Yönetim panelinden ekleyebilirsin."); return; }\n' +
+'    }\n' +
+'    if (liste.length === 1) {\n' +
+'        rotaHaritaAc(liste, (tur === "dagit") ? null : (merkezVar() ? MERKEZ : null));\n' +
+'        return;\n' +
+'    }\n' +
+'\n' +
+'    /* Baslangic, duraklar, bitis */\n' +
+'    var baslangic = (tur === "topla") ? { enlem: benimKonum.e, boylam: benimKonum.b } : MERKEZ;\n' +
+'    var bitisMerkez = (tur === "topla" || tur === "merkezdentopla");\n' +
+'\n' +
+'    var noktalar = [osrmNokta(baslangic.enlem, baslangic.boylam)];\n' +
+'    for (var i = 0; i < liste.length; i++) { noktalar.push(osrmNokta(liste[i].o.enlem, liste[i].o.boylam)); }\n' +
+'    if (bitisMerkez) { noktalar.push(osrmNokta(MERKEZ.enlem, MERKEZ.boylam)); }\n' +
 '\n' +
 '    var not = document.getElementById("konumNot");\n' +
-'    if (not) not.textContent = "En kısa tur hesaplanıyor...";\n' +
-'\n' +
-'    var noktalar = [osrmNokta(benimKonum.e, benimKonum.b)];\n' +
-'    for (var i = 0; i < liste.length; i++) { noktalar.push(osrmNokta(liste[i].o.enlem, liste[i].o.boylam)); }\n' +
+'    if (not) not.textContent = "Rota hesaplanıyor...";\n' +
 '\n' +
 '    osrmEnKisaTur(noktalar, function(v){\n' +
-'        /* v.sira[0] baslangic noktamiz; kalanlar duraklarin yeni sirasi */\n' +
+'        var sonIndeks = noktalar.length - 1;\n' +
 '        var yeni = [];\n' +
 '        for (var j = 0; j < v.sira.length; j++) {\n' +
 '            var n = v.sira[j];\n' +
-'            if (n === 0) continue;\n' +
+'            if (n === 0) continue;                       /* baslangic */\n' +
+'            if (bitisMerkez && n === sonIndeks) continue; /* bitis merkezi */\n' +
 '            yeni.push(liste[n - 1]);\n' +
 '        }\n' +
 '        if (yeni.length !== liste.length) { yeni = liste; }\n' +
 '        rotaSirasiniUygula(yeni);\n' +
 '        if (not) {\n' +
-'            not.textContent = "En kısa tur: " + metreYaz(v.mesafe) +\n' +
+'            not.textContent = "Rota: " + metreYaz(v.mesafe) +\n' +
 '                              ", yaklaşık " + Math.round(v.sure / 60) + " dk (trafiksiz).";\n' +
 '        }\n' +
-'        rotaHaritaAc(yeni);\n' +
+'        rotaHaritaAc(yeni, bitisMerkez ? MERKEZ : null);\n' +
 '    }, function(h){\n' +
-'        if (not) not.textContent = "Tur hesaplanamadı (" + h + ").";\n' +
-'        if (confirm("En kısa tur hesaplanamadı: " + h + "\\n\\n" +\n' +
-'                    "Mevcut sırayla açılsın mı?")) { rotaHaritaAc(liste); }\n' +
-'    });\n' +
+'        if (not) not.textContent = "Rota hesaplanamadı (" + h + ").";\n' +
+'        if (confirm("Rota hesaplanamadı: " + h + "\\n\\nMevcut sırayla açılsın mı?")) {\n' +
+'            rotaHaritaAc(liste, bitisMerkez ? MERKEZ : null);\n' +
+'        }\n' +
+'    }, bitisMerkez);\n' +
 '}\n' +
 '\n' +
 '/* Rota sirasindaki isimleri numarali metin olarak paylas.\n' +
@@ -793,9 +816,10 @@ bolumler +
 '\n' +
 '/* Baslangictan baslayip tum duraklari gezen en kisa turu ister.\n' +
 '   noktalar[0] baslangic. Donen sira indeks dizisidir. */\n' +
-'function osrmEnKisaTur(noktalar, bitti, hata) {\n' +
+'function osrmEnKisaTur(noktalar, bitti, hata, bitisSabit) {\n' +
 '    var adres = OSRM + "/trip/v1/driving/" + noktalar.join(";") +\n' +
-'                "?source=first&roundtrip=false&destination=any&overview=false";\n' +
+'                "?source=first&roundtrip=false&overview=false" +\n' +
+'                "&destination=" + (bitisSabit ? "last" : "any");\n' +
 '    osrmIstek(adres, function(v){\n' +
 '        if (!v.waypoints || !v.trips || !v.trips.length) { hata("bos yanit"); return; }\n' +
 '        var sira = [];\n' +
@@ -1042,9 +1066,16 @@ bolumler +
 '}\n' +
 'function siralaAcKapa() { var k = document.getElementById("siralaKutu"); if(k) k.style.display = (k.style.display === "block") ? "none" : "block"; }\n' +
 '/* Listeyi en kisa tura gore dizer, harita acmaz. */\n' +
-'function enKisaTuraGoreSirala() {\n' +
+'function enKisaTuraGoreSirala(baslangicTuru) {\n' +
 '    if (aktifYerel < 0) return;\n' +
-'    if (!benimKonum) { alert("Önce yukarıdaki Konum düğmesine basın."); return; }\n' +
+'    var bas;\n' +
+'    if (baslangicTuru === "merkez") {\n' +
+'        if (!merkezVar()) { alert("Merkez koordinatı tanımlı değil."); return; }\n' +
+'        bas = { enlem: MERKEZ.enlem, boylam: MERKEZ.boylam };\n' +
+'    } else {\n' +
+'        if (!benimKonum) { alert("Önce yukarıdaki Konum düğmesine basın."); return; }\n' +
+'        bas = { enlem: benimKonum.e, boylam: benimKonum.b };\n' +
+'    }\n' +
 '    var L = yerelListeler[aktifYerel];\n' +
 '    var liste = [], disarida = [];\n' +
 '    for (var i = 0; i < L.uyeler.length; i++) {\n' +
@@ -1057,7 +1088,7 @@ bolumler +
 '\n' +
 '    var not = document.getElementById("konumNot");\n' +
 '    if (not) not.textContent = "En kısa tur hesaplanıyor...";\n' +
-'    var noktalar = [osrmNokta(benimKonum.e, benimKonum.b)];\n' +
+'    var noktalar = [osrmNokta(bas.enlem, bas.boylam)];\n' +
 '    for (var j = 0; j < liste.length; j++) { noktalar.push(osrmNokta(liste[j].enlem, liste[j].boylam)); }\n' +
 '\n' +
 '    osrmEnKisaTur(noktalar, function(v){\n' +
@@ -1117,7 +1148,8 @@ bolumler +
 '         "</div>";\n' +
 '    if (L.uyeler.length > 1) {\n' +
 '        h += \x27<div class="sirala-kutu" id="siralaKutu">\x27 +\n' +
-'             \x27<button class="sirala-sec" onclick="yerelSirala(\\\'yakin\\\')">Bana Yakından Uzağa</button>\x27 +\n' +
+'             \x27<button class="sirala-sec" onclick="enKisaTuraGoreSirala(\\\'konum\\\')">🧭 En Kısa Tur — buradan</button>\x27 +\n' +
+'             \x27<button class="sirala-sec" onclick="enKisaTuraGoreSirala(\\\'merkez\\\')">🏫 En Kısa Tur — merkezden</button>\x27 +\n' +
 '             \x27<button class="sirala-sec" onclick="yerelSirala(\\\'isim\\\')">İsme Göre (A-Z)</button>\x27 +\n' +
 '             \x27<button class="sirala-sec" onclick="yerelSirala(\\\'ters\\\')">Sırayı Ters Çevir</button>\x27 +\n' +
 '             "</div>";\n' +
@@ -1352,7 +1384,9 @@ function kaydet() {
     ogrenciler.push(kayit);
     el("kaydetBtn").disabled = true; el("kaydetBtn").innerHTML = "Kaydediliyor...";
     var damga = new Date().toLocaleString("tr-TR");
-    var jsonMetin = JSON.stringify({ surum: 2, ogrenciler: ogrenciler, guzergahlar: guzergahlar }, null, 4);
+    var govdeJson = { surum: 2, ogrenciler: ogrenciler, guzergahlar: guzergahlar };
+    if (typeof merkez !== "undefined" && merkez && merkez.enlem) { govdeJson.merkez = merkez; }
+    var jsonMetin = JSON.stringify(govdeJson, null, 4);
     dosyaYaz("veriler.json", jsonMetin, ad + " eklendi (" + damga + ")")
         .then(function(){
             return dosyaYaz("index.html", listeSayfasiUret(), "Liste güncellendi (" + damga + ")");
