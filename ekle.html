@@ -181,7 +181,7 @@ function kartUret(o, numara) {
     var etiketler = "";
     if (o.mesafe) { etiketler += '                <span class="rozet-mesafe">' + htmlKacis(o.mesafe) + '</span>\n'; }
     if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {
-        etiketler += '                <span class="uzaklik" data-lat="' + o.enlem + '" data-lng="' + o.boylam + '"></span>\n';
+        etiketler += '                <span class="uzaklik" data-ogr="' + htmlKacis(o.id) + '" data-lat="' + o.enlem + '" data-lng="' + o.boylam + '"></span>\n';
     }
 
     var telSatir = "";
@@ -322,6 +322,7 @@ function listeSayfasiUret() {
 '    .alt-baglanti { text-align:center; font-size:13px; color:#8A97A8; margin-top:26px;\n' +
 '                    padding-top:18px; border-top:1px solid #262F3B; }\n' +
 '    .alt-baglanti a { color:#FFC400; text-decoration:none; font-weight:600; }\n' +
+'    .kaynak-not { font-size:11px; color:#5E6C7E; margin-top:10px; line-height:1.5; }\n' +
 '    .js-kapali { border-left:3px solid #FFC400; background:rgba(255,196,0,0.07); padding:12px 14px;\n' +
 '                 font-size:13px; color:#D9C99A; border-radius:0 8px 8px 0; margin:12px 0; }\n' +
 '    .yerel-arac { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 6px 0; }\n' +
@@ -397,6 +398,7 @@ bolumler +
 '\n' +
 '    <div class="alt-baglanti">\n' +
 '        <a href="./ekle.html">Öğrenci ekle</a> &nbsp;&middot;&nbsp; <a href="./yonetim.html">Yönetim paneli</a>\n' +
+'        <div class="kaynak-not">Yol mesafesi ve tur hesabı: OSRM &middot; Harita verisi &copy; OpenStreetMap katkıcıları (ODbL)</div>\n' +
 '    </div>\n' +
 '</div>\n' +
 '\n' +
@@ -415,9 +417,8 @@ bolumler +
 '<div class="modal-perde" id="rotaModal" onclick="modalKapat(event, \'rotaModal\')">\n' +
 '    <div class="modal-kutu">\n' +
 '        <div class="modal-baslik">Harita Rotasını Nasıl Açalım?</div>\n' +
+'        <button class="modal-btn btn-yesil" onclick="rotaCalistir(\'enkisa\')">🧭 En Kısa Turu Hesapla ve Aç</button>\n' +
 '        <button class="modal-btn btn-gmaps" onclick="rotaCalistir(\'mevcut\')">Mevcut Sırayla Aç</button>\n' +
-'        <button class="modal-btn btn-yesil" onclick="rotaCalistir(\'yakin\')">📍 Bana En Yakından En Uzağa (Sabah)</button>\n' +
-'        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'uzak\')">🏁 Bana En Uzaktan En Yakına (Akşam)</button>\n' +
 '        <button class="modal-btn btn-kapat" onclick="document.getElementById(\'rotaModal\').style.display=\'none\'">Vazgeç</button>\n' +
 '    </div>\n' +
 '</div>\n' +
@@ -635,6 +636,33 @@ bolumler +
 '    document.getElementById("rotaModal").style.display = "flex";\n' +
 '}\n' +
 '\n' +
+'/* Haritayi acar. Siralama zaten uygulanmis liste ile cagrilir. */\n' +
+'function rotaHaritaAc(liste) {\n' +
+'    var SINIR = 10;\n' +
+'    if (liste.length > SINIR) {\n' +
+'        if (!confirm("Google Haritalar tek rotada en fazla " + SINIR + " durak alabiliyor.\\n\\n" +\n' +
+'                     "İlk " + SINIR + " durak açılacak, bitince tekrar Rotayı Aç de.\\n\\nDevam edilsin mi?")) { return; }\n' +
+'        liste = liste.slice(0, SINIR);\n' +
+'    }\n' +
+'    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
+'    /* Basta bos bolum: Maps baslangic olarak mevcut konumu kullanir. */\n' +
+'    window.open("https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0", "_blank");\n' +
+'}\n' +
+'\n' +
+'/* Yeni sirayi ekrandaki gunluk listeye de yazar ki numaralar ortussun. */\n' +
+'function rotaSirasiniUygula(liste) {\n' +
+'    if (aktifYerel < 0) return;\n' +
+'    if (seciliRotaBolumId && seciliRotaBolumId !== "bolum-yerel") return;\n' +
+'    var yeniSira = [];\n' +
+'    for (var y = 0; y < liste.length; y++) { yeniSira.push(liste[y].o.id); }\n' +
+'    var eskiler = yerelListeler[aktifYerel].uyeler;\n' +
+'    for (var e2 = 0; e2 < eskiler.length; e2++) {\n' +
+'        if (yeniSira.indexOf(eskiler[e2]) === -1) { yeniSira.push(eskiler[e2]); }\n' +
+'    }\n' +
+'    yerelListeler[aktifYerel].uyeler = yeniSira;\n' +
+'    yerelKaydet(); yerelCiz(); filtrele();\n' +
+'}\n' +
+'\n' +
 'function rotaCalistir(tur) {\n' +
 '    document.getElementById("rotaModal").style.display = "none";\n' +
 '    var hedefBolum = null;\n' +
@@ -646,61 +674,45 @@ bolumler +
 '    var kartlar = hedefBolum.querySelectorAll(".kart");\n' +
 '    var liste = [];\n' +
 '    kartlar.forEach(function(k){\n' +
-'        var id = k.getAttribute("data-id");\n' +
-'        var o = ogrBul(id);\n' +
-'        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {\n' +
-'            var uz = (benimKonum) ? kusUcusu(benimKonum.e, benimKonum.b, o.enlem, o.boylam) : 0;\n' +
-'            liste.push({ o: o, uz: uz });\n' +
-'        }\n' +
+'        var o = ogrBul(k.getAttribute("data-id"));\n' +
+'        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push({ o: o }); }\n' +
 '    });\n' +
+'    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return; }\n' +
 '\n' +
-'    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return;\n }\n' +
+'    if (tur !== "enkisa") { rotaHaritaAc(liste); return; }\n' +
 '\n' +
-'    if (tur === "yakin" || tur === "uzak") {\n' +
-'        if (!benimKonum) {\n' +
-'            alert("Konumunuza göre sıralayabilmek için lütfen önce yukarıdaki Uzaklık Hesapla butonuna basın.");\n' +
-'            return;\n' +
+'    if (!benimKonum) {\n' +
+'        alert("En kısa turu hesaplamak için önce yukarıdaki Konum butonuna basıp konumunuzu alın.");\n' +
+'        return;\n' +
+'    }\n' +
+'    if (liste.length === 1) { rotaHaritaAc(liste); return; }\n' +
+'\n' +
+'    var not = document.getElementById("konumNot");\n' +
+'    if (not) not.textContent = "En kısa tur hesaplanıyor...";\n' +
+'\n' +
+'    var noktalar = [osrmNokta(benimKonum.e, benimKonum.b)];\n' +
+'    for (var i = 0; i < liste.length; i++) { noktalar.push(osrmNokta(liste[i].o.enlem, liste[i].o.boylam)); }\n' +
+'\n' +
+'    osrmEnKisaTur(noktalar, function(v){\n' +
+'        /* v.sira[0] baslangic noktamiz; kalanlar duraklarin yeni sirasi */\n' +
+'        var yeni = [];\n' +
+'        for (var j = 0; j < v.sira.length; j++) {\n' +
+'            var n = v.sira[j];\n' +
+'            if (n === 0) continue;\n' +
+'            yeni.push(liste[n - 1]);\n' +
 '        }\n' +
-'        liste.sort(function(a, b){\n' +
-'            return (tur === "yakin") ? (a.uz - b.uz) : (b.uz - a.uz);\n' +
-'        });\n' +
-'    }\n' +
-'\n' +
-'    /* Siralama uygulandiysa ekrandaki listeyi de ayni siraya getir ki\n' +
-'       Haritadaki 1-2-3 ile listedeki numaralar ortusUn. */\n' +
-'    if ((tur === "yakin" || tur === "uzak") && aktifYerel >= 0 &&\n' +
-'        (seciliRotaBolumId === "bolum-yerel" || !seciliRotaBolumId)) {\n' +
-'        var yeniSira = [];\n' +
-'        for (var y = 0; y < liste.length; y++) { yeniSira.push(liste[y].o.id); }\n' +
-'        /* Koordinati olmayanlar rotaya giremez ama listede kalmali: sona eklenir */\n' +
-'        var eskiler = yerelListeler[aktifYerel].uyeler;\n' +
-'        for (var e2 = 0; e2 < eskiler.length; e2++) {\n' +
-'            if (yeniSira.indexOf(eskiler[e2]) === -1) { yeniSira.push(eskiler[e2]); }\n' +
+'        if (yeni.length !== liste.length) { yeni = liste; }\n' +
+'        rotaSirasiniUygula(yeni);\n' +
+'        if (not) {\n' +
+'            not.textContent = "En kısa tur: " + metreYaz(v.mesafe) +\n' +
+'                              ", yaklaşık " + Math.round(v.sure / 60) + " dk (trafiksiz).";\n' +
 '        }\n' +
-'        yerelListeler[aktifYerel].uyeler = yeniSira;\n' +
-'        yerelKaydet(); yerelCiz(); filtrele();\n' +
-'    }\n' +
-'\n' +
-'    /* Google Haritalar bir rotada sinirli sayida durak destekler. */\n' +
-'    var SINIR = 10;\n' +
-'    var kalan = 0;\n' +
-'    if (liste.length > SINIR) {\n' +
-'        kalan = liste.length - SINIR;\n' +
-'        if (!confirm("Google Haritalar tek rotada en fazla " + SINIR + " durak alabiliyor.\\n\\n" +\n' +
-'                     "Ilk " + SINIR + " durak acilacak, kalan " + kalan + " durak icin " +\n' +
-'                     "bittiginde tekrar Rotayi Ac de.\\n\\nDevam edilsin mi?")) { return; }\n' +
-'        liste = liste.slice(0, SINIR);\n' +
-'    }\n' +
-'\n' +
-'    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
-'\n' +
-'    /* Yol bicimi (maps/dir/A/B/C): coklu duragi en saglam tasiyan bicim.\n' +
-'       Basa bos bir bolum konur (dir//...) ki Maps baslangic olarak\n' +
-'       mevcut konumu kullansin; boylece Onizle yerine Baslat cikar.\n' +
-'       dir_action=navigate KULLANILMAZ: Google\x27in belgelerine gore\n' +
-'       coklu ara durakla birlikte calismaz, tek hedefe iner. */\n' +
-'    var url = "https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0";\n' +
-'    window.open(url, "_blank");\n' +
+'        rotaHaritaAc(yeni);\n' +
+'    }, function(h){\n' +
+'        if (not) not.textContent = "Tur hesaplanamadı (" + h + ").";\n' +
+'        if (confirm("En kısa tur hesaplanamadı: " + h + "\\n\\n" +\n' +
+'                    "Mevcut sırayla açılsın mı?")) { rotaHaritaAc(liste); }\n' +
+'    });\n' +
 '}\n' +
 '\n' +
 '/* Rota sirasindaki isimleri numarali metin olarak paylas.\n' +
@@ -738,6 +750,59 @@ bolumler +
 '    if (m < 950) return Math.round(m / 10) * 10 + " m";\n' +
 '    return (Math.round(m / 100) / 10).toString().replace(".", ",") + " km";\n' +
 '}\n' +
+'/* ---------- OSRM: yol mesafesi ve en kisa tur ----------\n' +
+'   Ucretsiz demo sunucu, anahtar gerekmez. Dakikada birkac istek yapiyoruz,\n' +
+'   politikanin cok altinda. Sunucu yanit vermezse kus ucusuna dusuyoruz. */\n' +
+'var OSRM = "https://router.project-osrm.org";\n' +
+'\n' +
+'function osrmIstek(adres, bitti, hata) {\n' +
+'    var zamanAsimi = setTimeout(function(){ zamanAsimi = null; hata("zaman asimi"); }, 12000);\n' +
+'    fetch(adres).then(function(c){\n' +
+'        if (!c.ok) { throw new Error("sunucu " + c.status); }\n' +
+'        return c.json();\n' +
+'    }).then(function(v){\n' +
+'        if (zamanAsimi === null) return;\n' +
+'        clearTimeout(zamanAsimi);\n' +
+'        if (v.code !== "Ok") { throw new Error(v.code || "bilinmeyen"); }\n' +
+'        bitti(v);\n' +
+'    }).catch(function(h){\n' +
+'        if (zamanAsimi === null) return;\n' +
+'        clearTimeout(zamanAsimi);\n' +
+'        hata(h.message || "baglanti hatasi");\n' +
+'    });\n' +
+'}\n' +
+'\n' +
+'/* OSRM koordinati boylam,enlem sirasiyla ister */\n' +
+'function osrmNokta(e, b) { return b + "," + e; }\n' +
+'\n' +
+'/* Baslangictan baslayip tum duraklari gezen en kisa turu ister.\n' +
+'   noktalar[0] baslangic. Donen sira indeks dizisidir. */\n' +
+'function osrmEnKisaTur(noktalar, bitti, hata) {\n' +
+'    var adres = OSRM + "/trip/v1/driving/" + noktalar.join(";") +\n' +
+'                "?source=first&roundtrip=false&destination=any&overview=false";\n' +
+'    osrmIstek(adres, function(v){\n' +
+'        if (!v.waypoints || !v.trips || !v.trips.length) { hata("bos yanit"); return; }\n' +
+'        var sira = [];\n' +
+'        for (var i = 0; i < v.waypoints.length; i++) {\n' +
+'            sira.push({ girdi: v.waypoints[i].waypoint_index, nokta: i });\n' +
+'        }\n' +
+'        sira.sort(function(a,b){ return a.girdi - b.girdi; });\n' +
+'        var dizilim = [];\n' +
+'        for (var j = 0; j < sira.length; j++) { dizilim.push(sira[j].nokta); }\n' +
+'        bitti({ sira: dizilim, mesafe: v.trips[0].distance, sure: v.trips[0].duration });\n' +
+'    }, hata);\n' +
+'}\n' +
+'\n' +
+'/* Baslangictan her duraga olan yol mesafesi (metre) */\n' +
+'function osrmMesafeler(noktalar, bitti, hata) {\n' +
+'    var adres = OSRM + "/table/v1/driving/" + noktalar.join(";") +\n' +
+'                "?sources=0&annotations=distance,duration";\n' +
+'    osrmIstek(adres, function(v){\n' +
+'        if (!v.distances || !v.distances[0]) { hata("bos yanit"); return; }\n' +
+'        bitti({ mesafeler: v.distances[0], sureler: v.durations ? v.durations[0] : null });\n' +
+'    }, hata);\n' +
+'}\n' +
+'\n' +
 'function konumAl() {\n' +
 '    if (!navigator.geolocation) return;\n' +
 '    var not = document.getElementById("konumNot");\n' +
@@ -746,8 +811,12 @@ bolumler +
 '        benimKonum = { e: p.coords.latitude, b: p.coords.longitude };\n' +
 '        uzakliklariYaz(); yerelCiz(); filtrele();\n' +
 '        if (not) not.textContent = "Konum güncel.";\n' +
+'        yolMesafeleriniGetir();\n' +
 '    }, function () { if (not) not.textContent = "Konum alınamadı."; }, { enableHighAccuracy: true, timeout: 15000 });\n' +
 '}\n' +
+'/* Ogrenci kimligine gore yol mesafesi (metre). OSRM yanit verdikce dolar. */\n' +
+'var yolMesafesi = {};\n' +
+'\n' +
 'function uzakliklariYaz() {\n' +
 '    if (!benimKonum) return;\n' +
 '    var rozetler = document.getElementsByClassName("uzaklik");\n' +
@@ -755,9 +824,39 @@ bolumler +
 '        var e = parseFloat(rozetler[i].getAttribute("data-lat"));\n' +
 '        var b = parseFloat(rozetler[i].getAttribute("data-lng"));\n' +
 '        if (isNaN(e) || isNaN(b)) continue;\n' +
-'        rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " uzakta";\n' +
+'        var id = rozetler[i].getAttribute("data-ogr");\n' +
+'        if (id && yolMesafesi[id] !== undefined) {\n' +
+'            rozetler[i].innerHTML = metreYaz(yolMesafesi[id]) + " yol";\n' +
+'        } else {\n' +
+'            rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " kuş uçuşu";\n' +
+'        }\n' +
 '        rozetler[i].style.display = "inline-block";\n' +
 '    }\n' +
+'}\n' +
+'\n' +
+'/* Konum alindiginda tum ogrenciler icin yol mesafesini bir istekte ceker. */\n' +
+'function yolMesafeleriniGetir() {\n' +
+'    if (!benimKonum) return;\n' +
+'    var idler = [], noktalar = [osrmNokta(benimKonum.e, benimKonum.b)];\n' +
+'    for (var i = 0; i < OGRENCILER.length; i++) {\n' +
+'        var o = OGRENCILER[i];\n' +
+'        if (o.enlem === undefined || o.enlem === null || o.enlem === "") continue;\n' +
+'        idler.push(o.id);\n' +
+'        noktalar.push(osrmNokta(o.enlem, o.boylam));\n' +
+'    }\n' +
+'    if (idler.length === 0) return;\n' +
+'    var not = document.getElementById("konumNot");\n' +
+'    if (not) not.textContent = "Yol mesafeleri hesaplanıyor...";\n' +
+'    osrmMesafeler(noktalar, function(v){\n' +
+'        for (var j = 0; j < idler.length; j++) {\n' +
+'            var m = v.mesafeler[j + 1];\n' +
+'            if (typeof m === "number") { yolMesafesi[idler[j]] = m; }\n' +
+'        }\n' +
+'        uzakliklariYaz(); yerelCiz(); filtrele();\n' +
+'        if (not) not.textContent = "Yol mesafeleri güncel.";\n' +
+'    }, function(h){\n' +
+'        if (not) not.textContent = "Yol mesafesi alınamadı (" + h + "), kuş uçuşu gösteriliyor.";\n' +
+'    });\n' +
 '}\n' +
 '\n' +
 '/* ---------- Mahalle Hızlı Filtreleri ---------- */\n' +
@@ -926,6 +1025,45 @@ bolumler +
 '    else { window.open("https://wa.me/?text=" + encodeURIComponent(metin), "_blank"); }\n' +
 '}\n' +
 'function siralaAcKapa() { var k = document.getElementById("siralaKutu"); if(k) k.style.display = (k.style.display === "block") ? "none" : "block"; }\n' +
+'/* Listeyi en kisa tura gore dizer, harita acmaz. */\n' +
+'function enKisaTuraGoreSirala() {\n' +
+'    if (aktifYerel < 0) return;\n' +
+'    if (!benimKonum) { alert("Önce yukarıdaki Konum düğmesine basın."); return; }\n' +
+'    var L = yerelListeler[aktifYerel];\n' +
+'    var liste = [], disarida = [];\n' +
+'    for (var i = 0; i < L.uyeler.length; i++) {\n' +
+'        var o = ogrBul(L.uyeler[i]);\n' +
+'        if (!o) continue;\n' +
+'        if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push(o); }\n' +
+'        else { disarida.push(o.id); }\n' +
+'    }\n' +
+'    if (liste.length < 2) { alert("Sıralamak için en az iki koordinatlı durak gerekiyor."); return; }\n' +
+'\n' +
+'    var not = document.getElementById("konumNot");\n' +
+'    if (not) not.textContent = "En kısa tur hesaplanıyor...";\n' +
+'    var noktalar = [osrmNokta(benimKonum.e, benimKonum.b)];\n' +
+'    for (var j = 0; j < liste.length; j++) { noktalar.push(osrmNokta(liste[j].enlem, liste[j].boylam)); }\n' +
+'\n' +
+'    osrmEnKisaTur(noktalar, function(v){\n' +
+'        var yeni = [];\n' +
+'        for (var t = 0; t < v.sira.length; t++) {\n' +
+'            var n = v.sira[t];\n' +
+'            if (n === 0) continue;\n' +
+'            yeni.push(liste[n - 1].id);\n' +
+'        }\n' +
+'        if (yeni.length !== liste.length) { alert("Sıralama alınamadı."); return; }\n' +
+'        yerelListeler[aktifYerel].uyeler = yeni.concat(disarida);\n' +
+'        yerelKaydet(); yerelCiz(); filtrele();\n' +
+'        if (not) {\n' +
+'            not.textContent = "En kısa tur: " + metreYaz(v.mesafe) +\n' +
+'                              ", yaklaşık " + Math.round(v.sure / 60) + " dk (trafiksiz).";\n' +
+'        }\n' +
+'    }, function(h){\n' +
+'        if (not) not.textContent = "Tur hesaplanamadı (" + h + ").";\n' +
+'        alert("En kısa tur hesaplanamadı: " + h);\n' +
+'    });\n' +
+'}\n' +
+'\n' +
 'function yerelSirala(tur) {\n' +
 '    if (aktifYerel < 0) return;\n' +
 '    var L = yerelListeler[aktifYerel];\n' +
@@ -996,7 +1134,7 @@ bolumler +
 '                             \x27<h2><span class="sira-no">\x27 + (i + 1) + "</span>" + kacis(o.ad) + "</h2>" +\n' +
 '                             "<p>" + kacis(o.mahalle) + "</p>" +\n' +
 '                             (o.mesafe ? \x27<span class="rozet-mesafe">\x27 + kacis(o.mesafe) + "</span>" : "") +\n' +
-'                             (o.enlem ? \x27<span class="uzaklik" data-lat="\x27 + o.enlem + \x27" data-lng="\x27 + o.boylam + \x27"></span>\x27 : "") +\n' +
+'                             (o.enlem ? \x27<span class="uzaklik" data-ogr="\x27 + kacis(o.id) + \x27" data-lat="\x27 + o.enlem + \x27" data-lng="\x27 + o.boylam + \x27"></span>\x27 : "") +\n' +
 '                             telHtml +\n' +
 '                         "</div>" +\n' +
 '                     "</div>" +\n' +
