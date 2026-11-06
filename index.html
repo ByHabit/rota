@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12161C">
@@ -19,7 +21,11 @@
     .tarih { color:#8A97A8; font-size:12px; margin-top:2px; }
     .sifirla-btn { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-size:11px;
                    font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; }
-    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; }
+    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; align-items:center; }
+    .yonetim-btn { background:#232B36; border:1px solid #333D4B; color:#E8EDF3; font-size:11px;
+                   font-weight:700; border-radius:6px; padding:7px 10px; text-decoration:none;
+                   white-space:nowrap; }
+    .yonetim-btn:active { border-color:#FFC400; color:#FFC400; }
     .yenile-btn { background:transparent; border:1px solid #333D4B; color:#8A97A8; font-size:11px;
                   font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; font-family:inherit; }
     .yenile-btn:active { border-color:#FFC400; color:#FFC400; }
@@ -132,9 +138,10 @@
     <header>
         <div>
             <h1>Öğrenci <span>Rotaları</span></h1>
-            <div class="tarih">Son güncelleme: 06.11.2026</div>
+            <div class="tarih">Son güncelleme: 06.11.2026 22:52</div>
         </div>
         <div class="bas-dugmeler">
+            <a class="yonetim-btn" href="./yonetim.html">&#9881; Yönetim</a>
             <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>
             <button class="sifirla-btn" onclick="tikleriSifirla()">Servisi Sıfırla</button>
         </div>
@@ -1887,8 +1894,13 @@ var ks = document.getElementById("konumSatiri"); if (ks && navigator.geolocation
 
 /* Adresin sonuna taze bir zaman damgasi koyup yeniden yukler. */
 function sayfayiYenile() {
+    var n = 1;
+    try {
+        n = parseInt(localStorage.getItem("rota_yenile_sayac") || "0", 10) + 1;
+        localStorage.setItem("rota_yenile_sayac", String(n));
+    } catch (e) { n = 1; }
     var temiz = location.href.split("#")[0].split("?")[0];
-    location.replace(temiz + "?v=" + Date.now());
+    location.replace(temiz + "?v=" + n + "&t=" + Date.now());
 }
 
 function jsKacis(m) {
