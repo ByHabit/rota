@@ -1415,6 +1415,36 @@
             "link": "https://maps.app.goo.gl/KhgmuZVhvG8iLZ8k8",
             "enlem": 40.878359228177395,
             "boylam": 29.322951773479076
+        },
+        {
+            "id": "omw5dn4oeh5",
+            "ad": "HALE HOSTES  1",
+            "mahalle": "PENDIK",
+            "mesafe": "7.2KM",
+            "telefonlar": [
+                {
+                    "etiket": "KENDİSİ",
+                    "numara": "0 546 490 44 74"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/G6zqDeBsxN4N9dAU7",
+            "enlem": 40.86896007192986,
+            "boylam": 29.28136206640224
+        },
+        {
+            "id": "omw5dowj89j",
+            "ad": "HALE HOSTES 2",
+            "mahalle": "PENDIK",
+            "mesafe": "7.2 KM",
+            "telefonlar": [
+                {
+                    "etiket": "KENDİSİ",
+                    "numara": "0 546 490 44 74"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/u6c19T9swDJVGVRH7",
+            "enlem": 40.8695468202401,
+            "boylam": 29.281435279033246
         }
     ],
     "guzergahlar": []
