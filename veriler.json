@@ -1093,9 +1093,14 @@
             "mahalle": "TUZLA İSTASYON MAHALLESİ",
             "mesafe": "850 METRE",
             "link": "https://maps.app.goo.gl/GnDxQpBBT7D2CVg27",
-            "enlem": 40.82824831272407,
-            "boylam": 29.318162896584802,
-            "telefonlar": []
+            "enlem": 40.828248,
+            "boylam": 29.318163,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 505 313 37 93"
+                }
+            ]
         },
         {
             "id": "omssyjivsfn",
