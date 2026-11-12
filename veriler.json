@@ -756,9 +756,14 @@
             "link": "https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA",
             "id": "omsoxipqf9u",
             "mesafe": "1.1 KM",
-            "enlem": 40.828617356826314,
-            "boylam": 29.301800810550052,
-            "telefonlar": []
+            "enlem": 40.828617,
+            "boylam": 29.301801,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 546 570 25 61"
+                }
+            ]
         },
         {
             "ad": "HAMZA EFE TOSUN",
@@ -1018,9 +1023,14 @@
             "link": "https://maps.app.goo.gl/1juBzDQBKDgjVec16",
             "id": "omsoxipqfdl",
             "mesafe": "7.2 KM",
-            "enlem": 40.82903515274744,
-            "boylam": 29.360940555133293,
-            "telefonlar": []
+            "enlem": 40.829035,
+            "boylam": 29.360941,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 535 069 61 26"
+                }
+            ]
         },
         {
             "ad": "RABİA SAĞLIK",
@@ -1028,9 +1038,14 @@
             "link": "https://maps.app.goo.gl/zNZZftpFAzo1s5bSA",
             "id": "omsoxipqfp8",
             "mesafe": "13.8 KM",
-            "enlem": 40.9016834228326,
-            "boylam": 29.378306506508356,
-            "telefonlar": []
+            "enlem": 40.901683,
+            "boylam": 29.378307,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 552 204 71 52"
+                }
+            ]
         },
         {
             "ad": "BURCU ATEŞ",
@@ -1038,9 +1053,14 @@
             "link": "https://maps.app.goo.gl/BSo2j3AeihYZKmL68",
             "id": "omsoxipqfcq",
             "mesafe": "1.5 KM",
-            "enlem": 40.83642015220152,
-            "boylam": 29.307605427425298,
-            "telefonlar": []
+            "enlem": 40.83642,
+            "boylam": 29.307605,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 538 665 20 00"
+                }
+            ]
         },
         {
             "ad": "YUSUF BOZDOĞAN",
@@ -1048,9 +1068,14 @@
             "link": "https://maps.app.goo.gl/U63FCY1pdVcskTyZ7",
             "id": "omsoxipqfif",
             "mesafe": "800 METRE",
-            "enlem": 40.822608685796176,
-            "boylam": 29.30730266506917,
-            "telefonlar": []
+            "enlem": 40.822609,
+            "boylam": 29.307303,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 533 294 19 93"
+                }
+            ]
         },
         {
             "ad": "TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ",
