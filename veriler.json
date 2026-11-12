@@ -142,9 +142,14 @@
             "link": "https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA",
             "id": "omsoxipqffp",
             "mesafe": "450 METRE",
-            "enlem": 40.82967798397194,
-            "boylam": 29.309705128835645,
-            "telefonlar": []
+            "enlem": 40.829678,
+            "boylam": 29.309705,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 538 513 78 76"
+                }
+            ]
         },
         {
             "ad": "ELİF YAZGÜLÜ DEMİRBOZAN",
@@ -242,9 +247,14 @@
             "link": "https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8",
             "id": "omsoxipqf88",
             "mesafe": "12.9 KM",
-            "enlem": 40.90084393706418,
-            "boylam": 29.37922229455615,
-            "telefonlar": []
+            "enlem": 40.900844,
+            "boylam": 29.379222,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 538 415 93 33"
+                }
+            ]
         },
         {
             "ad": "FURKAN FATİH YILDIZ",
