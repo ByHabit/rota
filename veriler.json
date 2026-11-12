@@ -1426,10 +1426,15 @@
             "ad": "HÜSEYİN ARDUÇ",
             "mahalle": "TUZLA ŞİFA MAHALLESİ",
             "mesafe": "7.1 KM",
-            "telefonlar": [],
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 542 899 87 18"
+                }
+            ],
             "link": "https://maps.app.goo.gl/Rr3QAqZobSXczj5i6",
-            "enlem": 40.840972559116935,
-            "boylam": 29.364410676695595
+            "enlem": 40.840973,
+            "boylam": 29.364411
         },
         {
             "id": "omuhz4axbm3",
@@ -1461,20 +1466,30 @@
             "ad": "YASİN EMRE BULUT",
             "mahalle": "TUZLA KONAŞLI",
             "mesafe": "8 KM",
-            "telefonlar": [],
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 537 209 46 43"
+                }
+            ],
             "link": "https://maps.app.goo.gl/jGrrAWFddBc6HifW8",
-            "enlem": 40.88055468966665,
-            "boylam": 29.336455062654196
+            "enlem": 40.880555,
+            "boylam": 29.336455
         },
         {
             "id": "omviea05pq7",
             "ad": "BAHAR KARADENİZ",
             "mahalle": "TUZLA AYDINLI",
             "mesafe": "7.7 KM",
-            "telefonlar": [],
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 534 773 24 59"
+                }
+            ],
             "link": "https://maps.app.goo.gl/KhgmuZVhvG8iLZ8k8",
-            "enlem": 40.878359228177395,
-            "boylam": 29.322951773479076
+            "enlem": 40.878359,
+            "boylam": 29.322952
         },
         {
             "id": "omw5dn4oeh5",
