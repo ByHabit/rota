@@ -1,10 +1,5 @@
 {
     "surum": 2,
-    "merkez": {
-        "ad": "Merkez",
-        "enlem": 40.827502,
-        "boylam": 29.311442
-    },
     "ogrenciler": [
         {
             "ad": "ÖZEL ÇINAR TUZLA KURUM MERKEZ",
@@ -1117,9 +1112,14 @@
             "mahalle": "TUZLA ŞİFA MAHALLESİ",
             "mesafe": "5.8 KM",
             "link": "https://maps.app.goo.gl/HGryjV8ENZ9QP2E2A?g_st=ic",
-            "enlem": 40.8263527,
-            "boylam": 29.3546912,
-            "telefonlar": []
+            "enlem": 40.826353,
+            "boylam": 29.354691,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 538 697 84 82"
+                }
+            ]
         },
         {
             "id": "omswyimr6or",
@@ -1225,8 +1225,13 @@
             "mesafe": "950 METRE",
             "link": "https://maps.app.goo.gl/j2yoW2AbB6dtdw4c8?g_st=ic",
             "enlem": 40.827474,
-            "boylam": 29.3202007,
-            "telefonlar": []
+            "boylam": 29.320201,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 537 681 29 13"
+                }
+            ]
         },
         {
             "id": "omthfh0xt3v",
