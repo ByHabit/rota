@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12161C">
@@ -21,11 +19,7 @@
     .tarih { color:#8A97A8; font-size:12px; margin-top:2px; }
     .sifirla-btn { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-size:11px;
                    font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; }
-    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; align-items:center; }
-    .yonetim-btn { background:#232B36; border:1px solid #333D4B; color:#E8EDF3; font-size:11px;
-                   font-weight:700; border-radius:6px; padding:7px 10px; text-decoration:none;
-                   white-space:nowrap; }
-    .yonetim-btn:active { border-color:#FFC400; color:#FFC400; }
+    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; }
     .yenile-btn { background:transparent; border:1px solid #333D4B; color:#8A97A8; font-size:11px;
                   font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; font-family:inherit; }
     .yenile-btn:active { border-color:#FFC400; color:#FFC400; }
@@ -96,7 +90,6 @@
     .alt-baglanti { text-align:center; font-size:13px; color:#8A97A8; margin-top:26px;
                     padding-top:18px; border-top:1px solid #262F3B; }
     .alt-baglanti a { color:#FFC400; text-decoration:none; font-weight:600; }
-    .kaynak-not { font-size:11px; color:#5E6C7E; margin-top:10px; line-height:1.5; }
     .js-kapali { border-left:3px solid #FFC400; background:rgba(255,196,0,0.07); padding:12px 14px;
                  font-size:13px; color:#D9C99A; border-radius:0 8px 8px 0; margin:12px 0; }
     .yerel-arac { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 6px 0; }
@@ -138,10 +131,9 @@
     <header>
         <div>
             <h1>Öğrenci <span>Rotaları</span></h1>
-            <div class="tarih">Son güncelleme: 06.11.2026 23:44</div>
+            <div class="tarih">Son güncelleme: 12.11.2026</div>
         </div>
         <div class="bas-dugmeler">
-            <a class="yonetim-btn" href="./yonetim.html">&#9881; Yönetim</a>
             <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>
             <button class="sifirla-btn" onclick="tikleriSifirla()">Servisi Sıfırla</button>
         </div>
@@ -179,7 +171,7 @@
                     <h2>ÖZEL ÇINAR TUZLA KURUM MERKEZ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">KM HESAPLARI BU KURUMUN ADRESİNE GÖRE HESAPLANDI</span>
-                <span class="uzaklik" data-ogr="omsoxipqf6t" data-lat="40.82752360562284" data-lng="29.31144049586419"></span>
+                <span class="uzaklik" data-lat="40.82752360562284" data-lng="29.31144049586419"></span>
 </div>
                 </div>
             </div>
@@ -195,7 +187,7 @@
                     <h2>ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ</h2>
                     <p>SULTANBEYLİ</p>
                     <div>                <span class="rozet-mesafe">28 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf3t" data-lat="40.963657" data-lng="29.265646"></span>
+                <span class="uzaklik" data-lat="40.963657" data-lng="29.265646"></span>
                 <a class="tel" href="tel:02166347702">&#128222; 0 216 634 77 02</a>
                 <a class="tel" href="tel:02166347703">&#128222; 0 216 634 77 03</a>
                 <a class="tel" href="tel:05301569838">&#128222; WHATSAPP: 0 530 156 98 38</a>
@@ -214,7 +206,7 @@
                     <h2>ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ</h2>
                     <p>KURTKÖY</p>
                     <div>                <span class="rozet-mesafe">19 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfen" data-lat="40.916703" data-lng="29.302384"></span>
+                <span class="uzaklik" data-lat="40.916703" data-lng="29.302384"></span>
                 <a class="tel" href="tel:02165950415">&#128222; 0 216 595 04 15</a>
                 <a class="tel" href="tel:02165950416">&#128222; 0 216 595 04 16</a>
                 <a class="tel" href="tel:05456824298">&#128222; WHATSAPP: 0 545 682 42 98</a>
@@ -233,7 +225,7 @@
                     <h2>KADİR AKİF DABAN</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">2.2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfq8" data-lat="40.840449" data-lng="29.305907"></span>
+                <span class="uzaklik" data-lat="40.840449" data-lng="29.305907"></span>
                 <a class="tel" href="tel:05400054716">&#128222; ANNESİ: 0 540 005 47 16</a>
                 <a class="tel" href="tel:05520257053">&#128222; BABASI: 0 552 025 70 53</a>
 </div>
@@ -251,7 +243,7 @@
                     <h2>UMUT KAYA BOLAT</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">2.3 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfez" data-lat="40.837918423272" data-lng="29.306180137132305"></span>
+                <span class="uzaklik" data-lat="40.837918423272" data-lng="29.306180137132305"></span>
                 <a class="tel" href="tel:05372916437">&#128222; 0 537 291 64 37</a>
 </div>
                 </div>
@@ -268,7 +260,7 @@
                     <h2>ESLEM KONUK</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.7 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf8q" data-lat="40.839735" data-lng="29.358182"></span>
+                <span class="uzaklik" data-lat="40.839735" data-lng="29.358182"></span>
                 <a class="tel" href="tel:05426872652">&#128222; 0 542 687 26 52</a>
 </div>
                 </div>
@@ -285,7 +277,7 @@
                     <h2>ÜMMÜHAN EYŞAN</h2>
                     <p>TUZLA POSTAHANE MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.6 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfly" data-lat="40.815855" data-lng="29.308826"></span>
+                <span class="uzaklik" data-lat="40.815855" data-lng="29.308826"></span>
                 <a class="tel" href="tel:05432803580">&#128222; 0 543 280 35 80</a>
 </div>
                 </div>
@@ -302,7 +294,7 @@
                     <h2>KARDELEN TURGUT</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">7.2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf9k" data-lat="40.843905" data-lng="29.361054"></span>
+                <span class="uzaklik" data-lat="40.843905" data-lng="29.361054"></span>
                 <a class="tel" href="tel:05387327635">&#128222; Kendisi: 0 538 732 76 35</a>
 </div>
                 </div>
@@ -319,7 +311,7 @@
                     <h2>ESMA GÖLCÜ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">450 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqffp" data-lat="40.82967798397194" data-lng="29.309705128835645"></span>
+                <span class="uzaklik" data-lat="40.82967798397194" data-lng="29.309705128835645"></span>
 </div>
                 </div>
             </div>
@@ -335,7 +327,7 @@
                     <h2>ELİF YAZGÜLÜ DEMİRBOZAN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.5 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf68" data-lat="40.839353" data-lng="29.356849"></span>
+                <span class="uzaklik" data-lat="40.839353" data-lng="29.356849"></span>
                 <a class="tel" href="tel:05330948841">&#128222; Annesi: 0 533 094 88 41</a>
 </div>
                 </div>
@@ -352,7 +344,7 @@
                     <h2>HAZAL GÜLLÜ</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">7.8 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf9d" data-lat="40.848737" data-lng="29.362739"></span>
+                <span class="uzaklik" data-lat="40.848737" data-lng="29.362739"></span>
                 <a class="tel" href="tel:05414000128">&#128222; Annesi: 0 541 400 01 28</a>
 </div>
                 </div>
@@ -369,7 +361,7 @@
                     <h2>EMİR YILMAZ</h2>
                     <p>BAYRAMOĞLU</p>
                     <div>                <span class="rozet-mesafe">9.2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfk6" data-lat="40.793781" data-lng="29.369318"></span>
+                <span class="uzaklik" data-lat="40.793781" data-lng="29.369318"></span>
                 <a class="tel" href="tel:05553900396">&#128222; 0 555 390 03 96</a>
 </div>
                 </div>
@@ -386,7 +378,7 @@
                     <h2>MİRAÇ KIRMIZIGÖZ</h2>
                     <p>BAYRAMOĞLU</p>
                     <div>                <span class="rozet-mesafe">9.2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfq1" data-lat="40.793773" data-lng="29.369329"></span>
+                <span class="uzaklik" data-lat="40.793773" data-lng="29.369329"></span>
                 <a class="tel" href="tel:05320643376">&#128222; 0 532 064 33 76</a>
 </div>
                 </div>
@@ -403,7 +395,7 @@
                     <h2>EMRE YILMAZ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.3 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfg7" data-lat="40.833591" data-lng="29.305667"></span>
+                <span class="uzaklik" data-lat="40.833591" data-lng="29.305667"></span>
                 <a class="tel" href="tel:05456048036">&#128222; 0 545 604 80 36</a>
 </div>
                 </div>
@@ -420,7 +412,7 @@
                     <h2>ADEM VEZİR</h2>
                     <p>TUZLA AYDINLI MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">8.7 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfab" data-lat="40.882752" data-lng="29.339032"></span>
+                <span class="uzaklik" data-lat="40.882752" data-lng="29.339032"></span>
                 <a class="tel" href="tel:05411556960">&#128222; 0 541 155 69 60</a>
 </div>
                 </div>
@@ -437,7 +429,7 @@
                     <h2>HAMİT COŞKUN</h2>
                     <p>TUZLA OHANLI ORTA MAHALLE</p>
                     <div>                <span class="rozet-mesafe">12.9 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf88" data-lat="40.90084393706418" data-lng="29.37922229455615"></span>
+                <span class="uzaklik" data-lat="40.90084393706418" data-lng="29.37922229455615"></span>
 </div>
                 </div>
             </div>
@@ -453,7 +445,7 @@
                     <h2>FURKAN FATİH YILDIZ</h2>
                     <p>TUZLA AKFIRAT</p>
                     <div>                <span class="rozet-mesafe">18.1 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf99" data-lat="40.924606" data-lng="29.423318"></span>
+                <span class="uzaklik" data-lat="40.924606" data-lng="29.423318"></span>
                 <a class="tel" href="tel:05439252612">&#128222; 0 543 925 26 12</a>
 </div>
                 </div>
@@ -470,7 +462,7 @@
                     <h2>EYÜP CEVDET</h2>
                     <p>ESENYALI EV</p>
                     <div>                <span class="rozet-mesafe">6.8 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfgj" data-lat="40.868525" data-lng="29.298868"></span>
+                <span class="uzaklik" data-lat="40.868525" data-lng="29.298868"></span>
                 <a class="tel" href="tel:05319457065">&#128222; Kendisi: 0 531 945 70 65</a>
                 <a class="tel" href="tel:05350434004">&#128222; Babası: 0 535 043 40 04</a>
                 <a class="tel" href="tel:05399516015">&#128222; BabaAnnesi: 0 539 951 60 15</a>
@@ -489,7 +481,7 @@
                     <h2>EDANUR ÖN</h2>
                     <p>TUZLA İSTASYON MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf8" data-lat="40.831309" data-lng="29.322906"></span>
+                <span class="uzaklik" data-lat="40.831309" data-lng="29.322906"></span>
                 <a class="tel" href="tel:05439739540">&#128222; 0 543 973 95 40</a>
 </div>
                 </div>
@@ -506,7 +498,7 @@
                     <h2>İBRAHİM ERGİN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">7.4 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfbs" data-lat="40.846108196352574" data-lng="29.361930798196735"></span>
+                <span class="uzaklik" data-lat="40.846108196352574" data-lng="29.361930798196735"></span>
                 <a class="tel" href="tel:05373564139">&#128222; Annesi: 0 537 356 41 39</a>
                 <a class="tel" href="tel:05386930030">&#128222; Babası: 0 538 693 00 30</a>
 </div>
@@ -524,7 +516,7 @@
                     <h2>ÖMER ALPER GÜNDOĞDU</h2>
                     <p>ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.4 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfgk" data-lat="40.831106" data-lng="29.362575"></span>
+                <span class="uzaklik" data-lat="40.831106" data-lng="29.362575"></span>
                 <a class="tel" href="tel:05469494395">&#128222; 0 546 949 43 95</a>
 </div>
                 </div>
@@ -541,7 +533,7 @@
                     <h2>ÖMER YILMAZ UKUS</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">350 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqfoc" data-lat="40.830531" data-lng="29.31209"></span>
+                <span class="uzaklik" data-lat="40.830531" data-lng="29.31209"></span>
                 <a class="tel" href="tel:05362992014">&#128222; 0 536 299 20 14</a>
 </div>
                 </div>
@@ -558,7 +550,7 @@
                     <h2>ESLEM HALİME DEMİRCİ</h2>
                     <p>TUZLA İSTASYON MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">2.8 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfgi" data-lat="40.826598" data-lng="29.327179"></span>
+                <span class="uzaklik" data-lat="40.826598" data-lng="29.327179"></span>
                 <a class="tel" href="tel:05387750605">&#128222; 0 538 775 06 05</a>
 </div>
                 </div>
@@ -575,7 +567,7 @@
                     <h2>MEHMET EFE ASLANDAĞ</h2>
                     <p>TUZLA ORHANLI</p>
                     <div>                <span class="rozet-mesafe">12.6 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfqz" data-lat="40.888034" data-lng="29.345457"></span>
+                <span class="uzaklik" data-lat="40.888034" data-lng="29.345457"></span>
                 <a class="tel" href="tel:05532760824">&#128222; Annesi: 0 553 276 08 24</a>
 </div>
                 </div>
@@ -592,7 +584,7 @@
                     <h2>AHMET MELİH</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">450 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqf1o" data-lat="40.82959" data-lng="29.309874"></span>
+                <span class="uzaklik" data-lat="40.82959" data-lng="29.309874"></span>
                 <a class="tel" href="tel:05343632827">&#128222; Annesi: 0 534 363 28 27</a>
 </div>
                 </div>
@@ -609,7 +601,7 @@
                     <h2>ELANUR GÖKCÜL</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">400 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqf15" data-lat="40.825103" data-lng="29.311551"></span>
+                <span class="uzaklik" data-lat="40.825103" data-lng="29.311551"></span>
                 <a class="tel" href="tel:05310842943">&#128222; 0 531 084 29 43</a>
 </div>
                 </div>
@@ -626,7 +618,7 @@
                     <h2>ZEYNEP ESMA KAPAN</h2>
                     <p>TUZLA POSTAHANE MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.4 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfku" data-lat="40.817124" data-lng="29.305145"></span>
+                <span class="uzaklik" data-lat="40.817124" data-lng="29.305145"></span>
                 <a class="tel" href="tel:05454229787">&#128222; 0 545 422 97 87</a>
 </div>
                 </div>
@@ -643,7 +635,7 @@
                     <h2>AHMET ADAR DOĞAN</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.1 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfo8" data-lat="40.829781" data-lng="29.320583"></span>
+                <span class="uzaklik" data-lat="40.829781" data-lng="29.320583"></span>
                 <a class="tel" href="tel:05374277696">&#128222; 0 537 427 76 96</a>
                 <a class="tel" href="tel:05364056526">&#128222; Babası: 0 536 405 65 26</a>
 </div>
@@ -661,7 +653,7 @@
                     <h2>YUSUF AYAZ BİLİR</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.4 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfu" data-lat="40.832634" data-lng="29.360913"></span>
+                <span class="uzaklik" data-lat="40.832634" data-lng="29.360913"></span>
                 <a class="tel" href="tel:05386097013">&#128222; 0 538 609 70 13</a>
                 <a class="tel" href="tel:05350791654">&#128222; Annesi: 0 535 079 16 54</a>
 </div>
@@ -679,7 +671,7 @@
                     <h2>BAYRAM BİLİR</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.4 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf8v" data-lat="40.832634" data-lng="29.360913"></span>
+                <span class="uzaklik" data-lat="40.832634" data-lng="29.360913"></span>
                 <a class="tel" href="tel:05432753040">&#128222; Annesi: 0 543 275 30 40</a>
 </div>
                 </div>
@@ -696,7 +688,7 @@
                     <h2>İBRAHİM TOROS</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.5 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfce" data-lat="40.839657" data-lng="29.356867"></span>
+                <span class="uzaklik" data-lat="40.839657" data-lng="29.356867"></span>
                 <a class="tel" href="tel:05419397751">&#128222; 0 541 939 77 51</a>
 </div>
                 </div>
@@ -713,7 +705,7 @@
                     <h2>KEREM YAĞIZ GÜNER</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">550 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqfof" data-lat="40.831036" data-lng="29.314624"></span>
+                <span class="uzaklik" data-lat="40.831036" data-lng="29.314624"></span>
                 <a class="tel" href="tel:05369716956">&#128222; 0 536 971 69 56</a>
 </div>
                 </div>
@@ -730,7 +722,7 @@
                     <h2>FURKAN GÜLCAN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.4 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf7s" data-lat="40.831281" data-lng="29.362485"></span>
+                <span class="uzaklik" data-lat="40.831281" data-lng="29.362485"></span>
                 <a class="tel" href="tel:05548215864">&#128222; 0 554 821 58 64</a>
 </div>
                 </div>
@@ -747,7 +739,7 @@
                     <h2>YUSUF AYAZ BİLİR</h2>
                     <p>ESENYALI</p>
                     <div>                <span class="rozet-mesafe">7.3 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfhp" data-lat="40.869269" data-lng="29.301361"></span>
+                <span class="uzaklik" data-lat="40.869269" data-lng="29.301361"></span>
                 <a class="tel" href="tel:05386097013">&#128222; 0 538 609 70 13</a>
                 <a class="tel" href="tel:05350791654">&#128222; Annesi: 0 535 079 16 54</a>
 </div>
@@ -765,7 +757,7 @@
                     <h2>ELANUR İNAN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.9 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfcp" data-lat="40.832106" data-lng="29.366239"></span>
+                <span class="uzaklik" data-lat="40.832106" data-lng="29.366239"></span>
                 <a class="tel" href="tel:05304354387">&#128222; Annesi: 0 530 435 43 87</a>
                 <a class="tel" href="tel:05326312387">&#128222; Babası: 0 532 631 23 87</a>
 </div>
@@ -783,7 +775,7 @@
                     <h2>ADEM ÖZGÜL</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf2b" data-lat="40.827549" data-lng="29.359945"></span>
+                <span class="uzaklik" data-lat="40.827549" data-lng="29.359945"></span>
                 <a class="tel" href="tel:05415384319">&#128222; 0 541 538 43 19</a>
 </div>
                 </div>
@@ -800,7 +792,7 @@
                     <h2>ARİF EMRE ŞANAL</h2>
                     <p>TUZLA AYDINLI</p>
                     <div>                <span class="rozet-mesafe">10.6 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfah" data-lat="40.882741" data-lng="29.338901"></span>
+                <span class="uzaklik" data-lat="40.882741" data-lng="29.338901"></span>
                 <a class="tel" href="tel:05343979295">&#128222; 0 534 397 92 95</a>
 </div>
                 </div>
@@ -817,7 +809,7 @@
                     <h2>İCLAL SARE</h2>
                     <p>TUZLA AYDINLI TOKİ</p>
                     <div>                <span class="rozet-mesafe">8.5 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfla" data-lat="40.862126" data-lng="29.335501"></span>
+                <span class="uzaklik" data-lat="40.862126" data-lng="29.335501"></span>
                 <a class="tel" href="tel:05312874314">&#128222; Annesi: 0 531 287 43 14</a>
                 <a class="tel" href="tel:05379184182">&#128222; Babası: 0 537 918 41 82</a>
 </div>
@@ -835,7 +827,7 @@
                     <h2>SEMRA UÇAR</h2>
                     <p>TUZLA AYDINLI</p>
                     <div>                <span class="rozet-mesafe">8.3 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf6j" data-lat="40.86747" data-lng="29.322927"></span>
+                <span class="uzaklik" data-lat="40.86747" data-lng="29.322927"></span>
                 <a class="tel" href="tel:05539890085">&#128222; 0 553 989 00 85</a>
                 <a class="tel" href="tel:05362901200">&#128222; Babası: 0 536 290 12 00</a>
 </div>
@@ -853,7 +845,7 @@
                     <h2>AZİZ AKDENİZ</h2>
                     <p>KURTKÖY</p>
                     <div>                <span class="rozet-mesafe">18.8 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfa" data-lat="40.917538" data-lng="29.30619"></span>
+                <span class="uzaklik" data-lat="40.917538" data-lng="29.30619"></span>
                 <a class="tel" href="tel:05522099767">&#128222; 0 552 209 97 67</a>
 </div>
                 </div>
@@ -870,7 +862,7 @@
                     <h2>GAMZE ESİLA BOLAT</h2>
                     <p>TUZLA İSTASYON MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">850 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqfnl" data-lat="40.824153" data-lng="29.315242"></span>
+                <span class="uzaklik" data-lat="40.824153" data-lng="29.315242"></span>
                 <a class="tel" href="tel:05511747771">&#128222; 0 551 174 77 71</a>
 </div>
                 </div>
@@ -887,7 +879,7 @@
                     <h2>NURFİDAN ŞAHİN</h2>
                     <p>TUZLA ORTA MAHALLE</p>
                     <div>                <span class="rozet-mesafe">14.8 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfcw" data-lat="40.9013" data-lng="29.378178"></span>
+                <span class="uzaklik" data-lat="40.9013" data-lng="29.378178"></span>
                 <a class="tel" href="tel:05416064811">&#128222; 0 541 606 48 11</a>
 </div>
                 </div>
@@ -904,7 +896,7 @@
                     <h2>KEREM EDİS</h2>
                     <p>TUZLA TEPEÖREN</p>
                     <div>                <span class="rozet-mesafe">15.9 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf3h" data-lat="40.910245" data-lng="29.391193"></span>
+                <span class="uzaklik" data-lat="40.910245" data-lng="29.391193"></span>
                 <a class="tel" href="tel:05443745035">&#128222; Kendisi: 0 544 374 50 35</a>
                 <a class="tel" href="tel:05438272701">&#128222; Velisi: 0 543 827 27 01</a>
 </div>
@@ -922,7 +914,7 @@
                     <h2>SELAHATTİN YASİN YILMAZ</h2>
                     <p>TUZLA AYDINLI</p>
                     <div>                <span class="rozet-mesafe">8.8 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfqp" data-lat="40.871388" data-lng="29.325847"></span>
+                <span class="uzaklik" data-lat="40.871388" data-lng="29.325847"></span>
                 <a class="tel" href="tel:05347877867">&#128222; Annesi: 0 534 787 78 67</a>
 </div>
                 </div>
@@ -939,7 +931,7 @@
                     <h2>ERAY BULUT</h2>
                     <p>TUZLA AYDINLI</p>
                     <div>                <span class="rozet-mesafe">8.5 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfpw" data-lat="40.868444" data-lng="29.328607"></span>
+                <span class="uzaklik" data-lat="40.868444" data-lng="29.328607"></span>
                 <a class="tel" href="tel:05313612553">&#128222; Abisi: 0 531 361 25 53</a>
                 <a class="tel" href="tel:05453615353">&#128222; Annesi: 0 545 361 53 53</a>
 </div>
@@ -957,7 +949,7 @@
                     <h2>AYŞENUR ÇAĞLAYAN</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.7 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfbw" data-lat="40.837872" data-lng="29.3064"></span>
+                <span class="uzaklik" data-lat="40.837872" data-lng="29.3064"></span>
                 <a class="tel" href="tel:05452408532">&#128222; 0 545 240 85 32</a>
 </div>
                 </div>
@@ -974,7 +966,7 @@
                     <h2>MUHAMMED ALİ RIZA CANBAKAL</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.1 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf9u" data-lat="40.828617356826314" data-lng="29.301800810550052"></span>
+                <span class="uzaklik" data-lat="40.828617356826314" data-lng="29.301800810550052"></span>
 </div>
                 </div>
             </div>
@@ -990,7 +982,7 @@
                     <h2>HAMZA EFE TOSUN</h2>
                     <p>BAYRAMOĞLU</p>
                     <div>                <span class="rozet-mesafe">11.2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf3n" data-lat="40.786803" data-lng="29.362565"></span>
+                <span class="uzaklik" data-lat="40.786803" data-lng="29.362565"></span>
                 <a class="tel" href="tel:05014933647">&#128222; ELMAS: 0 501 493 36 47</a>
                 <a class="tel" href="tel:05454943040">&#128222; KENDİSİ: 0 545 494 30 40</a>
 </div>
@@ -1008,7 +1000,7 @@
                     <h2>EMRE SELÇUK</h2>
                     <p>DARICA</p>
                     <div>                <span class="rozet-mesafe">10.2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf3r" data-lat="40.789667" data-lng="29.370472"></span>
+                <span class="uzaklik" data-lat="40.789667" data-lng="29.370472"></span>
                 <a class="tel" href="tel:05518275741">&#128222; ANNE: 0 551 827 57 41</a>
 </div>
                 </div>
@@ -1025,7 +1017,7 @@
                     <h2>ESİLA İŞLER</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">500 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqfop" data-lat="40.826326" data-lng="29.30764"></span>
+                <span class="uzaklik" data-lat="40.826326" data-lng="29.30764"></span>
                 <a class="tel" href="tel:05394650424">&#128222; 0 539 465 04 24</a>
 </div>
                 </div>
@@ -1042,7 +1034,7 @@
                     <h2>İLAYDA ŞENOL</h2>
                     <p>TUZLA EVLİYA ÇELEBİ MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">2.1 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf86" data-lat="40.839972" data-lng="29.303122"></span>
+                <span class="uzaklik" data-lat="40.839972" data-lng="29.303122"></span>
                 <a class="tel" href="tel:05350105993">&#128222; 0 535 010 59 93</a>
 </div>
                 </div>
@@ -1059,7 +1051,7 @@
                     <h2>YUSUF ÇAL</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">350 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqfjn" data-lat="40.830178" data-lng="29.312528"></span>
+                <span class="uzaklik" data-lat="40.830178" data-lng="29.312528"></span>
                 <a class="tel" href="tel:05427851700">&#128222; ANNE: 0 542 785 17 00</a>
 </div>
                 </div>
@@ -1076,7 +1068,7 @@
                     <h2>MİKAİL KALINTAŞ</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">7.6 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf62" data-lat="40.84144" data-lng="29.366968"></span>
+                <span class="uzaklik" data-lat="40.84144" data-lng="29.366968"></span>
                 <a class="tel" href="tel:05318691065">&#128222; 0 531 869 10 65</a>
 </div>
                 </div>
@@ -1093,7 +1085,7 @@
                     <h2>METİN KARSLI</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">6.1 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfe7" data-lat="40.833047" data-lng="29.357929"></span>
+                <span class="uzaklik" data-lat="40.833047" data-lng="29.357929"></span>
                 <a class="tel" href="tel:05322738631">&#128222; 0 532 273 86 31</a>
                 <a class="tel" href="tel:05528479161">&#128222; 0 552 847 91 61</a>
 </div>
@@ -1111,7 +1103,7 @@
                     <h2>ABDULLAH ÇELİK</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">5.7 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfmm" data-lat="40.832219" data-lng="29.35425"></span>
+                <span class="uzaklik" data-lat="40.832219" data-lng="29.35425"></span>
                 <a class="tel" href="tel:05491933461">&#128222; ANNE: 0 549 193 34 61</a>
 </div>
                 </div>
@@ -1128,7 +1120,7 @@
                     <h2>YAĞMUR ÇAĞIL</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">5.9 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfq0" data-lat="40.82857" data-lng="29.359628"></span>
+                <span class="uzaklik" data-lat="40.82857" data-lng="29.359628"></span>
                 <a class="tel" href="tel:05074835446">&#128222; 0 507 483 54 46</a>
 </div>
                 </div>
@@ -1145,7 +1137,7 @@
                     <h2>ZEYNEP KARAMAN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">7.4 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfbq" data-lat="40.843647" data-lng="29.364662"></span>
+                <span class="uzaklik" data-lat="40.843647" data-lng="29.364662"></span>
                 <a class="tel" href="tel:05386112968">&#128222; 0 538 611 29 68</a>
 </div>
                 </div>
@@ -1162,7 +1154,7 @@
                     <h2>YÜCEHAN TAŞOVA</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">850 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqfhs" data-lat="40.834342" data-lng="29.312708"></span>
+                <span class="uzaklik" data-lat="40.834342" data-lng="29.312708"></span>
                 <a class="tel" href="tel:05374891914">&#128222; 0 537 489 19 14</a>
 </div>
                 </div>
@@ -1179,7 +1171,7 @@
                     <h2>FEYZA SENA</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">600 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqf53" data-lat="40.832346" data-lng="29.313524"></span>
+                <span class="uzaklik" data-lat="40.832346" data-lng="29.313524"></span>
                 <a class="tel" href="tel:05348220527">&#128222; 0 534 822 05 27</a>
 </div>
                 </div>
@@ -1196,7 +1188,7 @@
                     <h2>MİNA BOYSAN</h2>
                     <p>TUZLA AYDINLI</p>
                     <div>                <span class="rozet-mesafe">8.4 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfr3" data-lat="40.866217" data-lng="29.341239"></span>
+                <span class="uzaklik" data-lat="40.866217" data-lng="29.341239"></span>
                 <a class="tel" href="tel:05347426829">&#128222; ANNE: 0 534 742 68 29</a>
 </div>
                 </div>
@@ -1213,7 +1205,7 @@
                     <h2>BEYTULLAH YAVUZ</h2>
                     <p>TUZLA ORTA MAHALLE</p>
                     <div>                <span class="rozet-mesafe">14.3 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfgr" data-lat="40.901854" data-lng="29.382196"></span>
+                <span class="uzaklik" data-lat="40.901854" data-lng="29.382196"></span>
                 <a class="tel" href="tel:05437613389">&#128222; ANNE: 0 543 761 33 89</a>
                 <a class="tel" href="tel:05549527461">&#128222; BABA: 0 554 952 74 61</a>
 </div>
@@ -1231,7 +1223,7 @@
                     <h2>FATMANUR ÖZTÜRK</h2>
                     <p>TUZLA ORTA MAHALLE</p>
                     <div>                <span class="rozet-mesafe">14.2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqflt" data-lat="40.901315" data-lng="29.381052"></span>
+                <span class="uzaklik" data-lat="40.901315" data-lng="29.381052"></span>
                 <a class="tel" href="tel:05343295492">&#128222; BABA: 0 534 329 54 92</a>
 </div>
                 </div>
@@ -1248,7 +1240,7 @@
                     <h2>YİĞİT EFE GÖKYAR</h2>
                     <p>KONAŞLI</p>
                     <div>                <span class="rozet-mesafe">9.3 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfm3" data-lat="40.879927" data-lng="29.339083"></span>
+                <span class="uzaklik" data-lat="40.879927" data-lng="29.339083"></span>
                 <a class="tel" href="tel:05551599659">&#128222; 0 555 159 96 59</a>
 </div>
                 </div>
@@ -1265,7 +1257,7 @@
                     <h2>AHMET ÇAĞIN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">7.2 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfdl" data-lat="40.82903515274744" data-lng="29.360940555133293"></span>
+                <span class="uzaklik" data-lat="40.82903515274744" data-lng="29.360940555133293"></span>
 </div>
                 </div>
             </div>
@@ -1281,7 +1273,7 @@
                     <h2>RABİA SAĞLIK</h2>
                     <p>TUZLA ORTA MAHALLE</p>
                     <div>                <span class="rozet-mesafe">13.8 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfp8" data-lat="40.9016834228326" data-lng="29.378306506508356"></span>
+                <span class="uzaklik" data-lat="40.9016834228326" data-lng="29.378306506508356"></span>
 </div>
                 </div>
             </div>
@@ -1297,7 +1289,7 @@
                     <h2>BURCU ATEŞ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.5 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqfcq" data-lat="40.83642015220152" data-lng="29.307605427425298"></span>
+                <span class="uzaklik" data-lat="40.83642015220152" data-lng="29.307605427425298"></span>
 </div>
                 </div>
             </div>
@@ -1313,7 +1305,7 @@
                     <h2>YUSUF BOZDOĞAN</h2>
                     <p>TUZLA POSTAHANE MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">800 METRE</span>
-                <span class="uzaklik" data-ogr="omsoxipqfif" data-lat="40.822608685796176" data-lng="29.30730266506917"></span>
+                <span class="uzaklik" data-lat="40.822608685796176" data-lng="29.30730266506917"></span>
 </div>
                 </div>
             </div>
@@ -1329,7 +1321,7 @@
                     <h2>TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.8 KM</span>
-                <span class="uzaklik" data-ogr="omsoxipqf6x" data-lat="40.83616173475196" data-lng="29.301234884657436"></span>
+                <span class="uzaklik" data-lat="40.83616173475196" data-lng="29.301234884657436"></span>
 </div>
                 </div>
             </div>
@@ -1345,7 +1337,7 @@
                     <h2>TALHA KICANÇ CAN</h2>
                     <p>TUZLA İSTASYON MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">850 METRE</span>
-                <span class="uzaklik" data-ogr="omssxpnus64" data-lat="40.82824831272407" data-lng="29.318162896584802"></span>
+                <span class="uzaklik" data-lat="40.82824831272407" data-lng="29.318162896584802"></span>
 </div>
                 </div>
             </div>
@@ -1361,7 +1353,7 @@
                     <h2>ENES ARAS</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">450 METRE</span>
-                <span class="uzaklik" data-ogr="omssyjivsfn" data-lat="40.830395" data-lng="29.310946"></span>
+                <span class="uzaklik" data-lat="40.830395" data-lng="29.310946"></span>
                 <a class="tel" href="tel:02164462397">&#128222; EV TEL:: 0 216 446 23 97</a>
                 <a class="tel" href="tel:02164462397">&#128222; ABİSİ: 0 216 446 23 97</a>
 </div>
@@ -1378,7 +1370,7 @@
                 <div class="kisi">
                     <h2>Aytekin GÜNEL</h2>
                     <p>Tuzla Yayla Mahallesi</p>
-                    <div>                <span class="uzaklik" data-ogr="omstbjbgqln" data-lat="40.832743" data-lng="29.312556"></span>
+                    <div>                <span class="uzaklik" data-lat="40.832743" data-lng="29.312556"></span>
                 <a class="tel" href="tel:05307887194">&#128222; 0 530 788 71 94</a>
 </div>
                 </div>
@@ -1395,7 +1387,7 @@
                     <h2>EMİRHAN ÖZDEMİR</h2>
                     <p>ÇAYIROVA</p>
                     <div>                <span class="rozet-mesafe">11.2 KM</span>
-                <span class="uzaklik" data-ogr="omstfkfwr97" data-lat="40.83616689170353" data-lng="29.372001811494332"></span>
+                <span class="uzaklik" data-lat="40.83616689170353" data-lng="29.372001811494332"></span>
 </div>
                 </div>
             </div>
@@ -1411,12 +1403,13 @@
                     <h2>MELEK AKÜZÜM</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">5.8 KM</span>
-                <span class="uzaklik" data-ogr="omswyf7r56j" data-lat="40.8263527" data-lng="29.3546912"></span>
+                <span class="uzaklik" data-lat="40.826353" data-lng="29.354691"></span>
+                <a class="tel" href="tel:05386978482">&#128222; Annesi: 0 538 697 84 82</a>
 </div>
                 </div>
             </div>
             <div class="butonlar">
-                <button class="nav-btn gmaps" onclick="navigasyonAc('40.8263527', '29.3546912', 'https://maps.app.goo.gl/HGryjV8ENZ9QP2E2A?g_st=ic')">Yol Tarifi</button>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.826353', '29.354691', 'https://maps.app.goo.gl/HGryjV8ENZ9QP2E2A?g_st=ic')">Yol Tarifi</button>
                 <button class="gonder" onclick="waSecimAc('omswyf7r56j')">WhatsApp</button>
             </div>
         </li>
@@ -1427,7 +1420,7 @@
                     <h2>ECRİN SU AYAN</h2>
                     <p>TUZLA EVLİYA ÇELEBİ MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">2.4 KM</span>
-                <span class="uzaklik" data-ogr="omswyimr6or" data-lat="40.8379524" data-lng="29.2952465"></span>
+                <span class="uzaklik" data-lat="40.8379524" data-lng="29.2952465"></span>
 </div>
                 </div>
             </div>
@@ -1443,7 +1436,7 @@
                     <h2>DERYA BAYAT</h2>
                     <p>TUZLA POSTAHANE MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">2.4 KM</span>
-                <span class="uzaklik" data-ogr="omsxhz4szdz" data-lat="40.8177751320559" data-lng="29.314298896402292"></span>
+                <span class="uzaklik" data-lat="40.8177751320559" data-lng="29.314298896402292"></span>
 </div>
                 </div>
             </div>
@@ -1459,7 +1452,7 @@
                     <h2>DEFNE KAYA</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">180 METRE</span>
-                <span class="uzaklik" data-ogr="omsyn86349e" data-lat="40.8285461" data-lng="29.3129403"></span>
+                <span class="uzaklik" data-lat="40.8285461" data-lng="29.3129403"></span>
 </div>
                 </div>
             </div>
@@ -1475,7 +1468,7 @@
                     <h2>BERKAY ÇAYIR</h2>
                     <p>ÇAYIROVA</p>
                     <div>                <span class="rozet-mesafe">9.3 KM</span>
-                <span class="uzaklik" data-ogr="omt7dr36ogt" data-lat="40.860163" data-lng="29.372664"></span>
+                <span class="uzaklik" data-lat="40.860163" data-lng="29.372664"></span>
                 <a class="tel" href="tel:05393571054">&#128222; 0 539 357 10 54</a>
 </div>
                 </div>
@@ -1492,7 +1485,7 @@
                     <h2>Özel Çınaraltı Engelli Bakım Merkezi</h2>
                     <p>Samandıra</p>
                     <div>                <span class="rozet-mesafe">24 KM</span>
-                <span class="uzaklik" data-ogr="omtd4e20cp" data-lat="40.978986455009164" data-lng="29.21760505036953"></span>
+                <span class="uzaklik" data-lat="40.978986455009164" data-lng="29.21760505036953"></span>
                 <a class="tel" href="tel:02163110455">&#128222; 0 216 311 04 55</a>
                 <a class="tel" href="tel:02163110456">&#128222; 0 216 311 04 56</a>
 </div>
@@ -1510,7 +1503,7 @@
                     <h2>ATAŞEHİR ÇINAR ENGELLİ BAKIM MERKEZİ</h2>
                     <p>ATAŞEHİR</p>
                     <div>                <span class="rozet-mesafe">28.5 KM</span>
-                <span class="uzaklik" data-ogr="omtd4kcbzfg" data-lat="40.981473" data-lng="29.157274"></span>
+                <span class="uzaklik" data-lat="40.981473" data-lng="29.157274"></span>
                 <a class="tel" href="tel:02164715013">&#128222; 0 216 471 50 13</a>
                 <a class="tel" href="tel:02164715014">&#128222; 0 216 471 50 14</a>
                 <a class="tel" href="tel:05541518838">&#128222; WHATSAPP: 0 554 151 88 38</a>
@@ -1529,7 +1522,7 @@
                     <h2>ALPER DEMİR</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.1 KM</span>
-                <span class="uzaklik" data-ogr="omtgyv28yrq" data-lat="40.8345706" data-lng="29.3120093"></span>
+                <span class="uzaklik" data-lat="40.8345706" data-lng="29.3120093"></span>
 </div>
                 </div>
             </div>
@@ -1545,12 +1538,13 @@
                     <h2>SENEM ORTA</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">950 METRE</span>
-                <span class="uzaklik" data-ogr="omth0buvrhf" data-lat="40.827474" data-lng="29.3202007"></span>
+                <span class="uzaklik" data-lat="40.827474" data-lng="29.320201"></span>
+                <a class="tel" href="tel:05376812913">&#128222; Annesi: 0 537 681 29 13</a>
 </div>
                 </div>
             </div>
             <div class="butonlar">
-                <button class="nav-btn gmaps" onclick="navigasyonAc('40.827474', '29.3202007', 'https://maps.app.goo.gl/j2yoW2AbB6dtdw4c8?g_st=ic')">Yol Tarifi</button>
+                <button class="nav-btn gmaps" onclick="navigasyonAc('40.827474', '29.320201', 'https://maps.app.goo.gl/j2yoW2AbB6dtdw4c8?g_st=ic')">Yol Tarifi</button>
                 <button class="gonder" onclick="waSecimAc('omth0buvrhf')">WhatsApp</button>
             </div>
         </li>
@@ -1561,7 +1555,7 @@
                     <h2>TUZLA REHBERLİK VE ARAŞTIRMA MERKEZİ RAM</h2>
                     <p>TUZLA  AYDINTEPE</p>
                     <div>                <span class="rozet-mesafe">5 KM</span>
-                <span class="uzaklik" data-ogr="omthfh0xt3v" data-lat="40.85664205292189" data-lng="29.29821007332431"></span>
+                <span class="uzaklik" data-lat="40.85664205292189" data-lng="29.29821007332431"></span>
                 <a class="tel" href="tel:02164468183">&#128222; 0 216 446 81 83</a>
 </div>
                 </div>
@@ -1578,7 +1572,7 @@
                     <h2>BUĞLEM ARSLAN</h2>
                     <p>BAYRAMOĞLU</p>
                     <div>                <span class="rozet-mesafe">11.3 KM</span>
-                <span class="uzaklik" data-ogr="omtltolkmq" data-lat="40.786762223868536" data-lng="29.362588435478735"></span>
+                <span class="uzaklik" data-lat="40.786762223868536" data-lng="29.362588435478735"></span>
 </div>
                 </div>
             </div>
@@ -1594,7 +1588,7 @@
                     <h2>BELİNAY KILIÇ</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">7 KM</span>
-                <span class="uzaklik" data-ogr="omtqxwqvu3u" data-lat="40.84220545638074" data-lng="29.360319456919918"></span>
+                <span class="uzaklik" data-lat="40.84220545638074" data-lng="29.360319456919918"></span>
 </div>
                 </div>
             </div>
@@ -1610,7 +1604,7 @@
                     <h2>ABDURRAHMAN KANDEMİR</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">1.4  KM</span>
-                <span class="uzaklik" data-ogr="omtrmrmis4a" data-lat="40.83316087161735" data-lng="29.310050189288084"></span>
+                <span class="uzaklik" data-lat="40.83316087161735" data-lng="29.310050189288084"></span>
                 <a class="tel" href="tel:05305801978">&#128222; BABA: 0 530 580 19 78</a>
                 <a class="tel" href="tel:05344556834">&#128222; ANNE: 0 534 455 68 34</a>
 </div>
@@ -1628,7 +1622,7 @@
                     <h2>FATMANUR ŞAHİN</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">5.8 KM</span>
-                <span class="uzaklik" data-ogr="omu2vatyiht" data-lat="40.831345844589" data-lng="29.35690629710632"></span>
+                <span class="uzaklik" data-lat="40.831345844589" data-lng="29.35690629710632"></span>
 </div>
                 </div>
             </div>
@@ -1644,7 +1638,7 @@
                     <h2>BEYTULLAH YAVUZ OKUL</h2>
                     <p>ÇAYIROVA</p>
                     <div>                <span class="rozet-mesafe">13.2 KM</span>
-                <span class="uzaklik" data-ogr="omu3xhlshhy" data-lat="40.90497432781644" data-lng="29.37403158102774"></span>
+                <span class="uzaklik" data-lat="40.90497432781644" data-lng="29.37403158102774"></span>
 </div>
                 </div>
             </div>
@@ -1659,7 +1653,7 @@
                 <div class="kisi">
                     <h2>OSMAN UMUT ÜNAL</h2>
                     <p>TUZLA AYDINLI, ORHANLIYA YAKIN</p>
-                    <div>                <span class="uzaklik" data-ogr="omu5tah477f" data-lat="40.89058827793273" data-lng="29.347484844212442"></span>
+                    <div>                <span class="uzaklik" data-lat="40.89058827793273" data-lng="29.347484844212442"></span>
                 <a class="tel" href="tel:05385156418">&#128222; ANNESİ AYŞE: 0 538 515 64 18</a>
 </div>
                 </div>
@@ -1676,7 +1670,7 @@
                     <h2>HAMZA EFE TOSUN OKUL</h2>
                     <p>BAYRAMOĞLU</p>
                     <div>                <span class="rozet-mesafe">9.8 KM</span>
-                <span class="uzaklik" data-ogr="omu5tln9ca8" data-lat="40.787447753947774" data-lng="29.371712214049776"></span>
+                <span class="uzaklik" data-lat="40.787447753947774" data-lng="29.371712214049776"></span>
                 <a class="tel" href="tel:05014933647">&#128222; ELMAS: 0 501 493 36 47</a>
                 <a class="tel" href="tel:05454943040">&#128222; KENDİSİ: 0 545 494 30 40</a>
 </div>
@@ -1693,7 +1687,7 @@
                 <div class="kisi">
                     <h2>AYGÜL YILDIZ</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
-                    <div>                <span class="uzaklik" data-ogr="omu8b7kxn3d" data-lat="40.8375045" data-lng="29.357993"></span>
+                    <div>                <span class="uzaklik" data-lat="40.8375045" data-lng="29.357993"></span>
                 <a class="tel" href="tel:05374375697">&#128222; 0 537 437 56 97</a>
 </div>
                 </div>
@@ -1709,7 +1703,7 @@
                 <div class="kisi">
                     <h2>YUSUF ŞİRİNOĞLU</h2>
                     <p>TUZLA YAYLA MAHALLESİ</p>
-                    <div>                <span class="uzaklik" data-ogr="omucsix3vqm" data-lat="40.82980340092937" data-lng="29.31446079658482"></span>
+                    <div>                <span class="uzaklik" data-lat="40.82980340092937" data-lng="29.31446079658482"></span>
                 <a class="tel" href="tel:05524421842">&#128222; ANNE ZÜLFİYE: 0 552 442 18 42</a>
 </div>
                 </div>
@@ -1726,7 +1720,7 @@
                     <h2>HÜSEYİN ARDUÇ</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
                     <div>                <span class="rozet-mesafe">7.1 KM</span>
-                <span class="uzaklik" data-ogr="omufwr9z3qf" data-lat="40.840972559116935" data-lng="29.364410676695595"></span>
+                <span class="uzaklik" data-lat="40.840972559116935" data-lng="29.364410676695595"></span>
 </div>
                 </div>
             </div>
@@ -1741,7 +1735,7 @@
                 <div class="kisi">
                     <h2>YETER HOCA</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
-                    <div>                <span class="uzaklik" data-ogr="omuhz4axbm3" data-lat="40.828712" data-lng="29.354919"></span>
+                    <div>                <span class="uzaklik" data-lat="40.828712" data-lng="29.354919"></span>
 </div>
                 </div>
             </div>
@@ -1756,7 +1750,7 @@
                 <div class="kisi">
                     <h2>KADİR DERELİ</h2>
                     <p>TUZLA ŞİFA MAHALLESİ</p>
-                    <div>                <span class="uzaklik" data-ogr="omumio1m4np" data-lat="40.833352" data-lng="29.364622"></span>
+                    <div>                <span class="uzaklik" data-lat="40.833352" data-lng="29.364622"></span>
                 <a class="tel" href="tel:+905347086469">&#128222; ANNE: +90 534 708 64 69</a>
 </div>
                 </div>
@@ -1773,7 +1767,7 @@
                     <h2>YASİN EMRE BULUT</h2>
                     <p>TUZLA KONAŞLI</p>
                     <div>                <span class="rozet-mesafe">8 KM</span>
-                <span class="uzaklik" data-ogr="omv8d8j0ck9" data-lat="40.88055468966665" data-lng="29.336455062654196"></span>
+                <span class="uzaklik" data-lat="40.88055468966665" data-lng="29.336455062654196"></span>
 </div>
                 </div>
             </div>
@@ -1789,7 +1783,7 @@
                     <h2>BAHAR KARADENİZ</h2>
                     <p>TUZLA AYDINLI</p>
                     <div>                <span class="rozet-mesafe">7.7 KM</span>
-                <span class="uzaklik" data-ogr="omviea05pq7" data-lat="40.878359228177395" data-lng="29.322951773479076"></span>
+                <span class="uzaklik" data-lat="40.878359228177395" data-lng="29.322951773479076"></span>
 </div>
                 </div>
             </div>
@@ -1805,7 +1799,7 @@
                     <h2>HALE HOSTES  1</h2>
                     <p>PENDIK</p>
                     <div>                <span class="rozet-mesafe">7.2KM</span>
-                <span class="uzaklik" data-ogr="omw5dn4oeh5" data-lat="40.86896007192986" data-lng="29.28136206640224"></span>
+                <span class="uzaklik" data-lat="40.86896007192986" data-lng="29.28136206640224"></span>
                 <a class="tel" href="tel:05464904474">&#128222; KENDİSİ: 0 546 490 44 74</a>
 </div>
                 </div>
@@ -1822,7 +1816,7 @@
                     <h2>HALE HOSTES 2</h2>
                     <p>PENDIK</p>
                     <div>                <span class="rozet-mesafe">7.2 KM</span>
-                <span class="uzaklik" data-ogr="omw5dowj89j" data-lat="40.8695468202401" data-lng="29.281435279033246"></span>
+                <span class="uzaklik" data-lat="40.8695468202401" data-lng="29.281435279033246"></span>
                 <a class="tel" href="tel:05464904474">&#128222; KENDİSİ: 0 546 490 44 74</a>
 </div>
                 </div>
@@ -1840,7 +1834,6 @@
 
     <div class="alt-baglanti">
         <a href="./ekle.html">Öğrenci ekle</a> &nbsp;&middot;&nbsp; <a href="./yonetim.html">Yönetim paneli</a>
-        <div class="kaynak-not">Yol mesafesi ve tur hesabı: OSRM &middot; Harita verisi &copy; OpenStreetMap katkıcıları (ODbL)</div>
     </div>
 </div>
 
@@ -1858,11 +1851,10 @@
 <!-- Rota Sıralama Menüsü -->
 <div class="modal-perde" id="rotaModal" onclick="modalKapat(event, 'rotaModal')">
     <div class="modal-kutu">
-        <div class="modal-baslik">Rotayı Nasıl Kuralım?</div>
-        <button class="modal-btn btn-yesil" onclick="rotaCalistir('topla')">🚌 Buradan Topla &rarr; Merkeze</button>
-        <button class="modal-btn btn-apple" onclick="rotaCalistir('dagit')">🏫 Merkezden Dağıt</button>
-        <button class="modal-btn btn-apple" onclick="rotaCalistir('merkezdentopla')">🔄 Merkezden Çık, Topla, Merkeze Dön</button>
+        <div class="modal-baslik">Harita Rotasını Nasıl Açalım?</div>
         <button class="modal-btn btn-gmaps" onclick="rotaCalistir('mevcut')">Mevcut Sırayla Aç</button>
+        <button class="modal-btn btn-yesil" onclick="rotaCalistir('yakin')">📍 Bana En Yakından En Uzağa (Sabah)</button>
+        <button class="modal-btn btn-apple" onclick="rotaCalistir('uzak')">🏁 Bana En Uzaktan En Yakına (Akşam)</button>
         <button class="modal-btn btn-kapat" onclick="document.getElementById('rotaModal').style.display='none'">Vazgeç</button>
     </div>
 </div>
@@ -1878,9 +1870,8 @@
 </div>
 
 <script>
-var OGRENCILER = [{"ad":"ÖZEL ÇINAR TUZLA KURUM MERKEZ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA","id":"omsoxipqf6t","mesafe":"KM HESAPLARI BU KURUMUN ADRESİNE GÖRE HESAPLANDI","enlem":40.82752360562284,"boylam":29.31144049586419,"telefonlar":[]},{"ad":"ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ","mahalle":"SULTANBEYLİ","link":"https://maps.app.goo.gl/2FDGEQUePPGw9UFQ8","id":"omsoxipqf3t","mesafe":"28 KM","enlem":40.963657,"boylam":29.265646,"telefonlar":[{"etiket":"","numara":"0 216 634 77 02"},{"etiket":"","numara":"0 216 634 77 03"},{"etiket":"WHATSAPP","numara":"0 530 156 98 38"}]},{"ad":"ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ","mahalle":"KURTKÖY","link":"https://maps.app.goo.gl/jBesgV1hoMvDehRj9","id":"omsoxipqfen","mesafe":"19 KM","enlem":40.916703,"boylam":29.302384,"telefonlar":[{"etiket":"","numara":"0 216 595 04 15"},{"etiket":"","numara":"0 216 595 04 16"},{"etiket":"WHATSAPP","numara":"0 545 682 42 98"}]},{"ad":"KADİR AKİF DABAN","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/LnuUqnEvbEHv9pm68","id":"omsoxipqfq8","mesafe":"2.2 KM","enlem":40.840449,"boylam":29.305907,"telefonlar":[{"etiket":"ANNESİ","numara":"0 540 005 47 16"},{"etiket":"BABASI","numara":"0 552 025 70 53"}]},{"ad":"UMUT KAYA BOLAT","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/UWFcVCLyvtydRyUr9","id":"omsoxipqfez","mesafe":"2.3 KM","enlem":40.837918423272,"boylam":29.306180137132305,"telefonlar":[{"etiket":"","numara":"0 537 291 64 37"}]},{"ad":"ESLEM KONUK","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17","id":"omsoxipqf8q","mesafe":"6.7 KM","enlem":40.839735,"boylam":29.358182,"telefonlar":[{"etiket":"","numara":"0 542 687 26 52"}]},{"ad":"ÜMMÜHAN EYŞAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","link":"https://maps.app.goo.gl/UMCtRgARHmJHCp8GA","id":"omsoxipqfly","mesafe":"1.6 KM","enlem":40.815855,"boylam":29.308826,"telefonlar":[{"etiket":"","numara":"0 543 280 35 80"}]},{"ad":"KARDELEN TURGUT","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6","id":"omsoxipqf9k","mesafe":"7.2 KM","enlem":40.843905,"boylam":29.361054,"telefonlar":[{"etiket":"Kendisi","numara":"0 538 732 76 35"}]},{"ad":"ESMA GÖLCÜ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA","id":"omsoxipqffp","mesafe":"450 METRE","enlem":40.82967798397194,"boylam":29.309705128835645,"telefonlar":[]},{"ad":"ELİF YAZGÜLÜ DEMİRBOZAN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/p6kyGm76WQe32eq1A","id":"omsoxipqf68","mesafe":"6.5 KM","enlem":40.839353,"boylam":29.356849,"telefonlar":[{"etiket":"Annesi","numara":"0 533 094 88 41"}]},{"ad":"HAZAL GÜLLÜ","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6","id":"omsoxipqf9d","mesafe":"7.8 KM","enlem":40.848737,"boylam":29.362739,"telefonlar":[{"etiket":"Annesi","numara":"0 541 400 01 28"}]},{"ad":"EMİR YILMAZ","mahalle":"BAYRAMOĞLU","link":"https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9","id":"omsoxipqfk6","mesafe":"9.2 KM","enlem":40.793781,"boylam":29.369318,"telefonlar":[{"etiket":"","numara":"0 555 390 03 96"}]},{"ad":"MİRAÇ KIRMIZIGÖZ","mahalle":"BAYRAMOĞLU","link":"https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9","id":"omsoxipqfq1","mesafe":"9.2 KM","enlem":40.793773,"boylam":29.369329,"telefonlar":[{"etiket":"","numara":"0 532 064 33 76"}]},{"ad":"EMRE YILMAZ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/pWt5AEzNnkmS7icX7","id":"omsoxipqfg7","mesafe":"1.3 KM","enlem":40.833591,"boylam":29.305667,"telefonlar":[{"etiket":"","numara":"0 545 604 80 36"}]},{"ad":"ADEM VEZİR","mahalle":"TUZLA AYDINLI MAHALLESİ","link":"https://maps.app.goo.gl/tekZtsueRzdq2Ku66","id":"omsoxipqfab","mesafe":"8.7 KM","enlem":40.882752,"boylam":29.339032,"telefonlar":[{"etiket":"","numara":"0 541 155 69 60"}]},{"ad":"HAMİT COŞKUN","mahalle":"TUZLA OHANLI ORTA MAHALLE","link":"https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8","id":"omsoxipqf88","mesafe":"12.9 KM","enlem":40.90084393706418,"boylam":29.37922229455615,"telefonlar":[]},{"ad":"FURKAN FATİH YILDIZ","mahalle":"TUZLA AKFIRAT","link":"https://maps.app.goo.gl/PSgZVBaRMTyoexRM6","id":"omsoxipqf99","mesafe":"18.1 KM","enlem":40.924606,"boylam":29.423318,"telefonlar":[{"etiket":"","numara":"0 543 925 26 12"}]},{"ad":"EYÜP CEVDET","mahalle":"ESENYALI EV","link":"https://maps.app.goo.gl/bA8JH6RTLcHr132fA","id":"omsoxipqfgj","mesafe":"6.8 KM","enlem":40.868525,"boylam":29.298868,"telefonlar":[{"etiket":"Kendisi","numara":"0 531 945 70 65"},{"etiket":"Babası","numara":"0 535 043 40 04"},{"etiket":"BabaAnnesi","numara":"0 539 951 60 15"}]},{"ad":"EDANUR ÖN","mahalle":"TUZLA İSTASYON MAHALLESİ","link":"https://maps.app.goo.gl/VmyKBdYFconiDQLG7","id":"omsoxipqf8","mesafe":"2 KM","enlem":40.831309,"boylam":29.322906,"telefonlar":[{"etiket":"","numara":"0 543 973 95 40"}]},{"ad":"İBRAHİM ERGİN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/3AJyR2QKQTs3tAdG7","id":"omsoxipqfbs","mesafe":"7.4 KM","enlem":40.846108196352574,"boylam":29.361930798196735,"telefonlar":[{"etiket":"Annesi","numara":"0 537 356 41 39"},{"etiket":"Babası","numara":"0 538 693 00 30"}]},{"ad":"ÖMER ALPER GÜNDOĞDU","mahalle":"ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/QRHrK8A8V2QV2a548","id":"omsoxipqfgk","mesafe":"6.4 KM","enlem":40.831106,"boylam":29.362575,"telefonlar":[{"etiket":"","numara":"0 546 949 43 95"}]},{"ad":"ÖMER YILMAZ UKUS","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/g97ogr2Uvy7sST8T8","id":"omsoxipqfoc","mesafe":"350 METRE","enlem":40.830531,"boylam":29.31209,"telefonlar":[{"etiket":"","numara":"0 536 299 20 14"}]},{"ad":"ESLEM HALİME DEMİRCİ","mahalle":"TUZLA İSTASYON MAHALLESİ","link":"https://maps.app.goo.gl/PRXgPan4QNFX4MWv7","id":"omsoxipqfgi","mesafe":"2.8 KM","enlem":40.826598,"boylam":29.327179,"telefonlar":[{"etiket":"","numara":"0 538 775 06 05"}]},{"ad":"MEHMET EFE ASLANDAĞ","mahalle":"TUZLA ORHANLI","link":"https://maps.app.goo.gl/9jPZoWmERwF3YoeDA","id":"omsoxipqfqz","mesafe":"12.6 KM","enlem":40.888034,"boylam":29.345457,"telefonlar":[{"etiket":"Annesi","numara":"0 553 276 08 24"}]},{"ad":"AHMET MELİH","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/yM5yppFH8mJS93St8","id":"omsoxipqf1o","mesafe":"450 METRE","enlem":40.82959,"boylam":29.309874,"telefonlar":[{"etiket":"Annesi","numara":"0 534 363 28 27"}]},{"ad":"ELANUR GÖKCÜL","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/rbHgSym4arEJkGFfA","id":"omsoxipqf15","mesafe":"400 METRE","enlem":40.825103,"boylam":29.311551,"telefonlar":[{"etiket":"","numara":"0 531 084 29 43"}]},{"ad":"ZEYNEP ESMA KAPAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","link":"https://maps.app.goo.gl/fNo7EcHvf3poTrDW8","id":"omsoxipqfku","mesafe":"1.4 KM","enlem":40.817124,"boylam":29.305145,"telefonlar":[{"etiket":"","numara":"0 545 422 97 87"}]},{"ad":"AHMET ADAR DOĞAN","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6","id":"omsoxipqfo8","mesafe":"1.1 KM","enlem":40.829781,"boylam":29.320583,"telefonlar":[{"etiket":"","numara":"0 537 427 76 96"},{"etiket":"Babası","numara":"0 536 405 65 26"}]},{"ad":"YUSUF AYAZ BİLİR","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/dijc97tJgRGSghqx9","id":"omsoxipqfu","mesafe":"6.4 KM","enlem":40.832634,"boylam":29.360913,"telefonlar":[{"etiket":"","numara":"0 538 609 70 13"},{"etiket":"Annesi","numara":"0 535 079 16 54"}]},{"ad":"BAYRAM BİLİR","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/dijc97tJgRGSghqx9","id":"omsoxipqf8v","mesafe":"6.4 KM","enlem":40.832634,"boylam":29.360913,"telefonlar":[{"etiket":"Annesi","numara":"0 543 275 30 40"}]},{"ad":"İBRAHİM TOROS","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/PVhfScb2sNuh1sv26","id":"omsoxipqfce","mesafe":"6.5 KM","enlem":40.839657,"boylam":29.356867,"telefonlar":[{"etiket":"","numara":"0 541 939 77 51"}]},{"ad":"KEREM YAĞIZ GÜNER","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/TegUf8B4BMyFEgu6A","id":"omsoxipqfof","mesafe":"550 METRE","enlem":40.831036,"boylam":29.314624,"telefonlar":[{"etiket":"","numara":"0 536 971 69 56"}]},{"ad":"FURKAN GÜLCAN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/NXSrXCcjmNR41QxX8","id":"omsoxipqf7s","mesafe":"6.4 KM","enlem":40.831281,"boylam":29.362485,"telefonlar":[{"etiket":"","numara":"0 554 821 58 64"}]},{"ad":"YUSUF AYAZ BİLİR","mahalle":"ESENYALI","link":"https://maps.app.goo.gl/DBPywNPqcYmb4Aro7","id":"omsoxipqfhp","mesafe":"7.3 KM","enlem":40.869269,"boylam":29.301361,"telefonlar":[{"etiket":"","numara":"0 538 609 70 13"},{"etiket":"Annesi","numara":"0 535 079 16 54"}]},{"ad":"ELANUR İNAN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6","id":"omsoxipqfcp","mesafe":"6.9 KM","enlem":40.832106,"boylam":29.366239,"telefonlar":[{"etiket":"Annesi","numara":"0 530 435 43 87"},{"etiket":"Babası","numara":"0 532 631 23 87"}]},{"ad":"ADEM ÖZGÜL","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8","id":"omsoxipqf2b","mesafe":"6 KM","enlem":40.827549,"boylam":29.359945,"telefonlar":[{"etiket":"","numara":"0 541 538 43 19"}]},{"ad":"ARİF EMRE ŞANAL","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/3JmoKjy2jvHhznKx7","id":"omsoxipqfah","mesafe":"10.6 KM","enlem":40.882741,"boylam":29.338901,"telefonlar":[{"etiket":"","numara":"0 534 397 92 95"}]},{"ad":"İCLAL SARE","mahalle":"TUZLA AYDINLI TOKİ","link":"https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18","id":"omsoxipqfla","mesafe":"8.5 KM","enlem":40.862126,"boylam":29.335501,"telefonlar":[{"etiket":"Annesi","numara":"0 531 287 43 14"},{"etiket":"Babası","numara":"0 537 918 41 82"}]},{"ad":"SEMRA UÇAR","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA","id":"omsoxipqf6j","mesafe":"8.3 KM","enlem":40.86747,"boylam":29.322927,"telefonlar":[{"etiket":"","numara":"0 553 989 00 85"},{"etiket":"Babası","numara":"0 536 290 12 00"}]},{"ad":"AZİZ AKDENİZ","mahalle":"KURTKÖY","link":"https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9","id":"omsoxipqfa","mesafe":"18.8 KM","enlem":40.917538,"boylam":29.30619,"telefonlar":[{"etiket":"","numara":"0 552 209 97 67"}]},{"ad":"GAMZE ESİLA BOLAT","mahalle":"TUZLA İSTASYON MAHALLESİ","link":"https://maps.app.goo.gl/iKwPGNiA63Lr1ka46","id":"omsoxipqfnl","mesafe":"850 METRE","enlem":40.824153,"boylam":29.315242,"telefonlar":[{"etiket":"","numara":"0 551 174 77 71"}]},{"ad":"NURFİDAN ŞAHİN","mahalle":"TUZLA ORTA MAHALLE","link":"https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9","id":"omsoxipqfcw","mesafe":"14.8 KM","enlem":40.9013,"boylam":29.378178,"telefonlar":[{"etiket":"","numara":"0 541 606 48 11"}]},{"ad":"KEREM EDİS","mahalle":"TUZLA TEPEÖREN","link":"https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7","id":"omsoxipqf3h","mesafe":"15.9 KM","enlem":40.910245,"boylam":29.391193,"telefonlar":[{"etiket":"Kendisi","numara":"0 544 374 50 35"},{"etiket":"Velisi","numara":"0 543 827 27 01"}]},{"ad":"SELAHATTİN YASİN YILMAZ","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/miR73asUTD5xYgzN8","id":"omsoxipqfqp","mesafe":"8.8 KM","enlem":40.871388,"boylam":29.325847,"telefonlar":[{"etiket":"Annesi","numara":"0 534 787 78 67"}]},{"ad":"ERAY BULUT","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9","id":"omsoxipqfpw","mesafe":"8.5 KM","enlem":40.868444,"boylam":29.328607,"telefonlar":[{"etiket":"Abisi","numara":"0 531 361 25 53"},{"etiket":"Annesi","numara":"0 545 361 53 53"}]},{"ad":"AYŞENUR ÇAĞLAYAN","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9","id":"omsoxipqfbw","mesafe":"1.7 KM","enlem":40.837872,"boylam":29.3064,"telefonlar":[{"etiket":"","numara":"0 545 240 85 32"}]},{"ad":"MUHAMMED ALİ RIZA CANBAKAL","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA","id":"omsoxipqf9u","mesafe":"1.1 KM","enlem":40.828617356826314,"boylam":29.301800810550052,"telefonlar":[]},{"ad":"HAMZA EFE TOSUN","mahalle":"BAYRAMOĞLU","link":"https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9","id":"omsoxipqf3n","mesafe":"11.2 KM","enlem":40.786803,"boylam":29.362565,"telefonlar":[{"etiket":"ELMAS","numara":"0 501 493 36 47"},{"etiket":"KENDİSİ","numara":"0 545 494 30 40"}]},{"ad":"EMRE SELÇUK","mahalle":"DARICA","link":"https://maps.app.goo.gl/osVBHfQAogCpoqvB7","id":"omsoxipqf3r","mesafe":"10.2 KM","enlem":40.789667,"boylam":29.370472,"telefonlar":[{"etiket":"ANNE","numara":"0 551 827 57 41"}]},{"ad":"ESİLA İŞLER","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/bekAQADBrvEMUFo36","id":"omsoxipqfop","mesafe":"500 METRE","enlem":40.826326,"boylam":29.30764,"telefonlar":[{"etiket":"","numara":"0 539 465 04 24"}]},{"ad":"İLAYDA ŞENOL","mahalle":"TUZLA EVLİYA ÇELEBİ MAHALLESİ","link":"https://maps.app.goo.gl/69JXcYPhaUXGKRCN7","id":"omsoxipqf86","mesafe":"2.1 KM","enlem":40.839972,"boylam":29.303122,"telefonlar":[{"etiket":"","numara":"0 535 010 59 93"}]},{"ad":"YUSUF ÇAL","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/uzpifBe3C3s4hsSe8","id":"omsoxipqfjn","mesafe":"350 METRE","enlem":40.830178,"boylam":29.312528,"telefonlar":[{"etiket":"ANNE","numara":"0 542 785 17 00"}]},{"ad":"MİKAİL KALINTAŞ","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/h47BL3UwjycAD8zS9","id":"omsoxipqf62","mesafe":"7.6 KM","enlem":40.84144,"boylam":29.366968,"telefonlar":[{"etiket":"","numara":"0 531 869 10 65"}]},{"ad":"METİN KARSLI","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7","id":"omsoxipqfe7","mesafe":"6.1 KM","enlem":40.833047,"boylam":29.357929,"telefonlar":[{"etiket":"","numara":"0 532 273 86 31"},{"etiket":"","numara":"0 552 847 91 61"}]},{"ad":"ABDULLAH ÇELİK","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8","id":"omsoxipqfmm","mesafe":"5.7 KM","enlem":40.832219,"boylam":29.35425,"telefonlar":[{"etiket":"ANNE","numara":"0 549 193 34 61"}]},{"ad":"YAĞMUR ÇAĞIL","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7","id":"omsoxipqfq0","mesafe":"5.9 KM","enlem":40.82857,"boylam":29.359628,"telefonlar":[{"etiket":"","numara":"0 507 483 54 46"}]},{"ad":"ZEYNEP KARAMAN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7","id":"omsoxipqfbq","mesafe":"7.4 KM","enlem":40.843647,"boylam":29.364662,"telefonlar":[{"etiket":"","numara":"0 538 611 29 68"}]},{"ad":"YÜCEHAN TAŞOVA","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/xAcAqRSETknnJrZq5","id":"omsoxipqfhs","mesafe":"850 METRE","enlem":40.834342,"boylam":29.312708,"telefonlar":[{"etiket":"","numara":"0 537 489 19 14"}]},{"ad":"FEYZA SENA","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/PY4uTYUkcbFs28CX6","id":"omsoxipqf53","mesafe":"600 METRE","enlem":40.832346,"boylam":29.313524,"telefonlar":[{"etiket":"","numara":"0 534 822 05 27"}]},{"ad":"MİNA BOYSAN","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/x28RzWPEyueyZ7gBA","id":"omsoxipqfr3","mesafe":"8.4 KM","enlem":40.866217,"boylam":29.341239,"telefonlar":[{"etiket":"ANNE","numara":"0 534 742 68 29"}]},{"ad":"BEYTULLAH YAVUZ","mahalle":"TUZLA ORTA MAHALLE","link":"https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7","id":"omsoxipqfgr","mesafe":"14.3 KM","enlem":40.901854,"boylam":29.382196,"telefonlar":[{"etiket":"ANNE","numara":"0 543 761 33 89"},{"etiket":"BABA","numara":"0 554 952 74 61"}]},{"ad":"FATMANUR ÖZTÜRK","mahalle":"TUZLA ORTA MAHALLE","link":"https://maps.app.goo.gl/5wsiiuuEvF5kczM2A","id":"omsoxipqflt","mesafe":"14.2 KM","enlem":40.901315,"boylam":29.381052,"telefonlar":[{"etiket":"BABA","numara":"0 534 329 54 92"}]},{"ad":"YİĞİT EFE GÖKYAR","mahalle":"KONAŞLI","link":"https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6","id":"omsoxipqfm3","mesafe":"9.3 KM","enlem":40.879927,"boylam":29.339083,"telefonlar":[{"etiket":"","numara":"0 555 159 96 59"}]},{"ad":"AHMET ÇAĞIN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/1juBzDQBKDgjVec16","id":"omsoxipqfdl","mesafe":"7.2 KM","enlem":40.82903515274744,"boylam":29.360940555133293,"telefonlar":[]},{"ad":"RABİA SAĞLIK","mahalle":"TUZLA ORTA MAHALLE","link":"https://maps.app.goo.gl/zNZZftpFAzo1s5bSA","id":"omsoxipqfp8","mesafe":"13.8 KM","enlem":40.9016834228326,"boylam":29.378306506508356,"telefonlar":[]},{"ad":"BURCU ATEŞ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/BSo2j3AeihYZKmL68","id":"omsoxipqfcq","mesafe":"1.5 KM","enlem":40.83642015220152,"boylam":29.307605427425298,"telefonlar":[]},{"ad":"YUSUF BOZDOĞAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","link":"https://maps.app.goo.gl/U63FCY1pdVcskTyZ7","id":"omsoxipqfif","mesafe":"800 METRE","enlem":40.822608685796176,"boylam":29.30730266506917,"telefonlar":[]},{"ad":"TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA","id":"omsoxipqf6x","mesafe":"1.8 KM","enlem":40.83616173475196,"boylam":29.301234884657436,"telefonlar":[]},{"id":"omssxpnus64","ad":"TALHA KICANÇ CAN","mahalle":"TUZLA İSTASYON MAHALLESİ","mesafe":"850 METRE","link":"https://maps.app.goo.gl/GnDxQpBBT7D2CVg27","enlem":40.82824831272407,"boylam":29.318162896584802,"telefonlar":[]},{"id":"omssyjivsfn","ad":"ENES ARAS","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"450 METRE","link":"https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8","enlem":40.830395,"boylam":29.310946,"telefonlar":[{"etiket":"EV TEL:","numara":"0 216 446 23 97"},{"etiket":"ABİSİ","numara":"0 216 446 23 97"}]},{"id":"omstbjbgqln","ad":"Aytekin GÜNEL","mahalle":"Tuzla Yayla Mahallesi","mesafe":"","link":"https://www.google.com/maps/dir/?api=1&destination=40.832743,29.312556","enlem":40.832743,"boylam":29.312556,"telefonlar":[{"etiket":"","numara":"0 530 788 71 94"}]},{"id":"omstfkfwr97","ad":"EMİRHAN ÖZDEMİR","mahalle":"ÇAYIROVA","mesafe":"11.2 KM","link":"https://maps.app.goo.gl/z61duRuNLfqKeJeV8","enlem":40.83616689170353,"boylam":29.372001811494332,"telefonlar":[]},{"id":"omswyf7r56j","ad":"MELEK AKÜZÜM","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"5.8 KM","link":"https://maps.app.goo.gl/HGryjV8ENZ9QP2E2A?g_st=ic","enlem":40.8263527,"boylam":29.3546912,"telefonlar":[]},{"id":"omswyimr6or","ad":"ECRİN SU AYAN","mahalle":"TUZLA EVLİYA ÇELEBİ MAHALLESİ","mesafe":"2.4 KM","link":"https://maps.app.goo.gl/KaGkhmziB7fEGD4p6?g_st=ic","enlem":40.8379524,"boylam":29.2952465,"telefonlar":[]},{"id":"omsxhz4szdz","ad":"DERYA BAYAT","mahalle":"TUZLA POSTAHANE MAHALLESİ","mesafe":"2.4 KM","link":"https://maps.app.goo.gl/fEqJmSDd2ib9Y17E6","enlem":40.8177751320559,"boylam":29.314298896402292,"telefonlar":[]},{"id":"omsyn86349e","ad":"DEFNE KAYA","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"180 METRE","link":"https://maps.app.goo.gl/U4JF7kcTNDCPQLQX7?g_st=ic","enlem":40.8285461,"boylam":29.3129403,"telefonlar":[]},{"id":"omt7dr36ogt","ad":"BERKAY ÇAYIR","mahalle":"ÇAYIROVA","mesafe":"9.3 KM","link":"https://maps.app.goo.gl/AXKRSkhzMdt6sf2x7","enlem":40.860163,"boylam":29.372664,"telefonlar":[{"etiket":"","numara":"0 539 357 10 54"}]},{"id":"omtd4e20cp","ad":"Özel Çınaraltı Engelli Bakım Merkezi","mahalle":"Samandıra","mesafe":"24 KM","telefonlar":[{"etiket":"","numara":"0 216 311 04 55"},{"etiket":"","numara":"0 216 311 04 56"}],"link":"https://maps.app.goo.gl/L3s1oeUaBwkqtTw98","enlem":40.978986455009164,"boylam":29.21760505036953},{"id":"omtd4kcbzfg","ad":"ATAŞEHİR ÇINAR ENGELLİ BAKIM MERKEZİ","mahalle":"ATAŞEHİR","mesafe":"28.5 KM","telefonlar":[{"etiket":"","numara":"0 216 471 50 13"},{"etiket":"","numara":"0 216 471 50 14"},{"etiket":"WHATSAPP","numara":"0 554 151 88 38"}],"link":"https://maps.app.goo.gl/NTcFUqVW2S6MSRQk6","enlem":40.981473,"boylam":29.157274},{"id":"omtgyv28yrq","ad":"ALPER DEMİR","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"1.1 KM","link":"https://maps.app.goo.gl/6csrdk4kR65zKVdT9?g_st=ic","enlem":40.8345706,"boylam":29.3120093,"telefonlar":[]},{"id":"omth0buvrhf","ad":"SENEM ORTA","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"950 METRE","link":"https://maps.app.goo.gl/j2yoW2AbB6dtdw4c8?g_st=ic","enlem":40.827474,"boylam":29.3202007,"telefonlar":[]},{"id":"omthfh0xt3v","ad":"TUZLA REHBERLİK VE ARAŞTIRMA MERKEZİ RAM","mahalle":"TUZLA  AYDINTEPE","mesafe":"5 KM","telefonlar":[{"etiket":"","numara":"0 216 446 81 83"}],"link":"https://maps.app.goo.gl/m7C1FBrHoUiXj5xJA","enlem":40.85664205292189,"boylam":29.29821007332431},{"id":"omtltolkmq","ad":"BUĞLEM ARSLAN","mahalle":"BAYRAMOĞLU","mesafe":"11.3 KM","telefonlar":[],"link":"https://maps.app.goo.gl/9fHfCGox6TpyrXQy6","enlem":40.786762223868536,"boylam":29.362588435478735},{"id":"omtqxwqvu3u","ad":"BELİNAY KILIÇ","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"7 KM","link":"https://maps.app.goo.gl/zbFk1hB7MnbB76yJ9","enlem":40.84220545638074,"boylam":29.360319456919918,"telefonlar":[]},{"id":"omtrmrmis4a","ad":"ABDURRAHMAN KANDEMİR","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"1.4  KM","telefonlar":[{"etiket":"BABA","numara":"0 530 580 19 78"},{"etiket":"ANNE","numara":"0 534 455 68 34"}],"link":"https://maps.app.goo.gl/JzeuHdss4rk89MFcA","enlem":40.83316087161735,"boylam":29.310050189288084},{"id":"omu2vatyiht","ad":"FATMANUR ŞAHİN","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"5.8 KM","telefonlar":[],"link":"https://maps.app.goo.gl/AfcyaAvAxxeh4ubi6","enlem":40.831345844589,"boylam":29.35690629710632},{"id":"omu3xhlshhy","ad":"BEYTULLAH YAVUZ OKUL","mahalle":"ÇAYIROVA","mesafe":"13.2 KM","telefonlar":[],"link":"https://maps.app.goo.gl/A3UW3uc3CNqcW8HT8","enlem":40.90497432781644,"boylam":29.37403158102774},{"id":"omu5tah477f","ad":"OSMAN UMUT ÜNAL","mahalle":"TUZLA AYDINLI, ORHANLIYA YAKIN","mesafe":"","telefonlar":[{"etiket":"ANNESİ AYŞE","numara":"0 538 515 64 18"}],"link":"https://maps.app.goo.gl/FqkPFfsFUWo75oTf7","enlem":40.89058827793273,"boylam":29.347484844212442},{"id":"omu5tln9ca8","ad":"HAMZA EFE TOSUN OKUL","mahalle":"BAYRAMOĞLU","mesafe":"9.8 KM","telefonlar":[{"etiket":"ELMAS","numara":"0 501 493 36 47"},{"etiket":"KENDİSİ","numara":"0 545 494 30 40"}],"link":"https://maps.app.goo.gl/ExexwedZABzM6mfu5","enlem":40.787447753947774,"boylam":29.371712214049776},{"id":"omu8b7kxn3d","ad":"AYGÜL YILDIZ","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"","telefonlar":[{"etiket":"","numara":"0 537 437 56 97"}],"link":"https://maps.app.goo.gl/myuRppkHT9MDjRjQ7","enlem":40.8375045,"boylam":29.357993},{"id":"omucsix3vqm","ad":"YUSUF ŞİRİNOĞLU","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"","telefonlar":[{"etiket":"ANNE ZÜLFİYE","numara":"0 552 442 18 42"}],"link":"https://maps.app.goo.gl/FdJdu3injSANrbmt7","enlem":40.82980340092937,"boylam":29.31446079658482},{"id":"omufwr9z3qf","ad":"HÜSEYİN ARDUÇ","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"7.1 KM","telefonlar":[],"link":"https://maps.app.goo.gl/Rr3QAqZobSXczj5i6","enlem":40.840972559116935,"boylam":29.364410676695595},{"id":"omuhz4axbm3","ad":"YETER HOCA","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"","telefonlar":[],"link":"https://maps.app.goo.gl/RaWvnsXQFCQaG26Z9","enlem":40.828712,"boylam":29.354919},{"id":"omumio1m4np","ad":"KADİR DERELİ","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"","telefonlar":[{"etiket":"ANNE","numara":"+90 534 708 64 69"}],"link":"https://maps.app.goo.gl/ZXho3oP8XVnjGJUs8","enlem":40.833352,"boylam":29.364622},{"id":"omv8d8j0ck9","ad":"YASİN EMRE BULUT","mahalle":"TUZLA KONAŞLI","mesafe":"8 KM","telefonlar":[],"link":"https://maps.app.goo.gl/jGrrAWFddBc6HifW8","enlem":40.88055468966665,"boylam":29.336455062654196},{"id":"omviea05pq7","ad":"BAHAR KARADENİZ","mahalle":"TUZLA AYDINLI","mesafe":"7.7 KM","telefonlar":[],"link":"https://maps.app.goo.gl/KhgmuZVhvG8iLZ8k8","enlem":40.878359228177395,"boylam":29.322951773479076},{"id":"omw5dn4oeh5","ad":"HALE HOSTES  1","mahalle":"PENDIK","mesafe":"7.2KM","telefonlar":[{"etiket":"KENDİSİ","numara":"0 546 490 44 74"}],"link":"https://maps.app.goo.gl/G6zqDeBsxN4N9dAU7","enlem":40.86896007192986,"boylam":29.28136206640224},{"id":"omw5dowj89j","ad":"HALE HOSTES 2","mahalle":"PENDIK","mesafe":"7.2 KM","telefonlar":[{"etiket":"KENDİSİ","numara":"0 546 490 44 74"}],"link":"https://maps.app.goo.gl/u6c19T9swDJVGVRH7","enlem":40.8695468202401,"boylam":29.281435279033246}];
+var OGRENCILER = [{"ad":"ÖZEL ÇINAR TUZLA KURUM MERKEZ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA","id":"omsoxipqf6t","mesafe":"KM HESAPLARI BU KURUMUN ADRESİNE GÖRE HESAPLANDI","enlem":40.82752360562284,"boylam":29.31144049586419,"telefonlar":[]},{"ad":"ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ","mahalle":"SULTANBEYLİ","link":"https://maps.app.goo.gl/2FDGEQUePPGw9UFQ8","id":"omsoxipqf3t","mesafe":"28 KM","enlem":40.963657,"boylam":29.265646,"telefonlar":[{"etiket":"","numara":"0 216 634 77 02"},{"etiket":"","numara":"0 216 634 77 03"},{"etiket":"WHATSAPP","numara":"0 530 156 98 38"}]},{"ad":"ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ","mahalle":"KURTKÖY","link":"https://maps.app.goo.gl/jBesgV1hoMvDehRj9","id":"omsoxipqfen","mesafe":"19 KM","enlem":40.916703,"boylam":29.302384,"telefonlar":[{"etiket":"","numara":"0 216 595 04 15"},{"etiket":"","numara":"0 216 595 04 16"},{"etiket":"WHATSAPP","numara":"0 545 682 42 98"}]},{"ad":"KADİR AKİF DABAN","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/LnuUqnEvbEHv9pm68","id":"omsoxipqfq8","mesafe":"2.2 KM","enlem":40.840449,"boylam":29.305907,"telefonlar":[{"etiket":"ANNESİ","numara":"0 540 005 47 16"},{"etiket":"BABASI","numara":"0 552 025 70 53"}]},{"ad":"UMUT KAYA BOLAT","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/UWFcVCLyvtydRyUr9","id":"omsoxipqfez","mesafe":"2.3 KM","enlem":40.837918423272,"boylam":29.306180137132305,"telefonlar":[{"etiket":"","numara":"0 537 291 64 37"}]},{"ad":"ESLEM KONUK","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/iAdxPcQ8Y8Veh3j17","id":"omsoxipqf8q","mesafe":"6.7 KM","enlem":40.839735,"boylam":29.358182,"telefonlar":[{"etiket":"","numara":"0 542 687 26 52"}]},{"ad":"ÜMMÜHAN EYŞAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","link":"https://maps.app.goo.gl/UMCtRgARHmJHCp8GA","id":"omsoxipqfly","mesafe":"1.6 KM","enlem":40.815855,"boylam":29.308826,"telefonlar":[{"etiket":"","numara":"0 543 280 35 80"}]},{"ad":"KARDELEN TURGUT","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/MFrDWKokzDK3Wr1d6","id":"omsoxipqf9k","mesafe":"7.2 KM","enlem":40.843905,"boylam":29.361054,"telefonlar":[{"etiket":"Kendisi","numara":"0 538 732 76 35"}]},{"ad":"ESMA GÖLCÜ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/pBKtESPuLkKqYQ4FA","id":"omsoxipqffp","mesafe":"450 METRE","enlem":40.82967798397194,"boylam":29.309705128835645,"telefonlar":[]},{"ad":"ELİF YAZGÜLÜ DEMİRBOZAN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/p6kyGm76WQe32eq1A","id":"omsoxipqf68","mesafe":"6.5 KM","enlem":40.839353,"boylam":29.356849,"telefonlar":[{"etiket":"Annesi","numara":"0 533 094 88 41"}]},{"ad":"HAZAL GÜLLÜ","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/5Xr65Aaf5gz8qyhx6","id":"omsoxipqf9d","mesafe":"7.8 KM","enlem":40.848737,"boylam":29.362739,"telefonlar":[{"etiket":"Annesi","numara":"0 541 400 01 28"}]},{"ad":"EMİR YILMAZ","mahalle":"BAYRAMOĞLU","link":"https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9","id":"omsoxipqfk6","mesafe":"9.2 KM","enlem":40.793781,"boylam":29.369318,"telefonlar":[{"etiket":"","numara":"0 555 390 03 96"}]},{"ad":"MİRAÇ KIRMIZIGÖZ","mahalle":"BAYRAMOĞLU","link":"https://maps.app.goo.gl/ncs5Wq2sGZKDARwg9","id":"omsoxipqfq1","mesafe":"9.2 KM","enlem":40.793773,"boylam":29.369329,"telefonlar":[{"etiket":"","numara":"0 532 064 33 76"}]},{"ad":"EMRE YILMAZ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/pWt5AEzNnkmS7icX7","id":"omsoxipqfg7","mesafe":"1.3 KM","enlem":40.833591,"boylam":29.305667,"telefonlar":[{"etiket":"","numara":"0 545 604 80 36"}]},{"ad":"ADEM VEZİR","mahalle":"TUZLA AYDINLI MAHALLESİ","link":"https://maps.app.goo.gl/tekZtsueRzdq2Ku66","id":"omsoxipqfab","mesafe":"8.7 KM","enlem":40.882752,"boylam":29.339032,"telefonlar":[{"etiket":"","numara":"0 541 155 69 60"}]},{"ad":"HAMİT COŞKUN","mahalle":"TUZLA OHANLI ORTA MAHALLE","link":"https://maps.app.goo.gl/Aex4k3vnPtYV3Zfa8","id":"omsoxipqf88","mesafe":"12.9 KM","enlem":40.90084393706418,"boylam":29.37922229455615,"telefonlar":[]},{"ad":"FURKAN FATİH YILDIZ","mahalle":"TUZLA AKFIRAT","link":"https://maps.app.goo.gl/PSgZVBaRMTyoexRM6","id":"omsoxipqf99","mesafe":"18.1 KM","enlem":40.924606,"boylam":29.423318,"telefonlar":[{"etiket":"","numara":"0 543 925 26 12"}]},{"ad":"EYÜP CEVDET","mahalle":"ESENYALI EV","link":"https://maps.app.goo.gl/bA8JH6RTLcHr132fA","id":"omsoxipqfgj","mesafe":"6.8 KM","enlem":40.868525,"boylam":29.298868,"telefonlar":[{"etiket":"Kendisi","numara":"0 531 945 70 65"},{"etiket":"Babası","numara":"0 535 043 40 04"},{"etiket":"BabaAnnesi","numara":"0 539 951 60 15"}]},{"ad":"EDANUR ÖN","mahalle":"TUZLA İSTASYON MAHALLESİ","link":"https://maps.app.goo.gl/VmyKBdYFconiDQLG7","id":"omsoxipqf8","mesafe":"2 KM","enlem":40.831309,"boylam":29.322906,"telefonlar":[{"etiket":"","numara":"0 543 973 95 40"}]},{"ad":"İBRAHİM ERGİN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/3AJyR2QKQTs3tAdG7","id":"omsoxipqfbs","mesafe":"7.4 KM","enlem":40.846108196352574,"boylam":29.361930798196735,"telefonlar":[{"etiket":"Annesi","numara":"0 537 356 41 39"},{"etiket":"Babası","numara":"0 538 693 00 30"}]},{"ad":"ÖMER ALPER GÜNDOĞDU","mahalle":"ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/QRHrK8A8V2QV2a548","id":"omsoxipqfgk","mesafe":"6.4 KM","enlem":40.831106,"boylam":29.362575,"telefonlar":[{"etiket":"","numara":"0 546 949 43 95"}]},{"ad":"ÖMER YILMAZ UKUS","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/g97ogr2Uvy7sST8T8","id":"omsoxipqfoc","mesafe":"350 METRE","enlem":40.830531,"boylam":29.31209,"telefonlar":[{"etiket":"","numara":"0 536 299 20 14"}]},{"ad":"ESLEM HALİME DEMİRCİ","mahalle":"TUZLA İSTASYON MAHALLESİ","link":"https://maps.app.goo.gl/PRXgPan4QNFX4MWv7","id":"omsoxipqfgi","mesafe":"2.8 KM","enlem":40.826598,"boylam":29.327179,"telefonlar":[{"etiket":"","numara":"0 538 775 06 05"}]},{"ad":"MEHMET EFE ASLANDAĞ","mahalle":"TUZLA ORHANLI","link":"https://maps.app.goo.gl/9jPZoWmERwF3YoeDA","id":"omsoxipqfqz","mesafe":"12.6 KM","enlem":40.888034,"boylam":29.345457,"telefonlar":[{"etiket":"Annesi","numara":"0 553 276 08 24"}]},{"ad":"AHMET MELİH","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/yM5yppFH8mJS93St8","id":"omsoxipqf1o","mesafe":"450 METRE","enlem":40.82959,"boylam":29.309874,"telefonlar":[{"etiket":"Annesi","numara":"0 534 363 28 27"}]},{"ad":"ELANUR GÖKCÜL","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/rbHgSym4arEJkGFfA","id":"omsoxipqf15","mesafe":"400 METRE","enlem":40.825103,"boylam":29.311551,"telefonlar":[{"etiket":"","numara":"0 531 084 29 43"}]},{"ad":"ZEYNEP ESMA KAPAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","link":"https://maps.app.goo.gl/fNo7EcHvf3poTrDW8","id":"omsoxipqfku","mesafe":"1.4 KM","enlem":40.817124,"boylam":29.305145,"telefonlar":[{"etiket":"","numara":"0 545 422 97 87"}]},{"ad":"AHMET ADAR DOĞAN","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/3Dqr8A9YjqWWUp3f6","id":"omsoxipqfo8","mesafe":"1.1 KM","enlem":40.829781,"boylam":29.320583,"telefonlar":[{"etiket":"","numara":"0 537 427 76 96"},{"etiket":"Babası","numara":"0 536 405 65 26"}]},{"ad":"YUSUF AYAZ BİLİR","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/dijc97tJgRGSghqx9","id":"omsoxipqfu","mesafe":"6.4 KM","enlem":40.832634,"boylam":29.360913,"telefonlar":[{"etiket":"","numara":"0 538 609 70 13"},{"etiket":"Annesi","numara":"0 535 079 16 54"}]},{"ad":"BAYRAM BİLİR","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/dijc97tJgRGSghqx9","id":"omsoxipqf8v","mesafe":"6.4 KM","enlem":40.832634,"boylam":29.360913,"telefonlar":[{"etiket":"Annesi","numara":"0 543 275 30 40"}]},{"ad":"İBRAHİM TOROS","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/PVhfScb2sNuh1sv26","id":"omsoxipqfce","mesafe":"6.5 KM","enlem":40.839657,"boylam":29.356867,"telefonlar":[{"etiket":"","numara":"0 541 939 77 51"}]},{"ad":"KEREM YAĞIZ GÜNER","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/TegUf8B4BMyFEgu6A","id":"omsoxipqfof","mesafe":"550 METRE","enlem":40.831036,"boylam":29.314624,"telefonlar":[{"etiket":"","numara":"0 536 971 69 56"}]},{"ad":"FURKAN GÜLCAN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/NXSrXCcjmNR41QxX8","id":"omsoxipqf7s","mesafe":"6.4 KM","enlem":40.831281,"boylam":29.362485,"telefonlar":[{"etiket":"","numara":"0 554 821 58 64"}]},{"ad":"YUSUF AYAZ BİLİR","mahalle":"ESENYALI","link":"https://maps.app.goo.gl/DBPywNPqcYmb4Aro7","id":"omsoxipqfhp","mesafe":"7.3 KM","enlem":40.869269,"boylam":29.301361,"telefonlar":[{"etiket":"","numara":"0 538 609 70 13"},{"etiket":"Annesi","numara":"0 535 079 16 54"}]},{"ad":"ELANUR İNAN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/GByuDp9LZHiJ8VUX6","id":"omsoxipqfcp","mesafe":"6.9 KM","enlem":40.832106,"boylam":29.366239,"telefonlar":[{"etiket":"Annesi","numara":"0 530 435 43 87"},{"etiket":"Babası","numara":"0 532 631 23 87"}]},{"ad":"ADEM ÖZGÜL","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/MEtv6iwkDfQ6Mokv8","id":"omsoxipqf2b","mesafe":"6 KM","enlem":40.827549,"boylam":29.359945,"telefonlar":[{"etiket":"","numara":"0 541 538 43 19"}]},{"ad":"ARİF EMRE ŞANAL","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/3JmoKjy2jvHhznKx7","id":"omsoxipqfah","mesafe":"10.6 KM","enlem":40.882741,"boylam":29.338901,"telefonlar":[{"etiket":"","numara":"0 534 397 92 95"}]},{"ad":"İCLAL SARE","mahalle":"TUZLA AYDINLI TOKİ","link":"https://maps.app.goo.gl/eLnUxxCrJ3c4cyf18","id":"omsoxipqfla","mesafe":"8.5 KM","enlem":40.862126,"boylam":29.335501,"telefonlar":[{"etiket":"Annesi","numara":"0 531 287 43 14"},{"etiket":"Babası","numara":"0 537 918 41 82"}]},{"ad":"SEMRA UÇAR","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/GuQhJ8G6xpzGnCMVA","id":"omsoxipqf6j","mesafe":"8.3 KM","enlem":40.86747,"boylam":29.322927,"telefonlar":[{"etiket":"","numara":"0 553 989 00 85"},{"etiket":"Babası","numara":"0 536 290 12 00"}]},{"ad":"AZİZ AKDENİZ","mahalle":"KURTKÖY","link":"https://maps.app.goo.gl/WN2ALV6s7ogVnBCr9","id":"omsoxipqfa","mesafe":"18.8 KM","enlem":40.917538,"boylam":29.30619,"telefonlar":[{"etiket":"","numara":"0 552 209 97 67"}]},{"ad":"GAMZE ESİLA BOLAT","mahalle":"TUZLA İSTASYON MAHALLESİ","link":"https://maps.app.goo.gl/iKwPGNiA63Lr1ka46","id":"omsoxipqfnl","mesafe":"850 METRE","enlem":40.824153,"boylam":29.315242,"telefonlar":[{"etiket":"","numara":"0 551 174 77 71"}]},{"ad":"NURFİDAN ŞAHİN","mahalle":"TUZLA ORTA MAHALLE","link":"https://maps.app.goo.gl/DnXtcp8LMjkVnR6n9","id":"omsoxipqfcw","mesafe":"14.8 KM","enlem":40.9013,"boylam":29.378178,"telefonlar":[{"etiket":"","numara":"0 541 606 48 11"}]},{"ad":"KEREM EDİS","mahalle":"TUZLA TEPEÖREN","link":"https://maps.app.goo.gl/pTYjbAC4v8C7d3VF7","id":"omsoxipqf3h","mesafe":"15.9 KM","enlem":40.910245,"boylam":29.391193,"telefonlar":[{"etiket":"Kendisi","numara":"0 544 374 50 35"},{"etiket":"Velisi","numara":"0 543 827 27 01"}]},{"ad":"SELAHATTİN YASİN YILMAZ","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/miR73asUTD5xYgzN8","id":"omsoxipqfqp","mesafe":"8.8 KM","enlem":40.871388,"boylam":29.325847,"telefonlar":[{"etiket":"Annesi","numara":"0 534 787 78 67"}]},{"ad":"ERAY BULUT","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/RpNAAC9o6oBhvd7r9","id":"omsoxipqfpw","mesafe":"8.5 KM","enlem":40.868444,"boylam":29.328607,"telefonlar":[{"etiket":"Abisi","numara":"0 531 361 25 53"},{"etiket":"Annesi","numara":"0 545 361 53 53"}]},{"ad":"AYŞENUR ÇAĞLAYAN","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/jWPGLxxHcbDoDpmV9","id":"omsoxipqfbw","mesafe":"1.7 KM","enlem":40.837872,"boylam":29.3064,"telefonlar":[{"etiket":"","numara":"0 545 240 85 32"}]},{"ad":"MUHAMMED ALİ RIZA CANBAKAL","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/iwwb2zL5KyiwcyPUA","id":"omsoxipqf9u","mesafe":"1.1 KM","enlem":40.828617356826314,"boylam":29.301800810550052,"telefonlar":[]},{"ad":"HAMZA EFE TOSUN","mahalle":"BAYRAMOĞLU","link":"https://maps.app.goo.gl/4Nj3bWtMMD49eBcd9","id":"omsoxipqf3n","mesafe":"11.2 KM","enlem":40.786803,"boylam":29.362565,"telefonlar":[{"etiket":"ELMAS","numara":"0 501 493 36 47"},{"etiket":"KENDİSİ","numara":"0 545 494 30 40"}]},{"ad":"EMRE SELÇUK","mahalle":"DARICA","link":"https://maps.app.goo.gl/osVBHfQAogCpoqvB7","id":"omsoxipqf3r","mesafe":"10.2 KM","enlem":40.789667,"boylam":29.370472,"telefonlar":[{"etiket":"ANNE","numara":"0 551 827 57 41"}]},{"ad":"ESİLA İŞLER","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/bekAQADBrvEMUFo36","id":"omsoxipqfop","mesafe":"500 METRE","enlem":40.826326,"boylam":29.30764,"telefonlar":[{"etiket":"","numara":"0 539 465 04 24"}]},{"ad":"İLAYDA ŞENOL","mahalle":"TUZLA EVLİYA ÇELEBİ MAHALLESİ","link":"https://maps.app.goo.gl/69JXcYPhaUXGKRCN7","id":"omsoxipqf86","mesafe":"2.1 KM","enlem":40.839972,"boylam":29.303122,"telefonlar":[{"etiket":"","numara":"0 535 010 59 93"}]},{"ad":"YUSUF ÇAL","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/uzpifBe3C3s4hsSe8","id":"omsoxipqfjn","mesafe":"350 METRE","enlem":40.830178,"boylam":29.312528,"telefonlar":[{"etiket":"ANNE","numara":"0 542 785 17 00"}]},{"ad":"MİKAİL KALINTAŞ","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/h47BL3UwjycAD8zS9","id":"omsoxipqf62","mesafe":"7.6 KM","enlem":40.84144,"boylam":29.366968,"telefonlar":[{"etiket":"","numara":"0 531 869 10 65"}]},{"ad":"METİN KARSLI","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/qKUnZPkSfa5fiNsa7","id":"omsoxipqfe7","mesafe":"6.1 KM","enlem":40.833047,"boylam":29.357929,"telefonlar":[{"etiket":"","numara":"0 532 273 86 31"},{"etiket":"","numara":"0 552 847 91 61"}]},{"ad":"ABDULLAH ÇELİK","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/Tx8mevk6ygtiAVBw8","id":"omsoxipqfmm","mesafe":"5.7 KM","enlem":40.832219,"boylam":29.35425,"telefonlar":[{"etiket":"ANNE","numara":"0 549 193 34 61"}]},{"ad":"YAĞMUR ÇAĞIL","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/mTTc2hZTQoK3ZJQF7","id":"omsoxipqfq0","mesafe":"5.9 KM","enlem":40.82857,"boylam":29.359628,"telefonlar":[{"etiket":"","numara":"0 507 483 54 46"}]},{"ad":"ZEYNEP KARAMAN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/1y6gdSaLSFS2X1ts7","id":"omsoxipqfbq","mesafe":"7.4 KM","enlem":40.843647,"boylam":29.364662,"telefonlar":[{"etiket":"","numara":"0 538 611 29 68"}]},{"ad":"YÜCEHAN TAŞOVA","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/xAcAqRSETknnJrZq5","id":"omsoxipqfhs","mesafe":"850 METRE","enlem":40.834342,"boylam":29.312708,"telefonlar":[{"etiket":"","numara":"0 537 489 19 14"}]},{"ad":"FEYZA SENA","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/PY4uTYUkcbFs28CX6","id":"omsoxipqf53","mesafe":"600 METRE","enlem":40.832346,"boylam":29.313524,"telefonlar":[{"etiket":"","numara":"0 534 822 05 27"}]},{"ad":"MİNA BOYSAN","mahalle":"TUZLA AYDINLI","link":"https://maps.app.goo.gl/x28RzWPEyueyZ7gBA","id":"omsoxipqfr3","mesafe":"8.4 KM","enlem":40.866217,"boylam":29.341239,"telefonlar":[{"etiket":"ANNE","numara":"0 534 742 68 29"}]},{"ad":"BEYTULLAH YAVUZ","mahalle":"TUZLA ORTA MAHALLE","link":"https://maps.app.goo.gl/R4Ejz3Jr58p1rLmH7","id":"omsoxipqfgr","mesafe":"14.3 KM","enlem":40.901854,"boylam":29.382196,"telefonlar":[{"etiket":"ANNE","numara":"0 543 761 33 89"},{"etiket":"BABA","numara":"0 554 952 74 61"}]},{"ad":"FATMANUR ÖZTÜRK","mahalle":"TUZLA ORTA MAHALLE","link":"https://maps.app.goo.gl/5wsiiuuEvF5kczM2A","id":"omsoxipqflt","mesafe":"14.2 KM","enlem":40.901315,"boylam":29.381052,"telefonlar":[{"etiket":"BABA","numara":"0 534 329 54 92"}]},{"ad":"YİĞİT EFE GÖKYAR","mahalle":"KONAŞLI","link":"https://maps.app.goo.gl/nkch2rFY8sE4f9Qf6","id":"omsoxipqfm3","mesafe":"9.3 KM","enlem":40.879927,"boylam":29.339083,"telefonlar":[{"etiket":"","numara":"0 555 159 96 59"}]},{"ad":"AHMET ÇAĞIN","mahalle":"TUZLA ŞİFA MAHALLESİ","link":"https://maps.app.goo.gl/1juBzDQBKDgjVec16","id":"omsoxipqfdl","mesafe":"7.2 KM","enlem":40.82903515274744,"boylam":29.360940555133293,"telefonlar":[]},{"ad":"RABİA SAĞLIK","mahalle":"TUZLA ORTA MAHALLE","link":"https://maps.app.goo.gl/zNZZftpFAzo1s5bSA","id":"omsoxipqfp8","mesafe":"13.8 KM","enlem":40.9016834228326,"boylam":29.378306506508356,"telefonlar":[]},{"ad":"BURCU ATEŞ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/BSo2j3AeihYZKmL68","id":"omsoxipqfcq","mesafe":"1.5 KM","enlem":40.83642015220152,"boylam":29.307605427425298,"telefonlar":[]},{"ad":"YUSUF BOZDOĞAN","mahalle":"TUZLA POSTAHANE MAHALLESİ","link":"https://maps.app.goo.gl/U63FCY1pdVcskTyZ7","id":"omsoxipqfif","mesafe":"800 METRE","enlem":40.822608685796176,"boylam":29.30730266506917,"telefonlar":[]},{"ad":"TUZLA BELEDİYESİ ENGELSİZ YAŞAM MERKEZİ","mahalle":"TUZLA YAYLA MAHALLESİ","link":"https://maps.app.goo.gl/P5Ljd8BV4WDmwWuAA","id":"omsoxipqf6x","mesafe":"1.8 KM","enlem":40.83616173475196,"boylam":29.301234884657436,"telefonlar":[]},{"id":"omssxpnus64","ad":"TALHA KICANÇ CAN","mahalle":"TUZLA İSTASYON MAHALLESİ","mesafe":"850 METRE","link":"https://maps.app.goo.gl/GnDxQpBBT7D2CVg27","enlem":40.82824831272407,"boylam":29.318162896584802,"telefonlar":[]},{"id":"omssyjivsfn","ad":"ENES ARAS","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"450 METRE","link":"https://maps.app.goo.gl/8Hsi23xs6yYb4WAF8","enlem":40.830395,"boylam":29.310946,"telefonlar":[{"etiket":"EV TEL:","numara":"0 216 446 23 97"},{"etiket":"ABİSİ","numara":"0 216 446 23 97"}]},{"id":"omstbjbgqln","ad":"Aytekin GÜNEL","mahalle":"Tuzla Yayla Mahallesi","mesafe":"","link":"https://www.google.com/maps/dir/?api=1&destination=40.832743,29.312556","enlem":40.832743,"boylam":29.312556,"telefonlar":[{"etiket":"","numara":"0 530 788 71 94"}]},{"id":"omstfkfwr97","ad":"EMİRHAN ÖZDEMİR","mahalle":"ÇAYIROVA","mesafe":"11.2 KM","link":"https://maps.app.goo.gl/z61duRuNLfqKeJeV8","enlem":40.83616689170353,"boylam":29.372001811494332,"telefonlar":[]},{"id":"omswyf7r56j","ad":"MELEK AKÜZÜM","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"5.8 KM","link":"https://maps.app.goo.gl/HGryjV8ENZ9QP2E2A?g_st=ic","enlem":40.826353,"boylam":29.354691,"telefonlar":[{"etiket":"Annesi","numara":"0 538 697 84 82"}]},{"id":"omswyimr6or","ad":"ECRİN SU AYAN","mahalle":"TUZLA EVLİYA ÇELEBİ MAHALLESİ","mesafe":"2.4 KM","link":"https://maps.app.goo.gl/KaGkhmziB7fEGD4p6?g_st=ic","enlem":40.8379524,"boylam":29.2952465,"telefonlar":[]},{"id":"omsxhz4szdz","ad":"DERYA BAYAT","mahalle":"TUZLA POSTAHANE MAHALLESİ","mesafe":"2.4 KM","link":"https://maps.app.goo.gl/fEqJmSDd2ib9Y17E6","enlem":40.8177751320559,"boylam":29.314298896402292,"telefonlar":[]},{"id":"omsyn86349e","ad":"DEFNE KAYA","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"180 METRE","link":"https://maps.app.goo.gl/U4JF7kcTNDCPQLQX7?g_st=ic","enlem":40.8285461,"boylam":29.3129403,"telefonlar":[]},{"id":"omt7dr36ogt","ad":"BERKAY ÇAYIR","mahalle":"ÇAYIROVA","mesafe":"9.3 KM","link":"https://maps.app.goo.gl/AXKRSkhzMdt6sf2x7","enlem":40.860163,"boylam":29.372664,"telefonlar":[{"etiket":"","numara":"0 539 357 10 54"}]},{"id":"omtd4e20cp","ad":"Özel Çınaraltı Engelli Bakım Merkezi","mahalle":"Samandıra","mesafe":"24 KM","telefonlar":[{"etiket":"","numara":"0 216 311 04 55"},{"etiket":"","numara":"0 216 311 04 56"}],"link":"https://maps.app.goo.gl/L3s1oeUaBwkqtTw98","enlem":40.978986455009164,"boylam":29.21760505036953},{"id":"omtd4kcbzfg","ad":"ATAŞEHİR ÇINAR ENGELLİ BAKIM MERKEZİ","mahalle":"ATAŞEHİR","mesafe":"28.5 KM","telefonlar":[{"etiket":"","numara":"0 216 471 50 13"},{"etiket":"","numara":"0 216 471 50 14"},{"etiket":"WHATSAPP","numara":"0 554 151 88 38"}],"link":"https://maps.app.goo.gl/NTcFUqVW2S6MSRQk6","enlem":40.981473,"boylam":29.157274},{"id":"omtgyv28yrq","ad":"ALPER DEMİR","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"1.1 KM","link":"https://maps.app.goo.gl/6csrdk4kR65zKVdT9?g_st=ic","enlem":40.8345706,"boylam":29.3120093,"telefonlar":[]},{"id":"omth0buvrhf","ad":"SENEM ORTA","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"950 METRE","link":"https://maps.app.goo.gl/j2yoW2AbB6dtdw4c8?g_st=ic","enlem":40.827474,"boylam":29.320201,"telefonlar":[{"etiket":"Annesi","numara":"0 537 681 29 13"}]},{"id":"omthfh0xt3v","ad":"TUZLA REHBERLİK VE ARAŞTIRMA MERKEZİ RAM","mahalle":"TUZLA  AYDINTEPE","mesafe":"5 KM","telefonlar":[{"etiket":"","numara":"0 216 446 81 83"}],"link":"https://maps.app.goo.gl/m7C1FBrHoUiXj5xJA","enlem":40.85664205292189,"boylam":29.29821007332431},{"id":"omtltolkmq","ad":"BUĞLEM ARSLAN","mahalle":"BAYRAMOĞLU","mesafe":"11.3 KM","telefonlar":[],"link":"https://maps.app.goo.gl/9fHfCGox6TpyrXQy6","enlem":40.786762223868536,"boylam":29.362588435478735},{"id":"omtqxwqvu3u","ad":"BELİNAY KILIÇ","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"7 KM","link":"https://maps.app.goo.gl/zbFk1hB7MnbB76yJ9","enlem":40.84220545638074,"boylam":29.360319456919918,"telefonlar":[]},{"id":"omtrmrmis4a","ad":"ABDURRAHMAN KANDEMİR","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"1.4  KM","telefonlar":[{"etiket":"BABA","numara":"0 530 580 19 78"},{"etiket":"ANNE","numara":"0 534 455 68 34"}],"link":"https://maps.app.goo.gl/JzeuHdss4rk89MFcA","enlem":40.83316087161735,"boylam":29.310050189288084},{"id":"omu2vatyiht","ad":"FATMANUR ŞAHİN","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"5.8 KM","telefonlar":[],"link":"https://maps.app.goo.gl/AfcyaAvAxxeh4ubi6","enlem":40.831345844589,"boylam":29.35690629710632},{"id":"omu3xhlshhy","ad":"BEYTULLAH YAVUZ OKUL","mahalle":"ÇAYIROVA","mesafe":"13.2 KM","telefonlar":[],"link":"https://maps.app.goo.gl/A3UW3uc3CNqcW8HT8","enlem":40.90497432781644,"boylam":29.37403158102774},{"id":"omu5tah477f","ad":"OSMAN UMUT ÜNAL","mahalle":"TUZLA AYDINLI, ORHANLIYA YAKIN","mesafe":"","telefonlar":[{"etiket":"ANNESİ AYŞE","numara":"0 538 515 64 18"}],"link":"https://maps.app.goo.gl/FqkPFfsFUWo75oTf7","enlem":40.89058827793273,"boylam":29.347484844212442},{"id":"omu5tln9ca8","ad":"HAMZA EFE TOSUN OKUL","mahalle":"BAYRAMOĞLU","mesafe":"9.8 KM","telefonlar":[{"etiket":"ELMAS","numara":"0 501 493 36 47"},{"etiket":"KENDİSİ","numara":"0 545 494 30 40"}],"link":"https://maps.app.goo.gl/ExexwedZABzM6mfu5","enlem":40.787447753947774,"boylam":29.371712214049776},{"id":"omu8b7kxn3d","ad":"AYGÜL YILDIZ","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"","telefonlar":[{"etiket":"","numara":"0 537 437 56 97"}],"link":"https://maps.app.goo.gl/myuRppkHT9MDjRjQ7","enlem":40.8375045,"boylam":29.357993},{"id":"omucsix3vqm","ad":"YUSUF ŞİRİNOĞLU","mahalle":"TUZLA YAYLA MAHALLESİ","mesafe":"","telefonlar":[{"etiket":"ANNE ZÜLFİYE","numara":"0 552 442 18 42"}],"link":"https://maps.app.goo.gl/FdJdu3injSANrbmt7","enlem":40.82980340092937,"boylam":29.31446079658482},{"id":"omufwr9z3qf","ad":"HÜSEYİN ARDUÇ","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"7.1 KM","telefonlar":[],"link":"https://maps.app.goo.gl/Rr3QAqZobSXczj5i6","enlem":40.840972559116935,"boylam":29.364410676695595},{"id":"omuhz4axbm3","ad":"YETER HOCA","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"","telefonlar":[],"link":"https://maps.app.goo.gl/RaWvnsXQFCQaG26Z9","enlem":40.828712,"boylam":29.354919},{"id":"omumio1m4np","ad":"KADİR DERELİ","mahalle":"TUZLA ŞİFA MAHALLESİ","mesafe":"","telefonlar":[{"etiket":"ANNE","numara":"+90 534 708 64 69"}],"link":"https://maps.app.goo.gl/ZXho3oP8XVnjGJUs8","enlem":40.833352,"boylam":29.364622},{"id":"omv8d8j0ck9","ad":"YASİN EMRE BULUT","mahalle":"TUZLA KONAŞLI","mesafe":"8 KM","telefonlar":[],"link":"https://maps.app.goo.gl/jGrrAWFddBc6HifW8","enlem":40.88055468966665,"boylam":29.336455062654196},{"id":"omviea05pq7","ad":"BAHAR KARADENİZ","mahalle":"TUZLA AYDINLI","mesafe":"7.7 KM","telefonlar":[],"link":"https://maps.app.goo.gl/KhgmuZVhvG8iLZ8k8","enlem":40.878359228177395,"boylam":29.322951773479076},{"id":"omw5dn4oeh5","ad":"HALE HOSTES  1","mahalle":"PENDIK","mesafe":"7.2KM","telefonlar":[{"etiket":"KENDİSİ","numara":"0 546 490 44 74"}],"link":"https://maps.app.goo.gl/G6zqDeBsxN4N9dAU7","enlem":40.86896007192986,"boylam":29.28136206640224},{"id":"omw5dowj89j","ad":"HALE HOSTES 2","mahalle":"PENDIK","mesafe":"7.2 KM","telefonlar":[{"etiket":"KENDİSİ","numara":"0 546 490 44 74"}],"link":"https://maps.app.goo.gl/u6c19T9swDJVGVRH7","enlem":40.8695468202401,"boylam":29.281435279033246}];
 var GUZERGAHLAR = [];
-var MERKEZ = {"ad":"Merkez","enlem":40.827502,"boylam":29.311442};
 var ANAHTAR = "rota_gunluk_v1";
 var TIK_ANAHTAR = "rota_alindi_v1";
 var yerelListeler = [];
@@ -1897,13 +1888,8 @@ var ks = document.getElementById("konumSatiri"); if (ks && navigator.geolocation
 
 /* Adresin sonuna taze bir zaman damgasi koyup yeniden yukler. */
 function sayfayiYenile() {
-    var n = 1;
-    try {
-        n = parseInt(localStorage.getItem("rota_yenile_sayac") || "0", 10) + 1;
-        localStorage.setItem("rota_yenile_sayac", String(n));
-    } catch (e) { n = 1; }
     var temiz = location.href.split("#")[0].split("?")[0];
-    location.replace(temiz + "?v=" + n + "&t=" + Date.now());
+    location.replace(temiz + "?v=" + Date.now());
 }
 
 function jsKacis(m) {
@@ -2086,38 +2072,6 @@ function rotaMenuAc(bolumId) {
     document.getElementById("rotaModal").style.display = "flex";
 }
 
-/* Haritayi acar. Siralama zaten uygulanmis liste ile cagrilir. */
-function rotaHaritaAc(liste, bitisNoktasi) {
-    var SINIR = 10;
-    if (liste.length > SINIR) {
-        if (!confirm("Google Haritalar tek rotada en fazla " + SINIR + " durak alabiliyor.\n\n" +
-                     "İlk " + SINIR + " durak açılacak, bitince tekrar Rotayı Aç de.\n\nDevam edilsin mi?")) { return; }
-        liste = liste.slice(0, SINIR);
-    }
-    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });
-    if (bitisNoktasi && typeof bitisNoktasi.enlem === "number") {
-        koords.push(bitisNoktasi.enlem + "," + bitisNoktasi.boylam);
-    }
-    /* Basta bos bolum: Maps baslangic olarak mevcut konumu kullanir. */
-    window.open("https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0", "_blank");
-}
-
-/* Yeni sirayi ekrandaki gunluk listeye de yazar ki numaralar ortussun. */
-function rotaSirasiniUygula(liste) {
-    if (aktifYerel < 0) return;
-    if (seciliRotaBolumId && seciliRotaBolumId !== "bolum-yerel") return;
-    var yeniSira = [];
-    for (var y = 0; y < liste.length; y++) { yeniSira.push(liste[y].o.id); }
-    var eskiler = yerelListeler[aktifYerel].uyeler;
-    for (var e2 = 0; e2 < eskiler.length; e2++) {
-        if (yeniSira.indexOf(eskiler[e2]) === -1) { yeniSira.push(eskiler[e2]); }
-    }
-    yerelListeler[aktifYerel].uyeler = yeniSira;
-    yerelKaydet(); yerelCiz(); filtrele();
-}
-
-function merkezVar() { return MERKEZ && typeof MERKEZ.enlem === "number"; }
-
 function rotaCalistir(tur) {
     document.getElementById("rotaModal").style.display = "none";
     var hedefBolum = null;
@@ -2129,60 +2083,62 @@ function rotaCalistir(tur) {
     var kartlar = hedefBolum.querySelectorAll(".kart");
     var liste = [];
     kartlar.forEach(function(k){
-        var o = ogrBul(k.getAttribute("data-id"));
-        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push({ o: o }); }
+        var id = k.getAttribute("data-id");
+        var o = ogrBul(id);
+        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {
+            var uz = (benimKonum) ? kusUcusu(benimKonum.e, benimKonum.b, o.enlem, o.boylam) : 0;
+            liste.push({ o: o, uz: uz });
+        }
     });
-    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return; }
 
-    if (tur === "mevcut") { rotaHaritaAc(liste, null); return; }
+    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return;
+ }
 
-    var merkezliTur = (tur === "dagit" || tur === "merkezdentopla");
-    if (merkezliTur && !merkezVar()) {
-        alert("Merkez koordinatı tanımlı değil. Yönetim panelinden ekleyebilirsin.");
-        return;
-    }
-    if (tur === "topla") {
-        if (!benimKonum) { alert("Önce yukarıdaki Konum düğmesine basıp konumunuzu alın."); return; }
-        if (!merkezVar()) { alert("Merkez koordinatı tanımlı değil. Yönetim panelinden ekleyebilirsin."); return; }
-    }
-    if (liste.length === 1) {
-        rotaHaritaAc(liste, (tur === "dagit") ? null : (merkezVar() ? MERKEZ : null));
-        return;
+    if (tur === "yakin" || tur === "uzak") {
+        if (!benimKonum) {
+            alert("Konumunuza göre sıralayabilmek için lütfen önce yukarıdaki Uzaklık Hesapla butonuna basın.");
+            return;
+        }
+        liste.sort(function(a, b){
+            return (tur === "yakin") ? (a.uz - b.uz) : (b.uz - a.uz);
+        });
     }
 
-    /* Baslangic, duraklar, bitis */
-    var baslangic = (tur === "topla") ? { enlem: benimKonum.e, boylam: benimKonum.b } : MERKEZ;
-    var bitisMerkez = (tur === "topla" || tur === "merkezdentopla");
-
-    var noktalar = [osrmNokta(baslangic.enlem, baslangic.boylam)];
-    for (var i = 0; i < liste.length; i++) { noktalar.push(osrmNokta(liste[i].o.enlem, liste[i].o.boylam)); }
-    if (bitisMerkez) { noktalar.push(osrmNokta(MERKEZ.enlem, MERKEZ.boylam)); }
-
-    var not = document.getElementById("konumNot");
-    if (not) not.textContent = "Rota hesaplanıyor...";
-
-    osrmEnKisaTur(noktalar, function(v){
-        var sonIndeks = noktalar.length - 1;
-        var yeni = [];
-        for (var j = 0; j < v.sira.length; j++) {
-            var n = v.sira[j];
-            if (n === 0) continue;                       /* baslangic */
-            if (bitisMerkez && n === sonIndeks) continue; /* bitis merkezi */
-            yeni.push(liste[n - 1]);
+    /* Siralama uygulandiysa ekrandaki listeyi de ayni siraya getir ki
+       Haritadaki 1-2-3 ile listedeki numaralar ortusUn. */
+    if ((tur === "yakin" || tur === "uzak") && aktifYerel >= 0 &&
+        (seciliRotaBolumId === "bolum-yerel" || !seciliRotaBolumId)) {
+        var yeniSira = [];
+        for (var y = 0; y < liste.length; y++) { yeniSira.push(liste[y].o.id); }
+        /* Koordinati olmayanlar rotaya giremez ama listede kalmali: sona eklenir */
+        var eskiler = yerelListeler[aktifYerel].uyeler;
+        for (var e2 = 0; e2 < eskiler.length; e2++) {
+            if (yeniSira.indexOf(eskiler[e2]) === -1) { yeniSira.push(eskiler[e2]); }
         }
-        if (yeni.length !== liste.length) { yeni = liste; }
-        rotaSirasiniUygula(yeni);
-        if (not) {
-            not.textContent = "Rota: " + metreYaz(v.mesafe) +
-                              ", yaklaşık " + Math.round(v.sure / 60) + " dk (trafiksiz).";
-        }
-        rotaHaritaAc(yeni, bitisMerkez ? MERKEZ : null);
-    }, function(h){
-        if (not) not.textContent = "Rota hesaplanamadı (" + h + ").";
-        if (confirm("Rota hesaplanamadı: " + h + "\n\nMevcut sırayla açılsın mı?")) {
-            rotaHaritaAc(liste, bitisMerkez ? MERKEZ : null);
-        }
-    }, bitisMerkez);
+        yerelListeler[aktifYerel].uyeler = yeniSira;
+        yerelKaydet(); yerelCiz(); filtrele();
+    }
+
+    /* Google Haritalar bir rotada sinirli sayida durak destekler. */
+    var SINIR = 10;
+    var kalan = 0;
+    if (liste.length > SINIR) {
+        kalan = liste.length - SINIR;
+        if (!confirm("Google Haritalar tek rotada en fazla " + SINIR + " durak alabiliyor.\n\n" +
+                     "Ilk " + SINIR + " durak acilacak, kalan " + kalan + " durak icin " +
+                     "bittiginde tekrar Rotayi Ac de.\n\nDevam edilsin mi?")) { return; }
+        liste = liste.slice(0, SINIR);
+    }
+
+    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });
+
+    /* Yol bicimi (maps/dir/A/B/C): coklu duragi en saglam tasiyan bicim.
+       Basa bos bir bolum konur (dir//...) ki Maps baslangic olarak
+       mevcut konumu kullansin; boylece Onizle yerine Baslat cikar.
+       dir_action=navigate KULLANILMAZ: Google'in belgelerine gore
+       coklu ara durakla birlikte calismaz, tek hedefe iner. */
+    var url = "https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0";
+    window.open(url, "_blank");
 }
 
 /* Rota sirasindaki isimleri numarali metin olarak paylas.
@@ -2220,60 +2176,6 @@ function metreYaz(m) {
     if (m < 950) return Math.round(m / 10) * 10 + " m";
     return (Math.round(m / 100) / 10).toString().replace(".", ",") + " km";
 }
-/* ---------- OSRM: yol mesafesi ve en kisa tur ----------
-   Ucretsiz demo sunucu, anahtar gerekmez. Dakikada birkac istek yapiyoruz,
-   politikanin cok altinda. Sunucu yanit vermezse kus ucusuna dusuyoruz. */
-var OSRM = "https://router.project-osrm.org";
-
-function osrmIstek(adres, bitti, hata) {
-    var zamanAsimi = setTimeout(function(){ zamanAsimi = null; hata("zaman asimi"); }, 12000);
-    fetch(adres).then(function(c){
-        if (!c.ok) { throw new Error("sunucu " + c.status); }
-        return c.json();
-    }).then(function(v){
-        if (zamanAsimi === null) return;
-        clearTimeout(zamanAsimi);
-        if (v.code !== "Ok") { throw new Error(v.code || "bilinmeyen"); }
-        bitti(v);
-    }).catch(function(h){
-        if (zamanAsimi === null) return;
-        clearTimeout(zamanAsimi);
-        hata(h.message || "baglanti hatasi");
-    });
-}
-
-/* OSRM koordinati boylam,enlem sirasiyla ister */
-function osrmNokta(e, b) { return b + "," + e; }
-
-/* Baslangictan baslayip tum duraklari gezen en kisa turu ister.
-   noktalar[0] baslangic. Donen sira indeks dizisidir. */
-function osrmEnKisaTur(noktalar, bitti, hata, bitisSabit) {
-    var adres = OSRM + "/trip/v1/driving/" + noktalar.join(";") +
-                "?source=first&roundtrip=false&overview=false" +
-                "&destination=" + (bitisSabit ? "last" : "any");
-    osrmIstek(adres, function(v){
-        if (!v.waypoints || !v.trips || !v.trips.length) { hata("bos yanit"); return; }
-        var sira = [];
-        for (var i = 0; i < v.waypoints.length; i++) {
-            sira.push({ girdi: v.waypoints[i].waypoint_index, nokta: i });
-        }
-        sira.sort(function(a,b){ return a.girdi - b.girdi; });
-        var dizilim = [];
-        for (var j = 0; j < sira.length; j++) { dizilim.push(sira[j].nokta); }
-        bitti({ sira: dizilim, mesafe: v.trips[0].distance, sure: v.trips[0].duration });
-    }, hata);
-}
-
-/* Baslangictan her duraga olan yol mesafesi (metre) */
-function osrmMesafeler(noktalar, bitti, hata) {
-    var adres = OSRM + "/table/v1/driving/" + noktalar.join(";") +
-                "?sources=0&annotations=distance,duration";
-    osrmIstek(adres, function(v){
-        if (!v.distances || !v.distances[0]) { hata("bos yanit"); return; }
-        bitti({ mesafeler: v.distances[0], sureler: v.durations ? v.durations[0] : null });
-    }, hata);
-}
-
 function konumAl() {
     if (!navigator.geolocation) return;
     var not = document.getElementById("konumNot");
@@ -2282,12 +2184,8 @@ function konumAl() {
         benimKonum = { e: p.coords.latitude, b: p.coords.longitude };
         uzakliklariYaz(); yerelCiz(); filtrele();
         if (not) not.textContent = "Konum güncel.";
-        yolMesafeleriniGetir();
     }, function () { if (not) not.textContent = "Konum alınamadı."; }, { enableHighAccuracy: true, timeout: 15000 });
 }
-/* Ogrenci kimligine gore yol mesafesi (metre). OSRM yanit verdikce dolar. */
-var yolMesafesi = {};
-
 function uzakliklariYaz() {
     if (!benimKonum) return;
     var rozetler = document.getElementsByClassName("uzaklik");
@@ -2295,39 +2193,9 @@ function uzakliklariYaz() {
         var e = parseFloat(rozetler[i].getAttribute("data-lat"));
         var b = parseFloat(rozetler[i].getAttribute("data-lng"));
         if (isNaN(e) || isNaN(b)) continue;
-        var id = rozetler[i].getAttribute("data-ogr");
-        if (id && yolMesafesi[id] !== undefined) {
-            rozetler[i].innerHTML = metreYaz(yolMesafesi[id]) + " yol";
-        } else {
-            rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " kuş uçuşu";
-        }
+        rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " uzakta";
         rozetler[i].style.display = "inline-block";
     }
-}
-
-/* Konum alindiginda tum ogrenciler icin yol mesafesini bir istekte ceker. */
-function yolMesafeleriniGetir() {
-    if (!benimKonum) return;
-    var idler = [], noktalar = [osrmNokta(benimKonum.e, benimKonum.b)];
-    for (var i = 0; i < OGRENCILER.length; i++) {
-        var o = OGRENCILER[i];
-        if (o.enlem === undefined || o.enlem === null || o.enlem === "") continue;
-        idler.push(o.id);
-        noktalar.push(osrmNokta(o.enlem, o.boylam));
-    }
-    if (idler.length === 0) return;
-    var not = document.getElementById("konumNot");
-    if (not) not.textContent = "Yol mesafeleri hesaplanıyor...";
-    osrmMesafeler(noktalar, function(v){
-        for (var j = 0; j < idler.length; j++) {
-            var m = v.mesafeler[j + 1];
-            if (typeof m === "number") { yolMesafesi[idler[j]] = m; }
-        }
-        uzakliklariYaz(); yerelCiz(); filtrele();
-        if (not) not.textContent = "Yol mesafeleri güncel.";
-    }, function(h){
-        if (not) not.textContent = "Yol mesafesi alınamadı (" + h + "), kuş uçuşu gösteriliyor.";
-    });
 }
 
 /* ---------- Mahalle Hızlı Filtreleri ---------- */
@@ -2496,52 +2364,6 @@ function yerelPaylas() {
     else { window.open("https://wa.me/?text=" + encodeURIComponent(metin), "_blank"); }
 }
 function siralaAcKapa() { var k = document.getElementById("siralaKutu"); if(k) k.style.display = (k.style.display === "block") ? "none" : "block"; }
-/* Listeyi en kisa tura gore dizer, harita acmaz. */
-function enKisaTuraGoreSirala(baslangicTuru) {
-    if (aktifYerel < 0) return;
-    var bas;
-    if (baslangicTuru === "merkez") {
-        if (!merkezVar()) { alert("Merkez koordinatı tanımlı değil."); return; }
-        bas = { enlem: MERKEZ.enlem, boylam: MERKEZ.boylam };
-    } else {
-        if (!benimKonum) { alert("Önce yukarıdaki Konum düğmesine basın."); return; }
-        bas = { enlem: benimKonum.e, boylam: benimKonum.b };
-    }
-    var L = yerelListeler[aktifYerel];
-    var liste = [], disarida = [];
-    for (var i = 0; i < L.uyeler.length; i++) {
-        var o = ogrBul(L.uyeler[i]);
-        if (!o) continue;
-        if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push(o); }
-        else { disarida.push(o.id); }
-    }
-    if (liste.length < 2) { alert("Sıralamak için en az iki koordinatlı durak gerekiyor."); return; }
-
-    var not = document.getElementById("konumNot");
-    if (not) not.textContent = "En kısa tur hesaplanıyor...";
-    var noktalar = [osrmNokta(bas.enlem, bas.boylam)];
-    for (var j = 0; j < liste.length; j++) { noktalar.push(osrmNokta(liste[j].enlem, liste[j].boylam)); }
-
-    osrmEnKisaTur(noktalar, function(v){
-        var yeni = [];
-        for (var t = 0; t < v.sira.length; t++) {
-            var n = v.sira[t];
-            if (n === 0) continue;
-            yeni.push(liste[n - 1].id);
-        }
-        if (yeni.length !== liste.length) { alert("Sıralama alınamadı."); return; }
-        yerelListeler[aktifYerel].uyeler = yeni.concat(disarida);
-        yerelKaydet(); yerelCiz(); filtrele();
-        if (not) {
-            not.textContent = "En kısa tur: " + metreYaz(v.mesafe) +
-                              ", yaklaşık " + Math.round(v.sure / 60) + " dk (trafiksiz).";
-        }
-    }, function(h){
-        if (not) not.textContent = "Tur hesaplanamadı (" + h + ").";
-        alert("En kısa tur hesaplanamadı: " + h);
-    });
-}
-
 function yerelSirala(tur) {
     if (aktifYerel < 0) return;
     var L = yerelListeler[aktifYerel];
@@ -2579,8 +2401,7 @@ function yerelCiz() {
          "</div>";
     if (L.uyeler.length > 1) {
         h += '<div class="sirala-kutu" id="siralaKutu">' +
-             '<button class="sirala-sec" onclick="enKisaTuraGoreSirala(\'konum\')">🧭 En Kısa Tur — buradan</button>' +
-             '<button class="sirala-sec" onclick="enKisaTuraGoreSirala(\'merkez\')">🏫 En Kısa Tur — merkezden</button>' +
+             '<button class="sirala-sec" onclick="yerelSirala(\'yakin\')">Bana Yakından Uzağa</button>' +
              '<button class="sirala-sec" onclick="yerelSirala(\'isim\')">İsme Göre (A-Z)</button>' +
              '<button class="sirala-sec" onclick="yerelSirala(\'ters\')">Sırayı Ters Çevir</button>' +
              "</div>";
@@ -2613,7 +2434,7 @@ function yerelCiz() {
                              '<h2><span class="sira-no">' + (i + 1) + "</span>" + kacis(o.ad) + "</h2>" +
                              "<p>" + kacis(o.mahalle) + "</p>" +
                              (o.mesafe ? '<span class="rozet-mesafe">' + kacis(o.mesafe) + "</span>" : "") +
-                             (o.enlem ? '<span class="uzaklik" data-ogr="' + kacis(o.id) + '" data-lat="' + o.enlem + '" data-lng="' + o.boylam + '"></span>' : "") +
+                             (o.enlem ? '<span class="uzaklik" data-lat="' + o.enlem + '" data-lng="' + o.boylam + '"></span>' : "") +
                              telHtml +
                          "</div>" +
                      "</div>" +
