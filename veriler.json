@@ -1142,9 +1142,14 @@
             "mahalle": "ÇAYIROVA",
             "mesafe": "11.2 KM",
             "link": "https://maps.app.goo.gl/z61duRuNLfqKeJeV8",
-            "enlem": 40.83616689170353,
-            "boylam": 29.372001811494332,
-            "telefonlar": []
+            "enlem": 40.836167,
+            "boylam": 29.372002,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 532 063 02 15"
+                }
+            ]
         },
         {
             "id": "omswyf7r56j",
@@ -1167,9 +1172,14 @@
             "mahalle": "TUZLA EVLİYA ÇELEBİ MAHALLESİ",
             "mesafe": "2.4 KM",
             "link": "https://maps.app.goo.gl/KaGkhmziB7fEGD4p6?g_st=ic",
-            "enlem": 40.8379524,
-            "boylam": 29.2952465,
-            "telefonlar": []
+            "enlem": 40.837952,
+            "boylam": 29.295247,
+            "telefonlar": [
+                {
+                    "etiket": "Annesi",
+                    "numara": "0 542 235 15 67"
+                }
+            ]
         },
         {
             "id": "omsxhz4szdz",
