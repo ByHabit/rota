@@ -1,5 +1,10 @@
 {
     "surum": 2,
+    "merkez": {
+        "ad": "Merkez",
+        "enlem": 40.827502,
+        "boylam": 29.311442
+    },
     "ogrenciler": [
         {
             "ad": "ÖZEL ÇINAR TUZLA KURUM MERKEZ",
@@ -1520,6 +1525,16 @@
             "link": "https://maps.app.goo.gl/u6c19T9swDJVGVRH7",
             "enlem": 40.8695468202401,
             "boylam": 29.281435279033246
+        },
+        {
+            "id": "omwf9f3f6gr",
+            "ad": "EYÜP TAZEGÜL",
+            "mahalle": "TUZLA ŞİFA MAHALLESİ",
+            "mesafe": "7.1",
+            "telefonlar": [],
+            "link": "https://maps.app.goo.gl/9QCbqJ754BdFQ3Zd9",
+            "enlem": 40.82999513647978,
+            "boylam": 29.36338708114596
         }
     ],
     "guzergahlar": []
