@@ -370,6 +370,8 @@ function listeSayfasiUret() {
 '    .modal-perde { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); z-index:100; align-items:center; justify-content:center; padding:16px; }\n' +
 '    .modal-kutu { background:#1B212A; border:1px solid #333D4B; border-radius:12px; max-width:360px; width:100%; padding:20px; text-align:center; }\n' +
 '    .modal-baslik { font-size:15px; font-weight:700; margin-bottom:14px; }\n' +
+'    .rota-durum { display:none; font-size:12.5px; color:#8A97A8; text-align:center;\n' +
+'                  margin:-6px 0 14px 0; line-height:1.5; }\n' +
 '    .modal-btn { display:block; width:100%; padding:12px; margin-bottom:8px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; text-align:center; font-family:inherit; border:none; cursor:pointer; }\n' +
 '    .btn-gmaps { background:#FFC400; color:#14181F; }\n' +
 '    .btn-yandex { background:#E63946; color:#FFF; }\n' +
@@ -437,6 +439,7 @@ bolumler +
 '<div class="modal-perde" id="rotaModal" onclick="modalKapat(event, \'rotaModal\')">\n' +
 '    <div class="modal-kutu">\n' +
 '        <div class="modal-baslik">Rotayı Nasıl Kuralım?</div>\n' +
+'        <div class="rota-durum" id="rotaDurumNot"></div>\n' +
 '        <button class="modal-btn btn-yesil" onclick="rotaCalistir(\'topla\')">🚌 Buradan Topla &rarr; Merkeze</button>\n' +
 '        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'dagit\')">🏫 Merkezden Dağıt</button>\n' +
 '        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'merkezdentopla\')">🔄 Merkezden Çık, Topla, Merkeze Dön</button>\n' +
@@ -659,8 +662,32 @@ bolumler +
 '}\n' +
 '\n' +
 '/* ---------- Akıllı Rotayı Aç Menüsü & Sıralama ---------- */\n' +
+'/* Menu acilirken kac duragin rotaya gireceğini gosterir. */\n' +
+'function rotaDurumuYaz(bolumId) {\n' +
+'    var not = document.getElementById("rotaDurumNot");\n' +
+'    if (!not) return;\n' +
+'    var b = document.getElementById(bolumId);\n' +
+'    if (!b) { not.style.display = "none"; return; }\n' +
+'    var aktif = 0, alinmis = 0, koordinatsiz = 0;\n' +
+'    var kl = b.querySelectorAll(".kart");\n' +
+'    kl.forEach(function(k){\n' +
+'        var id = k.getAttribute("data-id");\n' +
+'        var o = ogrBul(id);\n' +
+'        if (!o) return;\n' +
+'        if (alinanlar[id]) { alinmis++; return; }\n' +
+'        if (o.enlem === undefined || o.enlem === null || o.enlem === "") { koordinatsiz++; return; }\n' +
+'        aktif++;\n' +
+'    });\n' +
+'    var p = [aktif + " aktif durak rotaya girecek"];\n' +
+'    if (alinmis > 0) p.push(alinmis + " alınmış durak atlanacak");\n' +
+'    if (koordinatsiz > 0) p.push(koordinatsiz + " koordinatsız durak atlanacak");\n' +
+'    not.innerHTML = p.join(" &middot; ");\n' +
+'    not.style.display = "block";\n' +
+'}\n' +
+'\n' +
 'function rotaMenuAc(bolumId) {\n' +
 '    seciliRotaBolumId = bolumId;\n' +
+'    rotaDurumuYaz(bolumId);\n' +
 '    document.getElementById("rotaModal").style.display = "flex";\n' +
 '}\n' +
 '\n' +
@@ -706,11 +733,24 @@ bolumler +
 '\n' +
 '    var kartlar = hedefBolum.querySelectorAll(".kart");\n' +
 '    var liste = [];\n' +
+'    var alinmisSayisi = 0, koordinatsizSayisi = 0;\n' +
 '    kartlar.forEach(function(k){\n' +
-'        var o = ogrBul(k.getAttribute("data-id"));\n' +
-'        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push({ o: o }); }\n' +
+'        var id = k.getAttribute("data-id");\n' +
+'        var o = ogrBul(id);\n' +
+'        if (!o) return;\n' +
+'        /* Alindi/teslim edildi isaretli duraklar rotaya girmez */\n' +
+'        if (alinanlar[id]) { alinmisSayisi++; return; }\n' +
+'        if (o.enlem === undefined || o.enlem === null || o.enlem === "") { koordinatsizSayisi++; return; }\n' +
+'        liste.push({ o: o });\n' +
 '    });\n' +
-'    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return; }\n' +
+'\n' +
+'    if (liste.length < 1) {\n' +
+'        var m = "Rotaya girecek aktif durak yok.";\n' +
+'        if (alinmisSayisi > 0) { m += "\\n" + alinmisSayisi + " durak alındı olarak işaretli."; }\n' +
+'        if (koordinatsizSayisi > 0) { m += "\\n" + koordinatsizSayisi + " durağın koordinatı yok."; }\n' +
+'        alert(m);\n' +
+'        return;\n' +
+'    }\n' +
 '\n' +
 '    if (tur === "mevcut") { rotaHaritaAc(liste, null); return; }\n' +
 '\n' +
@@ -1090,6 +1130,8 @@ bolumler +
 '    for (var i = 0; i < L.uyeler.length; i++) {\n' +
 '        var o = ogrBul(L.uyeler[i]);\n' +
 '        if (!o) continue;\n' +
+'        /* Alinmis duraklar siralamaya girmez, listenin sonuna gider */\n' +
+'        if (alinanlar[o.id]) { disarida.push(o.id); continue; }\n' +
 '        if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push(o); }\n' +
 '        else { disarida.push(o.id); }\n' +
 '    }\n' +
