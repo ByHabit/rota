@@ -89,6 +89,16 @@
 
     .bos-liste { color: var(--soluk); font-size: 14px; padding: 10px 0; }
 
+    .token-sar { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+    .token-sar input { flex: 1 1 auto; margin-bottom: 0; }
+    .token-btn {
+        flex: 0 0 auto; padding: 12px 14px; font-size: 16px; line-height: 1;
+        background: var(--panel-ic); border: 1px solid var(--cizgi); color: var(--soluk);
+        border-radius: 8px;
+    }
+    .token-btn:hover { border-color: var(--amber); color: var(--amber); }
+    .token-btn.acik { border-color: var(--amber); color: var(--amber); }
+
     .tel-satir { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
     .tel-satir input.tel-etiket { flex: 0 0 130px; margin-bottom: 0; }
     .tel-satir input.tel-numara { flex: 1 1 auto; margin-bottom: 0; }
@@ -198,7 +208,14 @@
             </div>
         </div>
         <label for="token">Erişim Anahtarı (Personal Access Token)</label>
-        <input type="password" id="token" placeholder="github_pat_..." autocomplete="off">
+        <div class="token-sar">
+            <input type="password" id="token" placeholder="github_pat_..." autocomplete="off">
+            <button type="button" class="token-btn" id="tokenGoz" onclick="tokenGoster()"
+                    title="Anahtarı göster / gizle">&#128065;</button>
+            <button type="button" class="token-btn" onclick="tokenKopyala()"
+                    title="Anahtarı panoya kopyala">&#128203;</button>
+        </div>
+        <div class="ipucu" id="tokenNot" style="display:none;"></div>
         <div class="ipucu">
             Anahtarı <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">github.com/settings/tokens</a>
             adresinden üret. Fine-grained token seçersen bu depoya <b>Contents: Read and write</b> izni ver.
@@ -212,6 +229,23 @@
 
     <!-- ============ YAYIN & YEDEK ============ -->
     <div class="blok">
+        <div class="blok-basligi">Merkez (Okul / Kurum)</div>
+        <div class="ikili">
+            <div>
+                <label for="merkezAd">Adı</label>
+                <input type="text" id="merkezAd" placeholder="Örn: Çınar Özel Eğitim">
+            </div>
+            <div>
+                <label for="merkezKoordinat">Koordinat</label>
+                <input type="text" id="merkezKoordinat" placeholder="40.827502, 29.311442">
+            </div>
+        </div>
+        <div class="ipucu">
+            Rota hesaplarında başlangıç veya bitiş noktası olarak kullanılır.
+            Maps'te okula sağ tıklayıp koordinatı kopyalayabilirsin.
+        </div>
+        <hr class="ayrac">
+
         <div class="blok-basligi">Yayın & Yedekleme</div>
         <div class="yol-kutusu">
             <div class="yol-etiket">GitHub Deposu</div>
@@ -305,6 +339,8 @@
    ============================================================ */
 var ogrenciler = [];      /* {id, ad, mahalle, mesafe, telefon, link, enlem, boylam} */
 var guzergahlar = [];     /* {ad, uyeler:[id,...]} */
+/* Merkez (okul/kurum). Panelden degistirilebilir, veriler.json icinde saklanir. */
+var merkez = { ad: "Merkez", enlem: 40.827502443684786, boylam: 29.31144164552846 };
 var duzenlenenSira = -1;
 var aktifGuzergah = -1;
 
@@ -440,6 +476,48 @@ function ayarlariOku() {
         el("token").value = localStorage.getItem("rota_token") || "";
     } catch (e) { }
 }
+/* Anahtari gorunur yapar/gizler. Acikken 60 saniye sonra kendiliginden gizlenir. */
+var tokenGizleZaman = null;
+
+function tokenGoster() {
+    var k = el("token"), d = el("tokenGoz"), n = el("tokenNot");
+    if (tokenGizleZaman) { clearTimeout(tokenGizleZaman); tokenGizleZaman = null; }
+    if (k.type === "password") {
+        if (!k.value) { gunlukYaz("Kayıtlı anahtar yok.", "bilgi"); return; }
+        k.type = "text";
+        d.className = "token-btn acik";
+        n.style.display = "block";
+        n.innerHTML = "Anahtar ekranda görünüyor. 60 saniye sonra kendiliğinden gizlenecek. " +
+                      "Ekran görüntüsü alma, başkası görmesin.";
+        tokenGizleZaman = setTimeout(tokenGizle, 60000);
+    } else {
+        tokenGizle();
+    }
+}
+
+function tokenGizle() {
+    if (tokenGizleZaman) { clearTimeout(tokenGizleZaman); tokenGizleZaman = null; }
+    el("token").type = "password";
+    el("tokenGoz").className = "token-btn";
+    el("tokenNot").style.display = "none";
+}
+
+function tokenKopyala() {
+    var k = el("token");
+    if (!k.value) { gunlukYaz("Kayıtlı anahtar yok.", "bilgi"); return; }
+    var bitti = function () { gunlukYaz("Anahtar panoya kopyalandı.", "ok"); };
+    var olmadi = function () { gunlukYaz("Kopyalanamadı. Göz düğmesine basıp elle seçebilirsin.", "hata"); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(k.value).then(bitti, olmadi);
+        return;
+    }
+    var eskiTur = k.type;
+    k.type = "text";
+    k.select();
+    try { document.execCommand("copy") ? bitti() : olmadi(); } catch (e) { olmadi(); }
+    k.type = eskiTur;
+}
+
 function ayarlariUnut() {
     try {
         localStorage.removeItem("rota_token");
@@ -470,7 +548,7 @@ function yollariGuncelle() {
    YEDEKLEME (JSON İNDİR / YÜKLE)
    ============================================================ */
 function jsonIndir() {
-    var veri = { surum: 2, tarih: new Date().toISOString(), ogrenciler: ogrenciler, guzergahlar: guzergahlar };
+    var veri = { surum: 2, tarih: new Date().toISOString(), merkez: merkez, ogrenciler: ogrenciler, guzergahlar: guzergahlar };
     var blob = new Blob([JSON.stringify(veri, null, 2)], { type: "application/json" });
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
@@ -767,7 +845,10 @@ function veriyiIcerAl(icerik) {
     } else {
         ham = icerik.ogrenciler || [];
         guz = icerik.guzergahlar || [];
+        if (icerik.merkez) { merkez = icerik.merkez; }
     }
+    el("merkezKoordinat").value = merkez.enlem ? koordinatYaz(merkez) : "";
+    el("merkezAd").value = merkez.ad || "";
 
     for (var i = 0; i < ham.length; i++) {
         if (!ham[i].id) { ham[i].id = yeniKimlik(); }
@@ -886,7 +967,16 @@ function githubaKaydet() {
     rozetAyarla("Kaydediliyor...");
 
     var damga = new Date().toLocaleString('tr-TR');
-    var jsonMetin = JSON.stringify({ surum: 2, ogrenciler: ogrenciler, guzergahlar: guzergahlar }, null, 4);
+    var mk = koordinatCoz(el("merkezKoordinat").value);
+    if (el("merkezKoordinat").value.trim() && !mk) {
+        gunlukYaz("Merkez koordinatı okunamadı. Örnek: 40.827502, 29.311442", "hata");
+        rozetAyarla("Kayıt hatası", "hata");
+        return;
+    }
+    merkez = { ad: el("merkezAd").value.trim() };
+    if (mk) { merkez.enlem = mk.enlem; merkez.boylam = mk.boylam; }
+
+    var jsonMetin = JSON.stringify({ surum: 2, merkez: merkez, ogrenciler: ogrenciler, guzergahlar: guzergahlar }, null, 4);
     var htmlMetin = listeSayfasiUret();
 
     gunlukYaz("veriler.json güncelleniyor...", "bilgi");
@@ -926,7 +1016,7 @@ function kartUret(o, numara) {
     var etiketler = "";
     if (o.mesafe) { etiketler += '                <span class="rozet-mesafe">' + htmlKacis(o.mesafe) + '</span>\n'; }
     if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {
-        etiketler += '                <span class="uzaklik" data-lat="' + o.enlem + '" data-lng="' + o.boylam + '"></span>\n';
+        etiketler += '                <span class="uzaklik" data-ogr="' + htmlKacis(o.id) + '" data-lat="' + o.enlem + '" data-lng="' + o.boylam + '"></span>\n';
     }
 
     var telSatir = "";
@@ -959,7 +1049,9 @@ function kartUret(o, numara) {
 }
 
 function listeSayfasiUret() {
-    var tarih = new Date().toLocaleDateString('tr-TR');
+    var d0 = new Date();
+    var tarih = d0.toLocaleDateString('tr-TR') + " " +
+                ("0" + d0.getHours()).slice(-2) + ":" + ("0" + d0.getMinutes()).slice(-2);
 
     var sekmeler = '        <button class="sekme aktif" data-anahtar="bolum-hepsi" onclick="sekmeSec(\'bolum-hepsi\')">Tümü</button>\n';
 
@@ -980,6 +1072,8 @@ function listeSayfasiUret() {
 '<head>\n' +
 '<meta charset="UTF-8">\n' +
 '<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">\n' +
+'<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">\n' +
+'<meta http-equiv="Pragma" content="no-cache">\n' +
 '<meta name="apple-mobile-web-app-capable" content="yes">\n' +
 '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n' +
 '<meta name="theme-color" content="#12161C">\n' +
@@ -996,7 +1090,11 @@ function listeSayfasiUret() {
 '    .tarih { color:#8A97A8; font-size:12px; margin-top:2px; }\n' +
 '    .sifirla-btn { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-size:11px;\n' +
 '                   font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; }\n' +
-'    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; }\n' +
+'    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; align-items:center; }\n' +
+'    .yonetim-btn { background:#232B36; border:1px solid #333D4B; color:#E8EDF3; font-size:11px;\n' +
+'                   font-weight:700; border-radius:6px; padding:7px 10px; text-decoration:none;\n' +
+'                   white-space:nowrap; }\n' +
+'    .yonetim-btn:active { border-color:#FFC400; color:#FFC400; }\n' +
 '    .yenile-btn { background:transparent; border:1px solid #333D4B; color:#8A97A8; font-size:11px;\n' +
 '                  font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; font-family:inherit; }\n' +
 '    .yenile-btn:active { border-color:#FFC400; color:#FFC400; }\n' +
@@ -1067,6 +1165,7 @@ function listeSayfasiUret() {
 '    .alt-baglanti { text-align:center; font-size:13px; color:#8A97A8; margin-top:26px;\n' +
 '                    padding-top:18px; border-top:1px solid #262F3B; }\n' +
 '    .alt-baglanti a { color:#FFC400; text-decoration:none; font-weight:600; }\n' +
+'    .kaynak-not { font-size:11px; color:#5E6C7E; margin-top:10px; line-height:1.5; }\n' +
 '    .js-kapali { border-left:3px solid #FFC400; background:rgba(255,196,0,0.07); padding:12px 14px;\n' +
 '                 font-size:13px; color:#D9C99A; border-radius:0 8px 8px 0; margin:12px 0; }\n' +
 '    .yerel-arac { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 6px 0; }\n' +
@@ -1095,6 +1194,8 @@ function listeSayfasiUret() {
 '    .modal-perde { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); z-index:100; align-items:center; justify-content:center; padding:16px; }\n' +
 '    .modal-kutu { background:#1B212A; border:1px solid #333D4B; border-radius:12px; max-width:360px; width:100%; padding:20px; text-align:center; }\n' +
 '    .modal-baslik { font-size:15px; font-weight:700; margin-bottom:14px; }\n' +
+'    .rota-durum { display:none; font-size:12.5px; color:#8A97A8; text-align:center;\n' +
+'                  margin:-6px 0 14px 0; line-height:1.5; }\n' +
 '    .modal-btn { display:block; width:100%; padding:12px; margin-bottom:8px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; text-align:center; font-family:inherit; border:none; cursor:pointer; }\n' +
 '    .btn-gmaps { background:#FFC400; color:#14181F; }\n' +
 '    .btn-yandex { background:#E63946; color:#FFF; }\n' +
@@ -1111,6 +1212,7 @@ function listeSayfasiUret() {
 '            <div class="tarih">Son güncelleme: ' + htmlKacis(tarih) + '</div>\n' +
 '        </div>\n' +
 '        <div class="bas-dugmeler">\n' +
+'            <a class="yonetim-btn" href="./yonetim.html">&#9881; Yönetim</a>\n' +
 '            <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>\n' +
 '            <button class="sifirla-btn" onclick="tikleriSifirla()">Servisi Sıfırla</button>\n' +
 '        </div>\n' +
@@ -1142,6 +1244,7 @@ bolumler +
 '\n' +
 '    <div class="alt-baglanti">\n' +
 '        <a href="./ekle.html">Öğrenci ekle</a> &nbsp;&middot;&nbsp; <a href="./yonetim.html">Yönetim paneli</a>\n' +
+'        <div class="kaynak-not">Yol mesafesi ve tur hesabı: OSRM &middot; Harita verisi &copy; OpenStreetMap katkıcıları (ODbL)</div>\n' +
 '    </div>\n' +
 '</div>\n' +
 '\n' +
@@ -1159,10 +1262,12 @@ bolumler +
 '<!-- Rota Sıralama Menüsü -->\n' +
 '<div class="modal-perde" id="rotaModal" onclick="modalKapat(event, \'rotaModal\')">\n' +
 '    <div class="modal-kutu">\n' +
-'        <div class="modal-baslik">Harita Rotasını Nasıl Açalım?</div>\n' +
+'        <div class="modal-baslik">Rotayı Nasıl Kuralım?</div>\n' +
+'        <div class="rota-durum" id="rotaDurumNot"></div>\n' +
+'        <button class="modal-btn btn-yesil" onclick="rotaCalistir(\'topla\')">🚌 Buradan Topla &rarr; Merkeze</button>\n' +
+'        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'dagit\')">🏫 Merkezden Dağıt</button>\n' +
+'        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'merkezdentopla\')">🔄 Merkezden Çık, Topla, Merkeze Dön</button>\n' +
 '        <button class="modal-btn btn-gmaps" onclick="rotaCalistir(\'mevcut\')">Mevcut Sırayla Aç</button>\n' +
-'        <button class="modal-btn btn-yesil" onclick="rotaCalistir(\'yakin\')">📍 Bana En Yakından En Uzağa (Sabah)</button>\n' +
-'        <button class="modal-btn btn-apple" onclick="rotaCalistir(\'uzak\')">🏁 Bana En Uzaktan En Yakına (Akşam)</button>\n' +
 '        <button class="modal-btn btn-kapat" onclick="document.getElementById(\'rotaModal\').style.display=\'none\'">Vazgeç</button>\n' +
 '    </div>\n' +
 '</div>\n' +
@@ -1180,6 +1285,7 @@ bolumler +
 '<script>\n' +
 'var OGRENCILER = ' + veriMetni + ';\n' +
 'var GUZERGAHLAR = ' + guzergahMetni + ';\n' +
+'var MERKEZ = ' + JSON.stringify(merkez).replace(/</g, "\\u003c") + ';\n' +
 'var ANAHTAR = "rota_gunluk_v1";\n' +
 'var TIK_ANAHTAR = "rota_alindi_v1";\n' +
 'var yerelListeler = [];\n' +
@@ -1196,8 +1302,13 @@ bolumler +
 '\n' +
 '/* Adresin sonuna taze bir zaman damgasi koyup yeniden yukler. */\n' +
 'function sayfayiYenile() {\n' +
+'    var n = 1;\n' +
+'    try {\n' +
+'        n = parseInt(localStorage.getItem("rota_yenile_sayac") || "0", 10) + 1;\n' +
+'        localStorage.setItem("rota_yenile_sayac", String(n));\n' +
+'    } catch (e) { n = 1; }\n' +
 '    var temiz = location.href.split("#")[0].split("?")[0];\n' +
-'    location.replace(temiz + "?v=" + Date.now());\n' +
+'    location.replace(temiz + "?v=" + n + "&t=" + Date.now());\n' +
 '}\n' +
 '\n' +
 'function jsKacis(m) {\n' +
@@ -1375,10 +1486,66 @@ bolumler +
 '}\n' +
 '\n' +
 '/* ---------- Akıllı Rotayı Aç Menüsü & Sıralama ---------- */\n' +
+'/* Menu acilirken kac duragin rotaya gireceğini gosterir. */\n' +
+'function rotaDurumuYaz(bolumId) {\n' +
+'    var not = document.getElementById("rotaDurumNot");\n' +
+'    if (!not) return;\n' +
+'    var b = document.getElementById(bolumId);\n' +
+'    if (!b) { not.style.display = "none"; return; }\n' +
+'    var aktif = 0, alinmis = 0, koordinatsiz = 0;\n' +
+'    var kl = b.querySelectorAll(".kart");\n' +
+'    kl.forEach(function(k){\n' +
+'        var id = k.getAttribute("data-id");\n' +
+'        var o = ogrBul(id);\n' +
+'        if (!o) return;\n' +
+'        if (alinanlar[id]) { alinmis++; return; }\n' +
+'        if (o.enlem === undefined || o.enlem === null || o.enlem === "") { koordinatsiz++; return; }\n' +
+'        aktif++;\n' +
+'    });\n' +
+'    var p = [aktif + " aktif durak rotaya girecek"];\n' +
+'    if (alinmis > 0) p.push(alinmis + " alınmış durak atlanacak");\n' +
+'    if (koordinatsiz > 0) p.push(koordinatsiz + " koordinatsız durak atlanacak");\n' +
+'    not.innerHTML = p.join(" &middot; ");\n' +
+'    not.style.display = "block";\n' +
+'}\n' +
+'\n' +
 'function rotaMenuAc(bolumId) {\n' +
 '    seciliRotaBolumId = bolumId;\n' +
+'    rotaDurumuYaz(bolumId);\n' +
 '    document.getElementById("rotaModal").style.display = "flex";\n' +
 '}\n' +
+'\n' +
+'/* Haritayi acar. Siralama zaten uygulanmis liste ile cagrilir. */\n' +
+'function rotaHaritaAc(liste, bitisNoktasi) {\n' +
+'    var SINIR = 10;\n' +
+'    if (liste.length > SINIR) {\n' +
+'        if (!confirm("Google Haritalar tek rotada en fazla " + SINIR + " durak alabiliyor.\\n\\n" +\n' +
+'                     "İlk " + SINIR + " durak açılacak, bitince tekrar Rotayı Aç de.\\n\\nDevam edilsin mi?")) { return; }\n' +
+'        liste = liste.slice(0, SINIR);\n' +
+'    }\n' +
+'    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
+'    if (bitisNoktasi && typeof bitisNoktasi.enlem === "number") {\n' +
+'        koords.push(bitisNoktasi.enlem + "," + bitisNoktasi.boylam);\n' +
+'    }\n' +
+'    /* Basta bos bolum: Maps baslangic olarak mevcut konumu kullanir. */\n' +
+'    window.open("https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0", "_blank");\n' +
+'}\n' +
+'\n' +
+'/* Yeni sirayi ekrandaki gunluk listeye de yazar ki numaralar ortussun. */\n' +
+'function rotaSirasiniUygula(liste) {\n' +
+'    if (aktifYerel < 0) return;\n' +
+'    if (seciliRotaBolumId && seciliRotaBolumId !== "bolum-yerel") return;\n' +
+'    var yeniSira = [];\n' +
+'    for (var y = 0; y < liste.length; y++) { yeniSira.push(liste[y].o.id); }\n' +
+'    var eskiler = yerelListeler[aktifYerel].uyeler;\n' +
+'    for (var e2 = 0; e2 < eskiler.length; e2++) {\n' +
+'        if (yeniSira.indexOf(eskiler[e2]) === -1) { yeniSira.push(eskiler[e2]); }\n' +
+'    }\n' +
+'    yerelListeler[aktifYerel].uyeler = yeniSira;\n' +
+'    yerelKaydet(); yerelCiz(); filtrele();\n' +
+'}\n' +
+'\n' +
+'function merkezVar() { return MERKEZ && typeof MERKEZ.enlem === "number"; }\n' +
 '\n' +
 'function rotaCalistir(tur) {\n' +
 '    document.getElementById("rotaModal").style.display = "none";\n' +
@@ -1390,62 +1557,74 @@ bolumler +
 '\n' +
 '    var kartlar = hedefBolum.querySelectorAll(".kart");\n' +
 '    var liste = [];\n' +
+'    var alinmisSayisi = 0, koordinatsizSayisi = 0;\n' +
 '    kartlar.forEach(function(k){\n' +
 '        var id = k.getAttribute("data-id");\n' +
 '        var o = ogrBul(id);\n' +
-'        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") {\n' +
-'            var uz = (benimKonum) ? kusUcusu(benimKonum.e, benimKonum.b, o.enlem, o.boylam) : 0;\n' +
-'            liste.push({ o: o, uz: uz });\n' +
-'        }\n' +
+'        if (!o) return;\n' +
+'        /* Alindi/teslim edildi isaretli duraklar rotaya girmez */\n' +
+'        if (alinanlar[id]) { alinmisSayisi++; return; }\n' +
+'        if (o.enlem === undefined || o.enlem === null || o.enlem === "") { koordinatsizSayisi++; return; }\n' +
+'        liste.push({ o: o });\n' +
 '    });\n' +
 '\n' +
-'    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return;\n }\n' +
+'    if (liste.length < 1) {\n' +
+'        var m = "Rotaya girecek aktif durak yok.";\n' +
+'        if (alinmisSayisi > 0) { m += "\\n" + alinmisSayisi + " durak alındı olarak işaretli."; }\n' +
+'        if (koordinatsizSayisi > 0) { m += "\\n" + koordinatsizSayisi + " durağın koordinatı yok."; }\n' +
+'        alert(m);\n' +
+'        return;\n' +
+'    }\n' +
 '\n' +
-'    if (tur === "yakin" || tur === "uzak") {\n' +
-'        if (!benimKonum) {\n' +
-'            alert("Konumunuza göre sıralayabilmek için lütfen önce yukarıdaki Uzaklık Hesapla butonuna basın.");\n' +
-'            return;\n' +
+'    if (tur === "mevcut") { rotaHaritaAc(liste, null); return; }\n' +
+'\n' +
+'    var merkezliTur = (tur === "dagit" || tur === "merkezdentopla");\n' +
+'    if (merkezliTur && !merkezVar()) {\n' +
+'        alert("Merkez koordinatı tanımlı değil. Yönetim panelinden ekleyebilirsin.");\n' +
+'        return;\n' +
+'    }\n' +
+'    if (tur === "topla") {\n' +
+'        if (!benimKonum) { alert("Önce yukarıdaki Konum düğmesine basıp konumunuzu alın."); return; }\n' +
+'        if (!merkezVar()) { alert("Merkez koordinatı tanımlı değil. Yönetim panelinden ekleyebilirsin."); return; }\n' +
+'    }\n' +
+'    if (liste.length === 1) {\n' +
+'        rotaHaritaAc(liste, (tur === "dagit") ? null : (merkezVar() ? MERKEZ : null));\n' +
+'        return;\n' +
+'    }\n' +
+'\n' +
+'    /* Baslangic, duraklar, bitis */\n' +
+'    var baslangic = (tur === "topla") ? { enlem: benimKonum.e, boylam: benimKonum.b } : MERKEZ;\n' +
+'    var bitisMerkez = (tur === "topla" || tur === "merkezdentopla");\n' +
+'\n' +
+'    var noktalar = [osrmNokta(baslangic.enlem, baslangic.boylam)];\n' +
+'    for (var i = 0; i < liste.length; i++) { noktalar.push(osrmNokta(liste[i].o.enlem, liste[i].o.boylam)); }\n' +
+'    if (bitisMerkez) { noktalar.push(osrmNokta(MERKEZ.enlem, MERKEZ.boylam)); }\n' +
+'\n' +
+'    var not = document.getElementById("konumNot");\n' +
+'    if (not) not.textContent = "Rota hesaplanıyor...";\n' +
+'\n' +
+'    osrmEnKisaTur(noktalar, function(v){\n' +
+'        var sonIndeks = noktalar.length - 1;\n' +
+'        var yeni = [];\n' +
+'        for (var j = 0; j < v.sira.length; j++) {\n' +
+'            var n = v.sira[j];\n' +
+'            if (n === 0) continue;                       /* baslangic */\n' +
+'            if (bitisMerkez && n === sonIndeks) continue; /* bitis merkezi */\n' +
+'            yeni.push(liste[n - 1]);\n' +
 '        }\n' +
-'        liste.sort(function(a, b){\n' +
-'            return (tur === "yakin") ? (a.uz - b.uz) : (b.uz - a.uz);\n' +
-'        });\n' +
-'    }\n' +
-'\n' +
-'    /* Siralama uygulandiysa ekrandaki listeyi de ayni siraya getir ki\n' +
-'       Haritadaki 1-2-3 ile listedeki numaralar ortusUn. */\n' +
-'    if ((tur === "yakin" || tur === "uzak") && aktifYerel >= 0 &&\n' +
-'        (seciliRotaBolumId === "bolum-yerel" || !seciliRotaBolumId)) {\n' +
-'        var yeniSira = [];\n' +
-'        for (var y = 0; y < liste.length; y++) { yeniSira.push(liste[y].o.id); }\n' +
-'        /* Koordinati olmayanlar rotaya giremez ama listede kalmali: sona eklenir */\n' +
-'        var eskiler = yerelListeler[aktifYerel].uyeler;\n' +
-'        for (var e2 = 0; e2 < eskiler.length; e2++) {\n' +
-'            if (yeniSira.indexOf(eskiler[e2]) === -1) { yeniSira.push(eskiler[e2]); }\n' +
+'        if (yeni.length !== liste.length) { yeni = liste; }\n' +
+'        rotaSirasiniUygula(yeni);\n' +
+'        if (not) {\n' +
+'            not.textContent = "Rota: " + metreYaz(v.mesafe) +\n' +
+'                              ", yaklaşık " + Math.round(v.sure / 60) + " dk (trafiksiz).";\n' +
 '        }\n' +
-'        yerelListeler[aktifYerel].uyeler = yeniSira;\n' +
-'        yerelKaydet(); yerelCiz(); filtrele();\n' +
-'    }\n' +
-'\n' +
-'    /* Google Haritalar bir rotada sinirli sayida durak destekler. */\n' +
-'    var SINIR = 10;\n' +
-'    var kalan = 0;\n' +
-'    if (liste.length > SINIR) {\n' +
-'        kalan = liste.length - SINIR;\n' +
-'        if (!confirm("Google Haritalar tek rotada en fazla " + SINIR + " durak alabiliyor.\\n\\n" +\n' +
-'                     "Ilk " + SINIR + " durak acilacak, kalan " + kalan + " durak icin " +\n' +
-'                     "bittiginde tekrar Rotayi Ac de.\\n\\nDevam edilsin mi?")) { return; }\n' +
-'        liste = liste.slice(0, SINIR);\n' +
-'    }\n' +
-'\n' +
-'    var koords = liste.map(function(item){ return item.o.enlem + "," + item.o.boylam; });\n' +
-'\n' +
-'    /* Yol bicimi (maps/dir/A/B/C): coklu duragi en saglam tasiyan bicim.\n' +
-'       Basa bos bir bolum konur (dir//...) ki Maps baslangic olarak\n' +
-'       mevcut konumu kullansin; boylece Onizle yerine Baslat cikar.\n' +
-'       dir_action=navigate KULLANILMAZ: Google\x27in belgelerine gore\n' +
-'       coklu ara durakla birlikte calismaz, tek hedefe iner. */\n' +
-'    var url = "https://www.google.com/maps/dir//" + koords.join("/") + "/data=!4m2!4m1!3e0";\n' +
-'    window.open(url, "_blank");\n' +
+'        rotaHaritaAc(yeni, bitisMerkez ? MERKEZ : null);\n' +
+'    }, function(h){\n' +
+'        if (not) not.textContent = "Rota hesaplanamadı (" + h + ").";\n' +
+'        if (confirm("Rota hesaplanamadı: " + h + "\\n\\nMevcut sırayla açılsın mı?")) {\n' +
+'            rotaHaritaAc(liste, bitisMerkez ? MERKEZ : null);\n' +
+'        }\n' +
+'    }, bitisMerkez);\n' +
 '}\n' +
 '\n' +
 '/* Rota sirasindaki isimleri numarali metin olarak paylas.\n' +
@@ -1483,6 +1662,60 @@ bolumler +
 '    if (m < 950) return Math.round(m / 10) * 10 + " m";\n' +
 '    return (Math.round(m / 100) / 10).toString().replace(".", ",") + " km";\n' +
 '}\n' +
+'/* ---------- OSRM: yol mesafesi ve en kisa tur ----------\n' +
+'   Ucretsiz demo sunucu, anahtar gerekmez. Dakikada birkac istek yapiyoruz,\n' +
+'   politikanin cok altinda. Sunucu yanit vermezse kus ucusuna dusuyoruz. */\n' +
+'var OSRM = "https://router.project-osrm.org";\n' +
+'\n' +
+'function osrmIstek(adres, bitti, hata) {\n' +
+'    var zamanAsimi = setTimeout(function(){ zamanAsimi = null; hata("zaman asimi"); }, 12000);\n' +
+'    fetch(adres).then(function(c){\n' +
+'        if (!c.ok) { throw new Error("sunucu " + c.status); }\n' +
+'        return c.json();\n' +
+'    }).then(function(v){\n' +
+'        if (zamanAsimi === null) return;\n' +
+'        clearTimeout(zamanAsimi);\n' +
+'        if (v.code !== "Ok") { throw new Error(v.code || "bilinmeyen"); }\n' +
+'        bitti(v);\n' +
+'    }).catch(function(h){\n' +
+'        if (zamanAsimi === null) return;\n' +
+'        clearTimeout(zamanAsimi);\n' +
+'        hata(h.message || "baglanti hatasi");\n' +
+'    });\n' +
+'}\n' +
+'\n' +
+'/* OSRM koordinati boylam,enlem sirasiyla ister */\n' +
+'function osrmNokta(e, b) { return b + "," + e; }\n' +
+'\n' +
+'/* Baslangictan baslayip tum duraklari gezen en kisa turu ister.\n' +
+'   noktalar[0] baslangic. Donen sira indeks dizisidir. */\n' +
+'function osrmEnKisaTur(noktalar, bitti, hata, bitisSabit) {\n' +
+'    var adres = OSRM + "/trip/v1/driving/" + noktalar.join(";") +\n' +
+'                "?source=first&roundtrip=false&overview=false" +\n' +
+'                "&destination=" + (bitisSabit ? "last" : "any");\n' +
+'    osrmIstek(adres, function(v){\n' +
+'        if (!v.waypoints || !v.trips || !v.trips.length) { hata("bos yanit"); return; }\n' +
+'        var sira = [];\n' +
+'        for (var i = 0; i < v.waypoints.length; i++) {\n' +
+'            sira.push({ girdi: v.waypoints[i].waypoint_index, nokta: i });\n' +
+'        }\n' +
+'        sira.sort(function(a,b){ return a.girdi - b.girdi; });\n' +
+'        var dizilim = [];\n' +
+'        for (var j = 0; j < sira.length; j++) { dizilim.push(sira[j].nokta); }\n' +
+'        bitti({ sira: dizilim, mesafe: v.trips[0].distance, sure: v.trips[0].duration });\n' +
+'    }, hata);\n' +
+'}\n' +
+'\n' +
+'/* Baslangictan her duraga olan yol mesafesi (metre) */\n' +
+'function osrmMesafeler(noktalar, bitti, hata) {\n' +
+'    var adres = OSRM + "/table/v1/driving/" + noktalar.join(";") +\n' +
+'                "?sources=0&annotations=distance,duration";\n' +
+'    osrmIstek(adres, function(v){\n' +
+'        if (!v.distances || !v.distances[0]) { hata("bos yanit"); return; }\n' +
+'        bitti({ mesafeler: v.distances[0], sureler: v.durations ? v.durations[0] : null });\n' +
+'    }, hata);\n' +
+'}\n' +
+'\n' +
 'function konumAl() {\n' +
 '    if (!navigator.geolocation) return;\n' +
 '    var not = document.getElementById("konumNot");\n' +
@@ -1491,8 +1724,12 @@ bolumler +
 '        benimKonum = { e: p.coords.latitude, b: p.coords.longitude };\n' +
 '        uzakliklariYaz(); yerelCiz(); filtrele();\n' +
 '        if (not) not.textContent = "Konum güncel.";\n' +
+'        yolMesafeleriniGetir();\n' +
 '    }, function () { if (not) not.textContent = "Konum alınamadı."; }, { enableHighAccuracy: true, timeout: 15000 });\n' +
 '}\n' +
+'/* Ogrenci kimligine gore yol mesafesi (metre). OSRM yanit verdikce dolar. */\n' +
+'var yolMesafesi = {};\n' +
+'\n' +
 'function uzakliklariYaz() {\n' +
 '    if (!benimKonum) return;\n' +
 '    var rozetler = document.getElementsByClassName("uzaklik");\n' +
@@ -1500,9 +1737,39 @@ bolumler +
 '        var e = parseFloat(rozetler[i].getAttribute("data-lat"));\n' +
 '        var b = parseFloat(rozetler[i].getAttribute("data-lng"));\n' +
 '        if (isNaN(e) || isNaN(b)) continue;\n' +
-'        rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " uzakta";\n' +
+'        var id = rozetler[i].getAttribute("data-ogr");\n' +
+'        if (id && yolMesafesi[id] !== undefined) {\n' +
+'            rozetler[i].innerHTML = metreYaz(yolMesafesi[id]) + " yol";\n' +
+'        } else {\n' +
+'            rozetler[i].innerHTML = metreYaz(kusUcusu(benimKonum.e, benimKonum.b, e, b)) + " kuş uçuşu";\n' +
+'        }\n' +
 '        rozetler[i].style.display = "inline-block";\n' +
 '    }\n' +
+'}\n' +
+'\n' +
+'/* Konum alindiginda tum ogrenciler icin yol mesafesini bir istekte ceker. */\n' +
+'function yolMesafeleriniGetir() {\n' +
+'    if (!benimKonum) return;\n' +
+'    var idler = [], noktalar = [osrmNokta(benimKonum.e, benimKonum.b)];\n' +
+'    for (var i = 0; i < OGRENCILER.length; i++) {\n' +
+'        var o = OGRENCILER[i];\n' +
+'        if (o.enlem === undefined || o.enlem === null || o.enlem === "") continue;\n' +
+'        idler.push(o.id);\n' +
+'        noktalar.push(osrmNokta(o.enlem, o.boylam));\n' +
+'    }\n' +
+'    if (idler.length === 0) return;\n' +
+'    var not = document.getElementById("konumNot");\n' +
+'    if (not) not.textContent = "Yol mesafeleri hesaplanıyor...";\n' +
+'    osrmMesafeler(noktalar, function(v){\n' +
+'        for (var j = 0; j < idler.length; j++) {\n' +
+'            var m = v.mesafeler[j + 1];\n' +
+'            if (typeof m === "number") { yolMesafesi[idler[j]] = m; }\n' +
+'        }\n' +
+'        uzakliklariYaz(); yerelCiz(); filtrele();\n' +
+'        if (not) not.textContent = "Yol mesafeleri güncel.";\n' +
+'    }, function(h){\n' +
+'        if (not) not.textContent = "Yol mesafesi alınamadı (" + h + "), kuş uçuşu gösteriliyor.";\n' +
+'    });\n' +
 '}\n' +
 '\n' +
 '/* ---------- Mahalle Hızlı Filtreleri ---------- */\n' +
@@ -1671,6 +1938,54 @@ bolumler +
 '    else { window.open("https://wa.me/?text=" + encodeURIComponent(metin), "_blank"); }\n' +
 '}\n' +
 'function siralaAcKapa() { var k = document.getElementById("siralaKutu"); if(k) k.style.display = (k.style.display === "block") ? "none" : "block"; }\n' +
+'/* Listeyi en kisa tura gore dizer, harita acmaz. */\n' +
+'function enKisaTuraGoreSirala(baslangicTuru) {\n' +
+'    if (aktifYerel < 0) return;\n' +
+'    var bas;\n' +
+'    if (baslangicTuru === "merkez") {\n' +
+'        if (!merkezVar()) { alert("Merkez koordinatı tanımlı değil."); return; }\n' +
+'        bas = { enlem: MERKEZ.enlem, boylam: MERKEZ.boylam };\n' +
+'    } else {\n' +
+'        if (!benimKonum) { alert("Önce yukarıdaki Konum düğmesine basın."); return; }\n' +
+'        bas = { enlem: benimKonum.e, boylam: benimKonum.b };\n' +
+'    }\n' +
+'    var L = yerelListeler[aktifYerel];\n' +
+'    var liste = [], disarida = [];\n' +
+'    for (var i = 0; i < L.uyeler.length; i++) {\n' +
+'        var o = ogrBul(L.uyeler[i]);\n' +
+'        if (!o) continue;\n' +
+'        /* Alinmis duraklar siralamaya girmez, listenin sonuna gider */\n' +
+'        if (alinanlar[o.id]) { disarida.push(o.id); continue; }\n' +
+'        if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push(o); }\n' +
+'        else { disarida.push(o.id); }\n' +
+'    }\n' +
+'    if (liste.length < 2) { alert("Sıralamak için en az iki koordinatlı durak gerekiyor."); return; }\n' +
+'\n' +
+'    var not = document.getElementById("konumNot");\n' +
+'    if (not) not.textContent = "En kısa tur hesaplanıyor...";\n' +
+'    var noktalar = [osrmNokta(bas.enlem, bas.boylam)];\n' +
+'    for (var j = 0; j < liste.length; j++) { noktalar.push(osrmNokta(liste[j].enlem, liste[j].boylam)); }\n' +
+'\n' +
+'    osrmEnKisaTur(noktalar, function(v){\n' +
+'        var yeni = [];\n' +
+'        for (var t = 0; t < v.sira.length; t++) {\n' +
+'            var n = v.sira[t];\n' +
+'            if (n === 0) continue;\n' +
+'            yeni.push(liste[n - 1].id);\n' +
+'        }\n' +
+'        if (yeni.length !== liste.length) { alert("Sıralama alınamadı."); return; }\n' +
+'        yerelListeler[aktifYerel].uyeler = yeni.concat(disarida);\n' +
+'        yerelKaydet(); yerelCiz(); filtrele();\n' +
+'        if (not) {\n' +
+'            not.textContent = "En kısa tur: " + metreYaz(v.mesafe) +\n' +
+'                              ", yaklaşık " + Math.round(v.sure / 60) + " dk (trafiksiz).";\n' +
+'        }\n' +
+'    }, function(h){\n' +
+'        if (not) not.textContent = "Tur hesaplanamadı (" + h + ").";\n' +
+'        alert("En kısa tur hesaplanamadı: " + h);\n' +
+'    });\n' +
+'}\n' +
+'\n' +
 'function yerelSirala(tur) {\n' +
 '    if (aktifYerel < 0) return;\n' +
 '    var L = yerelListeler[aktifYerel];\n' +
@@ -1708,7 +2023,8 @@ bolumler +
 '         "</div>";\n' +
 '    if (L.uyeler.length > 1) {\n' +
 '        h += \x27<div class="sirala-kutu" id="siralaKutu">\x27 +\n' +
-'             \x27<button class="sirala-sec" onclick="yerelSirala(\\\'yakin\\\')">Bana Yakından Uzağa</button>\x27 +\n' +
+'             \x27<button class="sirala-sec" onclick="enKisaTuraGoreSirala(\\\'konum\\\')">🧭 En Kısa Tur — buradan</button>\x27 +\n' +
+'             \x27<button class="sirala-sec" onclick="enKisaTuraGoreSirala(\\\'merkez\\\')">🏫 En Kısa Tur — merkezden</button>\x27 +\n' +
 '             \x27<button class="sirala-sec" onclick="yerelSirala(\\\'isim\\\')">İsme Göre (A-Z)</button>\x27 +\n' +
 '             \x27<button class="sirala-sec" onclick="yerelSirala(\\\'ters\\\')">Sırayı Ters Çevir</button>\x27 +\n' +
 '             "</div>";\n' +
@@ -1741,7 +2057,7 @@ bolumler +
 '                             \x27<h2><span class="sira-no">\x27 + (i + 1) + "</span>" + kacis(o.ad) + "</h2>" +\n' +
 '                             "<p>" + kacis(o.mahalle) + "</p>" +\n' +
 '                             (o.mesafe ? \x27<span class="rozet-mesafe">\x27 + kacis(o.mesafe) + "</span>" : "") +\n' +
-'                             (o.enlem ? \x27<span class="uzaklik" data-lat="\x27 + o.enlem + \x27" data-lng="\x27 + o.boylam + \x27"></span>\x27 : "") +\n' +
+'                             (o.enlem ? \x27<span class="uzaklik" data-ogr="\x27 + kacis(o.id) + \x27" data-lat="\x27 + o.enlem + \x27" data-lng="\x27 + o.boylam + \x27"></span>\x27 : "") +\n' +
 '                             telHtml +\n' +
 '                         "</div>" +\n' +
 '                     "</div>" +\n' +
@@ -1870,6 +2186,8 @@ function ekleSayfasiUret() {
 '<head>\n' +
 '<meta charset="UTF-8">\n' +
 '<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">\n' +
+'<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">\n' +
+'<meta http-equiv="Pragma" content="no-cache">\n' +
 '<meta name="apple-mobile-web-app-capable" content="yes">\n' +
 '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n' +
 '<meta name="theme-color" content="#12161C">\n' +
@@ -1905,6 +2223,12 @@ function ekleSayfasiUret() {
 '    .durum.hata { background:rgba(255,107,94,0.1); border-left:3px solid #FF6B5E; color:#FFB3AC; display:block; }\n' +
 '    .durum.bilgi { background:rgba(255,196,0,0.08); border-left:3px solid #FFC400; color:#D9C99A; display:block; }\n' +
 '    .sayi { font-size:12px; color:#8A97A8; text-align:center; margin-top:6px; }\n' +
+'    .token-sar { display:flex; gap:8px; align-items:center; }\n' +
+'    .token-sar input { flex:1 1 auto; }\n' +
+'    .token-btn { flex:0 0 auto; width:auto; margin:0 0 14px 0; padding:14px 15px; font-size:16px;\n' +
+'                 line-height:1; background:#232B36; border:1px solid #333D4B; color:#8A97A8;\n' +
+'                 border-radius:9px; }\n' +
+'    .token-btn.acik { border-color:#FFC400; color:#FFC400; }\n' +
 '    .tel-ikili { display:flex; gap:8px; }\n' +
 '    .tel-ikili .tel-etiket { flex:0 0 40%; }\n' +
 '    .tel-ikili .tel-numara { flex:1 1 auto; }\n' +
@@ -1930,7 +2254,10 @@ function ekleSayfasiUret() {
 '        <label for="depo">Depo Adı</label>\n' +
 '        <input type="text" id="depo" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="rota">\n' +
 '        <label for="token">Erişim Anahtarı</label>\n' +
-'        <input type="password" id="token" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_...">\n' +
+'        <div class="token-sar">\n' +
+'            <input type="password" id="token" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_...">\n' +
+'            <button type="button" class="token-btn" id="tokenGoz" onclick="tokenGoster()" title="Göster / gizle">&#128065;</button>\n' +
+'        </div>\n' +
 '        <button class="ana" onclick="baglan()">Bağlan ve Listeyi Çek</button>\n' +
 '    </div>\n' +
 '    <div class="katla" id="ayarAc" style="display:none;" onclick="ayarlariAc()">GitHub bilgilerini düzenle</div>\n' +
@@ -1970,8 +2297,13 @@ kaynak +
 '\n' +
 '/* Adresin sonuna taze bir zaman damgasi koyup yeniden yukler. */\n' +
 'function sayfayiYenile() {\n' +
+'    var n = 1;\n' +
+'    try {\n' +
+'        n = parseInt(localStorage.getItem("rota_yenile_sayac") || "0", 10) + 1;\n' +
+'        localStorage.setItem("rota_yenile_sayac", String(n));\n' +
+'    } catch (e) { n = 1; }\n' +
 '    var temiz = location.href.split("#")[0].split("?")[0];\n' +
-'    location.replace(temiz + "?v=" + Date.now());\n' +
+'    location.replace(temiz + "?v=" + n + "&t=" + Date.now());\n' +
 '}\n' +
 '\n' +
 'function el(k) { return document.getElementById(k); }\n' +
@@ -1983,6 +2315,22 @@ kaynak +
 '        localStorage.setItem("rota_token", el("token").value.trim());\n' +
 '    } catch (e) {}\n' +
 '}\n' +
+'var tokenGizleZaman = null;\n' +
+'function tokenGoster() {\n' +
+'    var k = el("token"), d = el("tokenGoz");\n' +
+'    if (tokenGizleZaman) { clearTimeout(tokenGizleZaman); tokenGizleZaman = null; }\n' +
+'    if (k.type === "password") {\n' +
+'        if (!k.value) { bildir("Kayıtlı anahtar yok.", "bilgi"); return; }\n' +
+'        k.type = "text"; d.className = "token-btn acik";\n' +
+'        bildir("Anahtar görünüyor. 60 saniye sonra gizlenecek.", "bilgi");\n' +
+'        tokenGizleZaman = setTimeout(function(){\n' +
+'            el("token").type = "password"; el("tokenGoz").className = "token-btn";\n' +
+'        }, 60000);\n' +
+'    } else {\n' +
+'        k.type = "password"; d.className = "token-btn";\n' +
+'    }\n' +
+'}\n' +
+'\n' +
 'function ayarOku() {\n' +
 '    try {\n' +
 '        el("kullanici").value = localStorage.getItem("rota_kullanici") || "";\n' +
@@ -2076,7 +2424,9 @@ kaynak +
 '    ogrenciler.push(kayit);\n' +
 '    el("kaydetBtn").disabled = true; el("kaydetBtn").innerHTML = "Kaydediliyor...";\n' +
 '    var damga = new Date().toLocaleString("tr-TR");\n' +
-'    var jsonMetin = JSON.stringify({ surum: 2, ogrenciler: ogrenciler, guzergahlar: guzergahlar }, null, 4);\n' +
+'    var govdeJson = { surum: 2, ogrenciler: ogrenciler, guzergahlar: guzergahlar };\n' +
+'    if (typeof merkez !== "undefined" && merkez && merkez.enlem) { govdeJson.merkez = merkez; }\n' +
+'    var jsonMetin = JSON.stringify(govdeJson, null, 4);\n' +
 '    dosyaYaz("veriler.json", jsonMetin, ad + " eklendi (" + damga + ")")\n' +
 '        .then(function(){\n' +
 '            return dosyaYaz("index.html", listeSayfasiUret(), "Liste güncellendi (" + damga + ")");\n' +
