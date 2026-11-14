@@ -125,6 +125,8 @@
     .modal-perde { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); z-index:100; align-items:center; justify-content:center; padding:16px; }
     .modal-kutu { background:#1B212A; border:1px solid #333D4B; border-radius:12px; max-width:360px; width:100%; padding:20px; text-align:center; }
     .modal-baslik { font-size:15px; font-weight:700; margin-bottom:14px; }
+    .rota-durum { display:none; font-size:12.5px; color:#8A97A8; text-align:center;
+                  margin:-6px 0 14px 0; line-height:1.5; }
     .modal-btn { display:block; width:100%; padding:12px; margin-bottom:8px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; text-align:center; font-family:inherit; border:none; cursor:pointer; }
     .btn-gmaps { background:#FFC400; color:#14181F; }
     .btn-yandex { background:#E63946; color:#FFF; }
@@ -138,7 +140,7 @@
     <header>
         <div>
             <h1>Öğrenci <span>Rotaları</span></h1>
-            <div class="tarih">Son güncelleme: 13.11.2026 20:37</div>
+            <div class="tarih">Son güncelleme: 14.11.2026 19:35</div>
         </div>
         <div class="bas-dugmeler">
             <a class="yonetim-btn" href="./yonetim.html">&#9881; Yönetim</a>
@@ -1890,6 +1892,7 @@
 <div class="modal-perde" id="rotaModal" onclick="modalKapat(event, 'rotaModal')">
     <div class="modal-kutu">
         <div class="modal-baslik">Rotayı Nasıl Kuralım?</div>
+        <div class="rota-durum" id="rotaDurumNot"></div>
         <button class="modal-btn btn-yesil" onclick="rotaCalistir('topla')">🚌 Buradan Topla &rarr; Merkeze</button>
         <button class="modal-btn btn-apple" onclick="rotaCalistir('dagit')">🏫 Merkezden Dağıt</button>
         <button class="modal-btn btn-apple" onclick="rotaCalistir('merkezdentopla')">🔄 Merkezden Çık, Topla, Merkeze Dön</button>
@@ -2112,8 +2115,32 @@ function tikleriSifirla() {
 }
 
 /* ---------- Akıllı Rotayı Aç Menüsü & Sıralama ---------- */
+/* Menu acilirken kac duragin rotaya gireceğini gosterir. */
+function rotaDurumuYaz(bolumId) {
+    var not = document.getElementById("rotaDurumNot");
+    if (!not) return;
+    var b = document.getElementById(bolumId);
+    if (!b) { not.style.display = "none"; return; }
+    var aktif = 0, alinmis = 0, koordinatsiz = 0;
+    var kl = b.querySelectorAll(".kart");
+    kl.forEach(function(k){
+        var id = k.getAttribute("data-id");
+        var o = ogrBul(id);
+        if (!o) return;
+        if (alinanlar[id]) { alinmis++; return; }
+        if (o.enlem === undefined || o.enlem === null || o.enlem === "") { koordinatsiz++; return; }
+        aktif++;
+    });
+    var p = [aktif + " aktif durak rotaya girecek"];
+    if (alinmis > 0) p.push(alinmis + " alınmış durak atlanacak");
+    if (koordinatsiz > 0) p.push(koordinatsiz + " koordinatsız durak atlanacak");
+    not.innerHTML = p.join(" &middot; ");
+    not.style.display = "block";
+}
+
 function rotaMenuAc(bolumId) {
     seciliRotaBolumId = bolumId;
+    rotaDurumuYaz(bolumId);
     document.getElementById("rotaModal").style.display = "flex";
 }
 
@@ -2159,11 +2186,24 @@ function rotaCalistir(tur) {
 
     var kartlar = hedefBolum.querySelectorAll(".kart");
     var liste = [];
+    var alinmisSayisi = 0, koordinatsizSayisi = 0;
     kartlar.forEach(function(k){
-        var o = ogrBul(k.getAttribute("data-id"));
-        if (o && o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push({ o: o }); }
+        var id = k.getAttribute("data-id");
+        var o = ogrBul(id);
+        if (!o) return;
+        /* Alindi/teslim edildi isaretli duraklar rotaya girmez */
+        if (alinanlar[id]) { alinmisSayisi++; return; }
+        if (o.enlem === undefined || o.enlem === null || o.enlem === "") { koordinatsizSayisi++; return; }
+        liste.push({ o: o });
     });
-    if (liste.length < 1) { alert("Bu listede koordinatı olan öğrenci bulunamadı."); return; }
+
+    if (liste.length < 1) {
+        var m = "Rotaya girecek aktif durak yok.";
+        if (alinmisSayisi > 0) { m += "\n" + alinmisSayisi + " durak alındı olarak işaretli."; }
+        if (koordinatsizSayisi > 0) { m += "\n" + koordinatsizSayisi + " durağın koordinatı yok."; }
+        alert(m);
+        return;
+    }
 
     if (tur === "mevcut") { rotaHaritaAc(liste, null); return; }
 
@@ -2543,6 +2583,8 @@ function enKisaTuraGoreSirala(baslangicTuru) {
     for (var i = 0; i < L.uyeler.length; i++) {
         var o = ogrBul(L.uyeler[i]);
         if (!o) continue;
+        /* Alinmis duraklar siralamaya girmez, listenin sonuna gider */
+        if (alinanlar[o.id]) { disarida.push(o.id); continue; }
         if (o.enlem !== undefined && o.enlem !== null && o.enlem !== "") { liste.push(o); }
         else { disarida.push(o.id); }
     }
