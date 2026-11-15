@@ -1556,10 +1556,15 @@
             "ad": "TANJU OTO LASTİK",
             "mahalle": "ÜMRANİYE",
             "mesafe": "34.9 KM",
-            "telefonlar": [],
+            "telefonlar": [
+                {
+                    "etiket": "",
+                    "numara": "0 539 301 22 18"
+                }
+            ],
             "link": "https://maps.app.goo.gl/xr7pjvwj7NvTcaZr6",
-            "enlem": 41.015463197250305,
-            "boylam": 29.0990372068525
+            "enlem": 41.015463,
+            "boylam": 29.099037
         }
     ],
     "guzergahlar": []
