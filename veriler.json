@@ -1535,6 +1535,21 @@
             "link": "https://maps.app.goo.gl/9QCbqJ754BdFQ3Zd9",
             "enlem": 40.82999513647978,
             "boylam": 29.36338708114596
+        },
+        {
+            "id": "omwi77zhih8",
+            "ad": "ZAFER OTO SERVİS",
+            "mahalle": "SANCAKTEPE",
+            "mesafe": "30.3 KM",
+            "telefonlar": [
+                {
+                    "etiket": "KENDİSİ",
+                    "numara": "0 537 481 15 19"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/h6Z9FC3CvZEaRBue7",
+            "enlem": 41.007708338962445,
+            "boylam": 29.18720558699866
         }
     ],
     "guzergahlar": []
