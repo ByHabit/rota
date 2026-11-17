@@ -7,17 +7,17 @@
     },
     "ogrenciler": [
         {
-            "ad": "ÖZEL ÇINAR TUZLA KURUM MERKEZ",
+            "ad": "TUZLA ÖZEL ÇINAR KURUM MERKEZ",
             "mahalle": "TUZLA YAYLA MAHALLESİ",
             "link": "https://maps.app.goo.gl/YMpew7ZyDvdS6rXLA",
             "id": "omsoxipqf6t",
             "mesafe": "KM HESAPLARI BU KURUMUN ADRESİNE GÖRE HESAPLANDI",
-            "enlem": 40.82752360562284,
-            "boylam": 29.31144049586419,
+            "enlem": 40.827524,
+            "boylam": 29.31144,
             "telefonlar": []
         },
         {
-            "ad": "ÖZEL ÇINAR 2 SULTANBEYLİ BAKIM MERKEZİ",
+            "ad": "SULTANBEYLİ ÖZEL ÇINAR 2 BAKIM MERKEZİ",
             "mahalle": "SULTANBEYLİ",
             "link": "https://maps.app.goo.gl/2FDGEQUePPGw9UFQ8",
             "id": "omsoxipqf3t",
@@ -40,7 +40,7 @@
             ]
         },
         {
-            "ad": "ÖZEL ÇINAR KURTKÖY BAKIM MERKEZİ",
+            "ad": "KURTKÖY ÖZEL ÇINAR BAKIM MERKEZİ",
             "mahalle": "KURTKÖY",
             "link": "https://maps.app.goo.gl/jBesgV1hoMvDehRj9",
             "id": "omsoxipqfen",
