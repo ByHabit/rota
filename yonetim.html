@@ -113,7 +113,34 @@
     }
     .ekle-numara:hover { border-color: var(--amber); color: var(--amber); }
 
-    .liste-arama-sar { position: relative; margin-bottom: 14px; }
+    .liste-ust {
+        position: -webkit-sticky; position: sticky; top: 0; z-index: 6;
+        background: var(--panel); padding: 2px 0 10px 0; margin-bottom: 6px;
+    }
+    .sirala-sira { gap: 6px; margin-top: 2px; }
+    .sirala-sira .mini-btn { flex: 1 1 auto; padding: 8px 10px; font-size: 12px; }
+
+    .tasima-serit {
+        display: none; align-items: center; gap: 8px; flex-wrap: wrap;
+        background: #2A2416; border: 1px solid var(--amber); border-radius: 9px;
+        padding: 10px 12px; margin-bottom: 10px; font-size: 13px;
+    }
+    .tasima-serit.acik { display: flex; }
+    .tasima-ad { flex: 1 1 140px; min-width: 0; font-weight: 700; color: var(--amber); }
+    .tasima-serit button {
+        padding: 8px 11px; font-size: 12px; background: var(--panel-ic);
+        border: 1px solid var(--cizgi); color: var(--metin);
+    }
+    .tasima-ipucu { flex: 1 1 100%; font-size: 11.5px; color: var(--soluk); line-height: 1.5; }
+
+    .kayit.tasiniyor { border-color: var(--amber); background: #221E12; }
+    .buraya-btn { color: var(--amber); border-color: var(--cizgi); }
+    .buraya-btn:hover { border-color: var(--amber); background: #2A2416; }
+    .tasiniyor-etiket { font-size: 11px; color: var(--amber); font-weight: 700; padding: 0 8px; white-space: nowrap; }
+    .tasi-btn { color: var(--soluk); padding: 8px 10px; }
+    .tasi-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+    .liste-arama-sar { position: relative; margin-bottom: 0; }
     .liste-arama {
         width: 100%; padding: 12px 46px 12px 14px; margin: 0;
         background: var(--panel-ic); border: 1px solid var(--cizgi);
@@ -320,12 +347,20 @@
     <div class="blok">
         <div class="blok-basligi">Kayıtlı Öğrenciler (<span id="sayac">0</span>)</div>
 
-        <div class="liste-arama-sar">
-            <input type="search" id="listeArama" class="liste-arama"
-                   placeholder="İsim, mahalle, mesafe veya telefon ara..."
-                   autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="liste-temizle" id="listeTemizle"
-                    onclick="listeAramaTemizle()" aria-label="Aramayı temizle">&times;</button>
+        <div class="liste-ust">
+            <div class="tasima-serit" id="tasimaSerit"></div>
+            <div class="liste-arama-sar">
+                <input type="search" id="listeArama" class="liste-arama"
+                       placeholder="İsim, mahalle, mesafe veya telefon ara..."
+                       autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                <button type="button" class="liste-temizle" id="listeTemizle"
+                        onclick="listeAramaTemizle()" aria-label="Aramayı temizle">&times;</button>
+            </div>
+            <div class="btn-sira sirala-sira">
+                <button class="mini-btn" onclick="listeSirala('isim')">İsme Göre (A-Z)</button>
+                <button class="mini-btn" onclick="listeSirala('mahalle')">Mahalleye Göre</button>
+                <button class="mini-btn" onclick="listeSirala('ters')">Ters Çevir</button>
+            </div>
         </div>
 
         <div id="kayitListesi"></div>
@@ -751,9 +786,143 @@ function listeAramaTemizle() {
     el("listeArama").focus();
 }
 
+/* ============================================================
+   LISTE SIRALAMA VE TASIMA
+   Uzun listede surukleme yerine iki adimli tasima:
+   1) Ogrencide "Tasi" dersin, 2) hedefi (gerekirse arayarak) bulup
+   "Buraya" dersin. Arama tasima sirasinda da calisir.
+   ============================================================ */
+var tasinanId = null;
+
+function idIndex(id) {
+    for (var i = 0; i < ogrenciler.length; i++) {
+        if (ogrenciler[i].id === id) { return i; }
+    }
+    return -1;
+}
+
+function siraDegisti() {
+    duzenlenenSira = -1;
+    listeCiz();
+}
+
+function tasimaBaslat(sira) {
+    if (duzenlenenSira >= 0) { duzenlemeIptal(); }
+    var o = ogrenciler[sira];
+    if (!o) { return; }
+    tasinanId = o.id;
+    listeCiz();
+    var serit = el("tasimaSerit");
+    if (serit && serit.scrollIntoView) {
+        serit.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+}
+
+function tasimaBitir(mesajVer) {
+    var vardi = tasinanId !== null;
+    tasinanId = null;
+    listeCiz();
+    if (vardi && mesajVer) {
+        gunlukYaz("Sıra değişti. GitHub'a Kaydet demeyi unutma.", "bilgi");
+    }
+}
+
+/* Secili ogrenciyi, hedef satirin bulundugu numaraya tasir. */
+function tasiHedefe(hedef) {
+    var kaynak = idIndex(tasinanId);
+    if (kaynak < 0 || kaynak === hedef) { tasimaBitir(false); return; }
+    /* Kaynagi cikarip hedef numaraya yerlestir: ogrenci o satirin numarasini alir,
+       oradaki kayit bir basamak kayar. Asagi tasirken de yukari tasirken de ayni. */
+    var kayit = ogrenciler.splice(kaynak, 1)[0];
+    ogrenciler.splice(hedef, 0, kayit);
+    gunlukYaz(kayit.ad + " → " + (hedef + 1) + ". sıraya taşındı. Kaydetmeyi unutma.", "ok");
+    tasimaBitir(false);
+}
+
+function tasiAdim(yon) {
+    var kaynak = idIndex(tasinanId);
+    if (kaynak < 0) { return; }
+    var hedef = kaynak + yon;
+    if (hedef < 0 || hedef >= ogrenciler.length) { return; }
+    var g = ogrenciler[kaynak];
+    ogrenciler[kaynak] = ogrenciler[hedef];
+    ogrenciler[hedef] = g;
+    listeCiz();
+}
+
+function tasiUca(ustMu) {
+    var kaynak = idIndex(tasinanId);
+    if (kaynak < 0) { return; }
+    var kayit = ogrenciler.splice(kaynak, 1)[0];
+    if (ustMu) { ogrenciler.unshift(kayit); } else { ogrenciler.push(kayit); }
+    listeCiz();
+}
+
+function tasiNumaraya() {
+    var kaynak = idIndex(tasinanId);
+    if (kaynak < 0) { return; }
+    var c = prompt("Kaçıncı sıraya taşınsın? (1 - " + ogrenciler.length + ")", String(kaynak + 1));
+    if (c === null) { return; }
+    var n = parseInt(c, 10);
+    if (isNaN(n) || n < 1 || n > ogrenciler.length) {
+        gunlukYaz("Geçersiz sıra numarası.", "hata");
+        return;
+    }
+    var kayit = ogrenciler.splice(kaynak, 1)[0];
+    ogrenciler.splice(n - 1, 0, kayit);
+    gunlukYaz(kayit.ad + " → " + n + ". sıraya taşındı. Kaydetmeyi unutma.", "ok");
+    tasimaBitir(false);
+}
+
+function listeSirala(tur) {
+    if (ogrenciler.length < 2) { return; }
+    var ad = (tur === "isim") ? "isme göre" : (tur === "mahalle") ? "mahalleye göre" : "ters";
+    if (!confirm("Liste " + ad + " yeniden dizilecek. Mevcut sıralamanın yerine geçer.\n\nDevam edilsin mi?")) { return; }
+
+    if (tur === "ters") {
+        ogrenciler.reverse();
+    } else {
+        var alan = (tur === "mahalle") ? "mahalle" : "ad";
+        var dizi = [];
+        for (var i = 0; i < ogrenciler.length; i++) {
+            dizi.push({ o: ogrenciler[i], a: aramaSadelestir(ogrenciler[i][alan] || ""), s: i });
+        }
+        dizi.sort(function (x, y) {
+            if (x.a < y.a) { return -1; }
+            if (x.a > y.a) { return 1; }
+            return x.s - y.s;
+        });
+        var yeni = [];
+        for (var j = 0; j < dizi.length; j++) { yeni.push(dizi[j].o); }
+        ogrenciler = yeni;
+    }
+    gunlukYaz("Liste " + ad + " dizildi. GitHub'a Kaydet demeyi unutma.", "ok");
+    siraDegisti();
+}
+
+function tasimaSeridiCiz() {
+    var serit = el("tasimaSerit");
+    if (tasinanId === null) { serit.className = "tasima-serit"; serit.innerHTML = ""; return; }
+    var sira = idIndex(tasinanId);
+    if (sira < 0) { tasinanId = null; serit.className = "tasima-serit"; serit.innerHTML = ""; return; }
+    var o = ogrenciler[sira];
+    serit.className = "tasima-serit acik";
+    serit.innerHTML =
+        '<div class="tasima-ad">' + htmlKacis(o.ad) + ' &middot; ' + (sira + 1) + '. sırada</div>' +
+        '<button onclick="tasiAdim(-1)" title="Bir yukarı">&#9650;</button>' +
+        '<button onclick="tasiAdim(1)" title="Bir aşağı">&#9660;</button>' +
+        '<button onclick="tasiUca(true)">En üste</button>' +
+        '<button onclick="tasiUca(false)">En alta</button>' +
+        '<button onclick="tasiNumaraya()">Sıra no gir</button>' +
+        '<button onclick="tasimaBitir(true)">Bitti</button>' +
+        '<div class="tasima-ipucu">Hedefi aramayla bulup satırındaki <b>Buraya</b> düğmesine bas; ' +
+        'öğrenci o satırın numarasına taşınır.</div>';
+}
+
 function listeCiz() {
     var kutu = el("kayitListesi");
     el("sayac").textContent = ogrenciler.length;
+    tasimaSeridiCiz();
 
     var aranan = "";
     var aramaKutusu = el("listeArama");
@@ -781,7 +950,8 @@ function listeCiz() {
         }
         gorunen++;
 
-        html += '<div class="kayit' + (i === duzenlenenSira ? ' secili' : '') + '">' +
+        var tasinanMi = (tasinanId !== null && o.id === tasinanId);
+        html += '<div class="kayit' + (i === duzenlenenSira ? ' secili' : '') + (tasinanMi ? ' tasiniyor' : '') + '">' +
                     '<div class="kayit-no">' + (i + 1) + '</div>' +
                     '<div class="kayit-bilgi">' +
                         '<div class="kayit-ad">' + htmlKacis(o.ad) + '</div>' +
@@ -798,8 +968,13 @@ function listeCiz() {
                         })() +
                         '<div class="kayit-link">' + (koordinatYaz(o) ? '&#9678; ' + koordinatYaz(o) + ' &middot; ' : '&#9678; koordinat yok &middot; ') + htmlKacis(o.link) + '</div>' +
                     '</div>' +
-                    '<button class="mini-btn duzenle-btn" onclick="kayitDuzenle(' + i + ')">Düzenle</button>' +
-                    '<button class="mini-btn sil-btn" onclick="kayitSil(' + i + ')">Sil</button>' +
+                    (tasinanId !== null
+                        ? (tasinanMi
+                            ? '<span class="tasiniyor-etiket">taşınıyor</span>'
+                            : '<button class="mini-btn buraya-btn" onclick="tasiHedefe(' + i + ')">Buraya</button>')
+                        : '<button class="mini-btn tasi-btn" onclick="tasimaBaslat(' + i + ')" title="Sırasını değiştir">&#8645;</button>' +
+                          '<button class="mini-btn duzenle-btn" onclick="kayitDuzenle(' + i + ')">Düzenle</button>' +
+                          '<button class="mini-btn sil-btn" onclick="kayitSil(' + i + ')">Sil</button>') +
                 '</div>';
     }
 
