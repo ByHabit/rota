@@ -381,11 +381,11 @@
         {
             "ad": "MEHMET EFE ASLANDAĞ",
             "mahalle": "TUZLA ORHANLI",
-            "link": "https://maps.app.goo.gl/9jPZoWmERwF3YoeDA",
+            "link": "https://maps.app.goo.gl/oWtsmFrp47ACrUVA6",
             "id": "omsoxipqfqz",
             "mesafe": "12.6 KM",
-            "enlem": 40.888034,
-            "boylam": 29.345457,
+            "enlem": 40.88834965745639,
+            "boylam": 29.346341609566743,
             "telefonlar": [
                 {
                     "etiket": "Annesi",
@@ -995,11 +995,11 @@
         {
             "ad": "FATMANUR ÖZTÜRK",
             "mahalle": "TUZLA ORTA MAHALLE",
-            "link": "https://maps.app.goo.gl/5wsiiuuEvF5kczM2A",
+            "link": "https://maps.app.goo.gl/6t29n1HWBz7Ru6mf9",
             "id": "omsoxipqflt",
             "mesafe": "14.2 KM",
-            "enlem": 40.901315,
-            "boylam": 29.381052,
+            "enlem": 40.90126497139158,
+            "boylam": 29.380978702364906,
             "telefonlar": [
                 {
                     "etiket": "BABA",
@@ -1373,9 +1373,9 @@
                     "numara": "0 538 515 64 18"
                 }
             ],
-            "link": "https://maps.app.goo.gl/FqkPFfsFUWo75oTf7",
-            "enlem": 40.89058827793273,
-            "boylam": 29.347484844212442
+            "link": "https://maps.app.goo.gl/WNXHfbt5g4LmMpaU8",
+            "enlem": 40.8888480583702,
+            "boylam": 29.347307008435536
         },
         {
             "id": "omu5tln9ca8",
@@ -1565,6 +1565,16 @@
             "link": "https://maps.app.goo.gl/xr7pjvwj7NvTcaZr6",
             "enlem": 41.015463,
             "boylam": 29.099037
+        },
+        {
+            "id": "omwl5ndn9rq",
+            "ad": "MUHAMMED DEMİRKIRAN",
+            "mahalle": "TUZLA ORHANLI ORTA MAHALLE",
+            "mesafe": "13.2 KM",
+            "telefonlar": [],
+            "link": "https://maps.app.goo.gl/jbmHfhU342wmD4WE6",
+            "enlem": 40.90113674339121,
+            "boylam": 29.380524067948635
         }
     ],
     "guzergahlar": []
