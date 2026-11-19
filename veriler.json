@@ -1575,6 +1575,21 @@
             "link": "https://maps.app.goo.gl/jbmHfhU342wmD4WE6",
             "enlem": 40.90113674339121,
             "boylam": 29.380524067948635
+        },
+        {
+            "id": "omwnpgluy35",
+            "ad": "ÖMER TAHA OKTAY",
+            "mahalle": "BAYRAMOĞLU",
+            "mesafe": "10.7 KM",
+            "telefonlar": [
+                {
+                    "etiket": "ANNE ÜMMÜGÜL",
+                    "numara": "0 531 365 73 98"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/YqwmCnc529Cm5VC38",
+            "enlem": 40.79363100214551,
+            "boylam": 29.36724926774738
         }
     ],
     "guzergahlar": []
