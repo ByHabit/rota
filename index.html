@@ -21,7 +21,8 @@
     .tarih { color:#8A97A8; font-size:12px; margin-top:2px; }
     .sifirla-btn { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-size:11px;
                    font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; }
-    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; align-items:center; }
+    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; align-items:center; flex-wrap:wrap;
+                    justify-content:flex-end; }
     .yonetim-btn { background:#232B36; border:1px solid #333D4B; color:#E8EDF3; font-size:11px;
                    font-weight:700; border-radius:6px; padding:7px 10px; text-decoration:none;
                    white-space:nowrap; }
@@ -140,9 +141,10 @@
     <header>
         <div>
             <h1>Öğrenci <span>Rotaları</span></h1>
-            <div class="tarih">Son güncelleme: 19.11.2026 18:28</div>
+            <div class="tarih">Son güncelleme: 20.11.2026 23:38</div>
         </div>
         <div class="bas-dugmeler">
+            <a class="yonetim-btn" href="./mahalle.html">&#128506; Mahalle</a>
             <a class="yonetim-btn" href="./yonetim.html">&#9881; Yönetim</a>
             <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>
             <button class="sifirla-btn" onclick="tikleriSifirla()">Servisi Sıfırla</button>
@@ -1939,7 +1941,7 @@
     <div class="not" id="bosNot">Eşleşen kayıt bulunamadı.</div>
 
     <div class="alt-baglanti">
-        <a href="./ekle.html">Öğrenci ekle</a> &nbsp;&middot;&nbsp; <a href="./yonetim.html">Yönetim paneli</a>
+        <a href="./ekle.html">Öğrenci ekle</a> &nbsp;&middot;&nbsp; <a href="./mahalle.html">Mahalle föyü</a>&nbsp;&middot;&nbsp; <a href="./yonetim.html">Yönetim paneli</a>
         <div class="kaynak-not">Yol mesafesi ve tur hesabı: OSRM &middot; Harita verisi &copy; OpenStreetMap katkıcıları (ODbL)</div>
     </div>
 </div>
