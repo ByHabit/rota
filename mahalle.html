@@ -28,6 +28,26 @@
     h1 { margin:0; font-size:16px; letter-spacing:2px; text-transform:uppercase; font-weight:700; }
     h1 span { color:var(--amber); }
     .ust-bilgi { font-size:12px; color:var(--soluk); }
+    /* ---------- Tam ekran harita ---------- */
+    body.tam-ekran header,
+    body.tam-ekran .yan { display:none !important; }
+    body.tam-ekran .govde { position:fixed; inset:0; z-index:900; }
+    body.tam-ekran #harita { height:100%; }
+    .tam-ekran-cik {
+        display:none; position:fixed; top:10px; right:10px; z-index:1000;
+        background:var(--panel); border:1px solid var(--cizgi); color:var(--metin);
+        font-family:inherit; font-size:13px; font-weight:700; border-radius:8px;
+        padding:10px 14px; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,.5);
+    }
+    body.tam-ekran .tam-ekran-cik { display:block; }
+    @media print { .tam-ekran-cik { display:none !important; } }
+
+    /* ---------- Kaydi eslesip sinir disinda kalanlar ---------- */
+    .aday-kutu { margin-top:12px; border:1px solid var(--amber); border-radius:8px;
+                 background:rgba(255,196,0,.07); padding:8px; }
+    .aday-bas { font-size:12px; color:var(--amber); line-height:1.5; margin-bottom:6px; }
+    .aday-bas .mini { margin-top:6px; display:block; width:100%; }
+
     .panel-dugme { display:none; background:var(--panel-ic); border:1px solid var(--cizgi);
                    color:var(--metin); font-family:inherit; font-size:12px; font-weight:700;
                    border-radius:8px; padding:9px 12px; cursor:pointer; white-space:nowrap; }
@@ -239,6 +259,7 @@
     </div>
     <div class="btn-sira" style="flex:0 0 auto;">
         <button class="panel-dugme" id="panelDugme" onclick="paneliAcKapa()">&#9776; Ayarlar</button>
+        <button class="panel-dugme" id="tamEkranDugme" onclick="tamEkranAcKapa()" style="display:inline-block;">&#9974; Tam ekran</button>
         <button class="yesil" onclick="baskiyaHazirla()">&#128424; Yazdır / PDF</button>
     </div>
 </header>
@@ -359,6 +380,8 @@
     <div id="harita"></div>
 </div>
 
+<button class="tam-ekran-cik" onclick="tamEkranAcKapa()">&#10005; Tam ekrandan çık</button>
+
 <div class="baski-liste" id="baskiListe"></div>
 
 <!-- İstanbul + Kocaeli ilçe/mahalle sınırları. Kaynak: OpenStreetMap katkıcıları, ODbL 1.0 -->
@@ -373,6 +396,7 @@ var ogrenciler = [], merkez = null;
 var sinir = null;
 var sonSecim = null;              /* yandaki listeyi filtrelerken yeniden cizmek icin */                 /* { ad, halkalar:[ [ [lat,lng], ... ], ... ] } */
 var disBirakilan = {};            /* elle çıkarılan öğrenci id'leri */
+var elleEklenen = {};             /* sınır dışında olduğu halde listeye alınanlar */
 var cizimNoktalar = [], cizimAcik = false, cizimCizgi = null, cizimNoktaIsaret = [];
 var VERI_URL = "https://raw.githubusercontent.com/ByHabit/rota/main/veriler.json";
 
@@ -541,12 +565,23 @@ function secenekDoldur(kutuId, adlar, bosMetin, etiketle) {
 /* Telefonda yan menuyu gizleyip haritayi tam ekrana cikarir.
    Durum degiskende tutulur: baski modu body sinifini sifirladigi icin
    sinifa bakarak karar vermek baskidan sonra yanlis sonuc veriyor. */
-var panelKapali = false;
+var panelKapali = false, tamEkran = false, baskiModu = false;
 
+/* body sinifi uc durumu birden tasiyor; tek yerden kurulsun ki
+   biri digerini sessizce silmesin. */
 function panelDurumunuUygula() {
-    document.body.className = panelKapali ? "panel-kapali" : "";
+    var sinif = [];
+    if (baskiModu) {
+        sinif.push("baski-modu");
+    } else {
+        if (panelKapali) { sinif.push("panel-kapali"); }
+        if (tamEkran) { sinif.push("tam-ekran"); }
+    }
+    document.body.className = sinif.join(" ");
     var dugme = el("panelDugme");
     if (dugme) { dugme.innerHTML = panelKapali ? "&#9776; Menü" : "&#9776; Ayarlar"; }
+    var td = el("tamEkranDugme");
+    if (td) { td.innerHTML = tamEkran ? "&#10005; Çık" : "&#9974; Tam ekran"; }
     /* Leaflet olcuyu yeniden almazsa harita yarim kalir. */
     if (harita) { setTimeout(function () { harita.invalidateSize(); }, 60); }
 }
@@ -555,6 +590,28 @@ function paneliAcKapa() {
     panelKapali = !panelKapali;
     panelDurumunuUygula();
 }
+
+/* Haritayi tum ekrana yayar. Once tarayicinin kendi tam ekranini dener
+   (adres cubugu da gider); iOS Safari bunu vermiyor, o zaman CSS ile
+   sayfa icinde tam ekran yapilir. */
+function tamEkranAcKapa() {
+    tamEkran = !tamEkran;
+    var k = document.documentElement;
+    try {
+        if (tamEkran && k.requestFullscreen) {
+            var sz = k.requestFullscreen();
+            if (sz && sz.catch) { sz.catch(function () {}); }
+        } else if (!tamEkran && document.exitFullscreen && document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    } catch (e) { /* desteklemiyorsa CSS tam ekran yeter */ }
+    panelDurumunuUygula();
+}
+
+/* Kullanici tarayicinin kendi dugmesiyle cikarsa bizim durumumuz da dussun */
+document.addEventListener("fullscreenchange", function () {
+    if (!document.fullscreenElement && tamEkran) { tamEkran = false; panelDurumunuUygula(); }
+});
 
 /* Telefon duzeninde miyiz? CSS kirilma noktasiyla ayni deger. */
 function darEkranMi() {
@@ -600,7 +657,7 @@ function ilceDegisti() {
         durumYaz("sinirDurum", ilce + " için sınır verisi yok.", "hata");
         return;
     }
-    sinirUygula({ ad: ilce, halkalar: kayit.s });
+    sinirUygula({ ad: ilce, halkalar: kayit.s, eslesme: ilce });
     if (mahalleler.length) {
         durumYaz("sinirDurum", ilce + " sınırı çizildi, " + mahalleler.length +
                  " mahalle listelendi.", "ok");
@@ -616,7 +673,7 @@ function mahalleDegisti() {
     var kayit = BOLGE.iller[il].ilceler[ilce];
     if (!mah) {
         if (kayit.s && kayit.s.length) {
-            sinirUygula({ ad: ilce, halkalar: kayit.s });
+            sinirUygula({ ad: ilce, halkalar: kayit.s, eslesme: ilce });
             durumYaz("sinirDurum", ilce + " ilçesinin tamamı gösteriliyor.", "ok");
         }
         return;
@@ -626,7 +683,7 @@ function mahalleDegisti() {
         durumYaz("sinirDurum", mah + " için sınır verisi yok; elle çizebilirsin.", "hata");
         return;
     }
-    sinirUygula({ ad: mah + " Mahallesi", halkalar: halkalar });
+    sinirUygula({ ad: mah + " Mahallesi", halkalar: halkalar, eslesme: mah });
     durumYaz("sinirDurum", mah + " Mahallesi, " + ilce + " — sınır çizildi.", "ok");
     /* Telefonda panel ekranin yarisini kapliyor; mahalle secilince haritaya gecilsin.
        Ayarlar dugmesi paneli geri acar. */
@@ -725,17 +782,43 @@ function iceriMi(lat, lng, halkalar) {
     return icinde;
 }
 
+/* Kaydinda secili bolgenin adi yazdigi halde cizili sinirin disinda kalanlar.
+   Halk agzindaki mahalle adi resmi sinirdan genis olabiliyor: ornegin
+   "Sifa" denen alanin bir bolumu resmi olarak Mimar Sinan Mahallesi'nde kaliyor.
+   Bunlari sessizce elemek yerine ayrica gosterip tek dokunusla eklenmesini sagliyoruz. */
+function sinirAdayliklari() {
+    if (!sinir || !sinir.eslesme) { return []; }
+    var ara = aramaSadelestir(sinir.eslesme);
+    if (ara.length < 3) { return []; }          /* cok kisa ad yanlis eslesir */
+    var c = [];
+    for (var i = 0; i < ogrenciler.length; i++) {
+        var o = ogrenciler[i];
+        if (elleEklenen[o.id] || disBirakilan[o.id]) { continue; }
+        if (iceriMi(o.enlem, o.boylam, sinir.halkalar)) { continue; }
+        if (aramaSadelestir(o.mahalle).indexOf(ara) < 0) { continue; }
+        c.push(o);
+    }
+    return c;
+}
+
 function secilenler() {
     var ic = [], dis = [];
     for (var i = 0; i < ogrenciler.length; i++) {
         var o = ogrenciler[i];
         var girer = sinir ? iceriMi(o.enlem, o.boylam, sinir.halkalar) : true;
+        if (elleEklenen[o.id]) { girer = true; }
         if (girer && !disBirakilan[o.id]) { ic.push(o); } else { dis.push(o); }
     }
     return { ic: ic, dis: dis };
 }
 
-function ogrCikar(id) { disBirakilan[id] = true; haritayiCiz(); }
+function ogrCikar(id) { disBirakilan[id] = true; delete elleEklenen[id]; haritayiCiz(); }
+function ogrEkle(id) { elleEklenen[id] = true; delete disBirakilan[id]; haritayiCiz(); }
+function adayHepsiniEkle() {
+    var a = sinirAdayliklari();
+    for (var i = 0; i < a.length; i++) { elleEklenen[a[i].id] = true; }
+    haritayiCiz();
+}
 function ogrGeriAl(id) { delete disBirakilan[id]; haritayiCiz(); }
 
 /* ============================================================
@@ -858,6 +941,42 @@ function yanListeyiCiz(s) {
         }
         h += '</div>';
     }
+
+    /* 1) Kaydinda bu bolge yaziyor ama sinirin disinda kaliyor */
+    var aday = sinirAdayliklari();
+    if (aday.length) {
+        h += '<div class="aday-kutu">' +
+                '<div class="aday-bas">Kaydında &ldquo;' + kacis(sinir.eslesme) +
+                '&rdquo; yazan ' + aday.length + ' öğrenci çizili sınırın dışında kaldı.' +
+                '<button class="mini" onclick="adayHepsiniEkle()">Hepsini ekle</button></div>' +
+                '<div class="liste-kutu">';
+        for (var a = 0; a < aday.length; a++) {
+            h += '<div class="ogr-satir disarida">' +
+                    '<span class="ogr-no">+</span>' +
+                    '<span class="ogr-ad" title="' + kacis(aday[a].mahalle) + '">' + kacis(aday[a].ad) + '</span>' +
+                    '<button class="ogr-cikar" style="color:var(--yesil)" onclick="ogrEkle(\'' + kacis(aday[a].id) + '\')">Ekle</button>' +
+                 '</div>';
+        }
+        h += '</div></div>';
+    }
+
+    /* 2) Elle eklenenler geri cikarilabilsin */
+    var elleGiren = [];
+    for (var g = 0; g < s.ic.length; g++) {
+        if (elleEklenen[s.ic[g].id]) { elleGiren.push(s.ic[g]); }
+    }
+    if (elleGiren.length) {
+        h += '<div class="ipucu" style="margin-top:10px;">Elle eklenenler (' + elleGiren.length + '):</div><div class="liste-kutu">';
+        for (var e2 = 0; e2 < elleGiren.length; e2++) {
+            h += '<div class="ogr-satir">' +
+                    '<span class="ogr-no">+</span>' +
+                    '<span class="ogr-ad">' + kacis(elleGiren[e2].ad) + '</span>' +
+                    '<button class="ogr-cikar" onclick="ogrCikar(\'' + kacis(elleGiren[e2].id) + '\')">Çıkar</button>' +
+                 '</div>';
+        }
+        h += '</div>';
+    }
+
     kutu.innerHTML = h;
 }
 
@@ -900,6 +1019,7 @@ function tumunuSigdir() {
    BASKI
    ============================================================ */
 function baskiModunuKapat() {
+    baskiModu = false;
     panelDurumunuUygula();
     if (harita) { setTimeout(function () { harita.invalidateSize(); }, 150); }
 }
@@ -915,7 +1035,8 @@ function baskiyaHazirla() {
 
     /* Once baski duzenine gec, haritayi o olcude yeniden ciz, karolar
        yuklendikten SONRA yazdir. Yoksa kagitta eksik harita cikiyor. */
-    document.body.className = "baski-modu";   /* panel-kapali sinifinin yerini alir */
+    baskiModu = true;
+    panelDurumunuUygula();
     harita.invalidateSize();
     if (sinirKatman) {
         harita.fitBounds(sinirKatman.getBounds(), { padding: [20, 20] });
@@ -940,7 +1061,9 @@ window.addEventListener("beforeprint", function () {
 window.addEventListener("afterprint", baskiModunuKapat);
 /* Kullanici Ctrl+P yerine bu modda kalirsa Esc ile cikabilsin */
 window.addEventListener("keydown", function (e) {
-    if (e.keyCode === 27 && document.body.className === "baski-modu") { baskiModunuKapat(); }
+    if (e.keyCode !== 27) { return; }
+    if (baskiModu) { baskiModunuKapat(); }
+    else if (tamEkran) { tamEkranAcKapa(); }
 });
 
 /* ============================================================
