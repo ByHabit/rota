@@ -1265,7 +1265,8 @@ function listeSayfasiUret() {
 '    .tarih { color:#8A97A8; font-size:12px; margin-top:2px; }\n' +
 '    .sifirla-btn { background:transparent; border:1px solid #333D4B; color:#FF6B5E; font-size:11px;\n' +
 '                   font-weight:700; border-radius:6px; padding:6px 10px; cursor:pointer; }\n' +
-'    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; align-items:center; }\n' +
+'    .bas-dugmeler { display:flex; gap:6px; flex:0 0 auto; align-items:center; flex-wrap:wrap;\n' +
+'                    justify-content:flex-end; }\n' +
 '    .yonetim-btn { background:#232B36; border:1px solid #333D4B; color:#E8EDF3; font-size:11px;\n' +
 '                   font-weight:700; border-radius:6px; padding:7px 10px; text-decoration:none;\n' +
 '                   white-space:nowrap; }\n' +
@@ -1387,6 +1388,7 @@ function listeSayfasiUret() {
 '            <div class="tarih">Son güncelleme: ' + htmlKacis(tarih) + '</div>\n' +
 '        </div>\n' +
 '        <div class="bas-dugmeler">\n' +
+'            <a class="yonetim-btn" href="./mahalle.html">&#128506; Mahalle</a>\n' +
 '            <a class="yonetim-btn" href="./yonetim.html">&#9881; Yönetim</a>\n' +
 '            <button class="yenile-btn" onclick="sayfayiYenile()" title="Son sürümü indir">&#8635; Yenile</button>\n' +
 '            <button class="sifirla-btn" onclick="tikleriSifirla()">Servisi Sıfırla</button>\n' +
@@ -1418,7 +1420,8 @@ bolumler +
 '    <div class="not" id="bosNot">Eşleşen kayıt bulunamadı.</div>\n' +
 '\n' +
 '    <div class="alt-baglanti">\n' +
-'        <a href="./ekle.html">Öğrenci ekle</a> &nbsp;&middot;&nbsp; <a href="./yonetim.html">Yönetim paneli</a>\n' +
+'        <a href="./ekle.html">Öğrenci ekle</a> &nbsp;&middot;&nbsp; <a href="./mahalle.html">Mahalle föyü</a>'
++ '&nbsp;&middot;&nbsp; <a href="./yonetim.html">Yönetim paneli</a>\n' +
 '        <div class="kaynak-not">Yol mesafesi ve tur hesabı: OSRM &middot; Harita verisi &copy; OpenStreetMap katkıcıları (ODbL)</div>\n' +
 '    </div>\n' +
 '</div>\n' +
