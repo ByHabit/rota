@@ -1590,6 +1590,21 @@
             "link": "https://maps.app.goo.gl/YqwmCnc529Cm5VC38",
             "enlem": 40.79363100214551,
             "boylam": 29.36724926774738
+        },
+        {
+            "id": "omwqappwfms",
+            "ad": "ASEL MİNA VARIŞLI",
+            "mahalle": "TUZLA YAYLA MAHALLESİ",
+            "mesafe": "500 METRE",
+            "telefonlar": [
+                {
+                    "etiket": "ANNESİ",
+                    "numara": "0 539 977 79 88"
+                }
+            ],
+            "link": "https://maps.app.goo.gl/FCJUQ8D9SbkW1YiX8",
+            "enlem": 40.829921,
+            "boylam": 29.31527
         }
     ],
     "guzergahlar": []
