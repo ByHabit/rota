@@ -161,6 +161,9 @@
         padding:1px 5px; font-size:11px; font-weight:600; color:#111; white-space:nowrap;
         font-family:'Segoe UI', sans-serif;
     }
+    /* Sinir disindakiler: okunur ama one cikmasin, foyun numarali listesi baskin kalsin */
+    .pin-ad.sonuk { background:rgba(255,255,255,.72); border-color:#9AA6B4; color:#444;
+                    font-weight:500; font-size:10px; }
     .merkez-pin {
         background:#1D4ED8; color:#fff; border:2px solid #fff; border-radius:5px;
         padding:2px 7px; font-size:11px; font-weight:700; white-space:nowrap;
@@ -335,7 +338,7 @@
                 <div class="sayac"><b id="sayacTum">0</b><span>toplam</span></div>
             </div>
             <label class="kutucuk"><input type="checkbox" id="adGoster" checked onchange="haritayiCiz()"> Haritada isimleri göster</label>
-            <label class="kutucuk"><input type="checkbox" id="disGoster" onchange="haritayiCiz()"> Sınır dışındakileri soluk göster</label>
+            <label class="kutucuk"><input type="checkbox" id="disGoster" checked onchange="haritayiCiz()"> Sınır dışındakileri de göster</label>
             <label class="kutucuk"><input type="checkbox" id="merkezGoster" checked onchange="haritayiCiz()"> Merkezi (okul) göster</label>
             <label class="kutucuk"><input type="checkbox" id="imzaSutun"> Çıktıda imza sütunu olsun</label>
             <input type="text" id="ogrFiltre" placeholder="Listede ara (isim)" oninput="ogrFiltrele()">
@@ -846,17 +849,28 @@ function haritayiCiz() {
     el("sayacIc").textContent = s.ic.length;
     el("sayacTum").textContent = ogrenciler.length;
 
+    var adVar = el("adGoster").checked;
+
+    /* Sinir disinda kalanlar: numarasiz ve soluk, ama adlariyla birlikte.
+       Secili mahalleye odaklanirken komsu duraklarin nerede oldugu gorunsun diye. */
     if (el("disGoster").checked) {
         for (var d = 0; d < s.dis.length; d++) {
-            isaretKatman.addLayer(L.marker([s.dis[d].enlem, s.dis[d].boylam], {
-                icon: L.divIcon({ className: "", html: '<div class="pin sonuk">·</div>',
-                                  iconSize: [18, 18], iconAnchor: [9, 9] }),
-                interactive: false
-            }));
+            var dis = s.dis[d];
+            isaretKatman.addLayer(L.marker([dis.enlem, dis.boylam], {
+                icon: L.divIcon({ className: "", html: '<div class="pin sonuk">&#183;</div>',
+                                  iconSize: [18, 18], iconAnchor: [9, 9] })
+            }).bindPopup("<b>" + kacis(dis.ad) + "</b><br>" + kacis(dis.mahalle) +
+                         '<br><a href="#" onclick="ogrEkle(\'' + kacis(dis.id) + '\');return false;">Listeye ekle</a>'));
+            if (adVar) {
+                isaretKatman.addLayer(L.marker([dis.enlem, dis.boylam], {
+                    icon: L.divIcon({ className: "", html: '<div class="pin-ad sonuk">' + kacis(dis.ad) + '</div>',
+                                      iconSize: [0, 0], iconAnchor: [-13, 7] }),
+                    interactive: false
+                }));
+            }
         }
     }
 
-    var adVar = el("adGoster").checked;
     for (var i = 0; i < s.ic.length; i++) {
         var o = s.ic[i];
         isaretKatman.addLayer(L.marker([o.enlem, o.boylam], {
